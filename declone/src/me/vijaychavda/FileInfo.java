@@ -12,6 +12,7 @@ import java.util.zip.Adler32;
 public class FileInfo {
 
     private String path;
+    private String name;
     private long size;
     private long hash;
 
@@ -23,6 +24,10 @@ public class FileInfo {
 
     public String getPath() {
         return path;
+    }
+
+    public String getName() {
+        return name;
     }
 
     public long getSize() {
@@ -47,6 +52,7 @@ public class FileInfo {
         adler.update(data);
 
         FileInfo info = new FileInfo();
+        info.name = file.getName();
         info.path = path;
         info.hash = adler.getValue();
         info.size = file.length();

@@ -10,9 +10,9 @@ public class SearchSettings {
     private boolean size;
     private boolean content;
 
-    private int nameDelta;
-    private int sizeDelta;
-    private int contentVolumePercent;
+    private float nameDelta;
+    private float sizeDelta;
+    private float contentVolumePercent;
 
     public boolean isName() {
         return name;
@@ -38,27 +38,27 @@ public class SearchSettings {
         this.content = content;
     }
 
-    public int getNameDelta() {
+    public float getNameDelta() {
         return nameDelta;
     }
 
-    public void setNameDelta(int nameDelta) {
+    public void setNameDelta(float nameDelta) {
         this.nameDelta = nameDelta;
     }
 
-    public int getSizeDelta() {
+    public float getSizeDelta() {
         return sizeDelta;
     }
 
-    public void setSizeDelta(int sizeDelta) {
+    public void setSizeDelta(float sizeDelta) {
         this.sizeDelta = sizeDelta;
     }
 
-    public int getContentVolumePercent() {
+    public float getContentVolumePercent() {
         return contentVolumePercent;
     }
 
-    public void setContentVolumePercent(int contentVolumePercent) {
+    public void setContentVolumePercent(float contentVolumePercent) {
         this.contentVolumePercent = contentVolumePercent;
     }
 

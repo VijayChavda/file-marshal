@@ -8,14 +8,25 @@ import info.debatty.java.stringsimilarity.JaroWinkler;
  */
 public class FileInfoComparer {
 
-    private final SearchSettings searchSettings;
+    private final SearchSettings settings;
 
     public FileInfoComparer(SearchSettings searchSettings) {
-        this.searchSettings = searchSettings;
+        this.settings = searchSettings;
     }
 
     public boolean areSame(FileInfo f1, FileInfo f2) {
-        return false;
+        boolean same = true;
+
+        if (settings.isName())
+            same = nameSimilar(f1.getName(), f2.getName(), settings.getNameDelta());
+
+        if (same && settings.isSize())
+            same = sizeSimilar(f1.getSize(), f2.getSize(), settings.getSizeDelta());
+
+        if (same && settings.isContent())
+            same = contentSimilar(f1.getHash(), f2.getHash());
+
+        return same;
     }
 
     private boolean nameSimilar(String name1, String name2, float delta) {
