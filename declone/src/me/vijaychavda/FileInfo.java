@@ -1,9 +1,9 @@
 package me.vijaychavda;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.zip.Adler32;
 
 /**
  *
@@ -11,14 +11,14 @@ import java.io.IOException;
  */
 public class FileInfo {
 
-    private final String path;
+    private String path;
     private long size;
-    private int hash;
+    private long hash;
 
-    public FileInfo(String path) {
-        this.path = path;
-        this.size = -1;
-        this.hash = -1;
+    private FileInfo() {
+        path = "";
+        size = -1;
+        hash = -1;
     }
 
     public String getPath() {
@@ -29,22 +29,26 @@ public class FileInfo {
         return size;
     }
 
-    public int getHash() {
+    public long getHash() {
         return hash;
     }
 
     public static FileInfo init(String path) throws IOException {
         File file = new File(path);
-        BufferedReader reader = new BufferedReader(new FileReader(file));
 
-        StringBuilder sb = new StringBuilder();
-        int ch;
-        while ((ch = reader.read()) != -1) {
-            sb.append(ch);
+        byte data[] = new byte[(int) file.length()];
+
+        try (FileInputStream stream = new FileInputStream(file)) {
+            //TODO:
+            while (stream.read(data) != -1);
         }
 
-        FileInfo info = new FileInfo(path);
-        info.hash = sb.toString().hashCode();
+        Adler32 adler = new Adler32();
+        adler.update(data);
+
+        FileInfo info = new FileInfo();
+        info.path = path;
+        info.hash = adler.getValue();
         info.size = file.length();
 
         return info;
