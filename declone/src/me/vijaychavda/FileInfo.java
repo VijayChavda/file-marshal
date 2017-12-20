@@ -39,7 +39,7 @@ public class FileInfo {
         byte data[] = new byte[(int) file.length()];
 
         try (FileInputStream stream = new FileInputStream(file)) {
-            //TODO:
+            //TODO: Generate hash according to settings
             while (stream.read(data) != -1);
         }
 
@@ -53,4 +53,29 @@ public class FileInfo {
 
         return info;
     }
+
+    @Override
+    public String toString() {
+        return "[" + hash + "] " + size + " " + path;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null)
+            return false;
+
+        if (!obj.getClass().equals(FileInfo.class))
+            return false;
+
+        FileInfo other = (FileInfo) obj;
+
+        //TODO: Compare FileInfos according to settings
+        return other.size == size;
+    }
+
+    @Override
+    public int hashCode() {
+        return Long.hashCode(hash);
+    }
+
 }
