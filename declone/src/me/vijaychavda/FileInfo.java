@@ -73,10 +73,7 @@ public class FileInfo {
         if (!obj.getClass().equals(FileInfo.class))
             return false;
 
-        FileInfo other = (FileInfo) obj;
-
-        //TODO: Compare FileInfos according to settings
-        return other.size == size;
+        return new FileInfoComparer().areSame(this, (FileInfo) obj);
     }
 
     @Override
