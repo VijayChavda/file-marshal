@@ -1,5 +1,7 @@
 package me.vijaychavda;
 
+import info.debatty.java.stringsimilarity.JaroWinkler;
+
 /**
  *
  * @author Vijay
@@ -16,8 +18,8 @@ public class FileInfoComparer {
         return false;
     }
 
-    private boolean nameSimilar(String name1, String name2) {
-        return false;
+    private boolean nameSimilar(String name1, String name2, float delta) {
+        return 1 - new JaroWinkler().similarity(name1, name2) <= delta;
     }
 
     private boolean sizeSimilar(long size1, long size2, float delta) {
