@@ -8,6 +8,7 @@ package me.vijaychavda.ui;
 import java.io.File;
 import java.util.ArrayList;
 import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -22,6 +23,11 @@ public class MainFrame extends javax.swing.JFrame {
      */
     public MainFrame() {
         initComponents();
+
+        B_RemoveSource.setVisible(false);
+        L_Sources.addListSelectionListener(
+                e -> B_RemoveSource.setVisible(L_Sources.getSelectedIndices().length > 0)
+        );        
     }
 
     private void getAllFiles(File directory, ArrayList<File> files) {
@@ -118,11 +124,32 @@ public class MainFrame extends javax.swing.JFrame {
 
         L_WhereDoWeLook.setText("Where do we look for duplicate files?");
 
+        T_SourcePath.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                T_SourcePathActionPerformed(evt);
+            }
+        });
+
         B_AddSource.setText("Add");
+        B_AddSource.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                B_AddSourceActionPerformed(evt);
+            }
+        });
 
         B_RemoveSource.setText("Remove selected");
+        B_RemoveSource.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                B_RemoveSourceActionPerformed(evt);
+            }
+        });
 
         B_Browse.setText("Browse");
+        B_Browse.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                B_BrowseActionPerformed(evt);
+            }
+        });
 
         B_Declone.setText("Declone");
 
@@ -556,6 +583,51 @@ public class MainFrame extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void B_AddSourceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_B_AddSourceActionPerformed
+        String path = T_SourcePath.getText();
+
+        File file = new File(path);
+        if (!file.exists()) {
+            JOptionPane.showMessageDialog(this, "This path does not exist. Please check.");
+            T_SourcePath.setText("");
+        } else if (!file.isDirectory()) {
+            JOptionPane.showMessageDialog(this, "The path is not a directory.");
+        } else {
+            DefaultListModel model = (DefaultListModel) L_Sources.getModel();
+            if (model.contains(file.getAbsolutePath()))
+                JOptionPane.showMessageDialog(this, "This source is already added.");
+            else
+                model.addElement(file.getAbsolutePath());
+        }
+    }//GEN-LAST:event_B_AddSourceActionPerformed
+
+    private void B_BrowseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_B_BrowseActionPerformed
+        FilePicker.showOpenDialog(this);
+
+        File file = FilePicker.getSelectedFile();
+
+        if (file == null)
+            return;
+
+        DefaultListModel model = (DefaultListModel) L_Sources.getModel();
+        if (model.contains(file.getAbsolutePath()))
+            JOptionPane.showMessageDialog(this, "This source is already added.");
+        else
+            model.addElement(file.getAbsolutePath());
+    }//GEN-LAST:event_B_BrowseActionPerformed
+
+    private void T_SourcePathActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_T_SourcePathActionPerformed
+        B_AddSourceActionPerformed(evt);
+    }//GEN-LAST:event_T_SourcePathActionPerformed
+
+    private void B_RemoveSourceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_B_RemoveSourceActionPerformed
+        DefaultListModel model = (DefaultListModel) L_Sources.getModel();
+
+        for (int i : L_Sources.getSelectedIndices()) {
+            model.removeElementAt(i);
+        }
+    }//GEN-LAST:event_B_RemoveSourceActionPerformed
 
     /**
      * @param args the command line arguments

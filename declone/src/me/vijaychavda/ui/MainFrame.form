@@ -191,21 +191,33 @@
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JTextField" name="T_SourcePath">
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="T_SourcePathActionPerformed"/>
+                  </Events>
                 </Component>
                 <Component class="javax.swing.JButton" name="B_AddSource">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Add"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="B_AddSourceActionPerformed"/>
+                  </Events>
                 </Component>
                 <Component class="javax.swing.JButton" name="B_RemoveSource">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Remove selected"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="B_RemoveSourceActionPerformed"/>
+                  </Events>
                 </Component>
                 <Component class="javax.swing.JButton" name="B_Browse">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Browse"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="B_BrowseActionPerformed"/>
+                  </Events>
                 </Component>
                 <Component class="javax.swing.JButton" name="B_Declone">
                   <Properties>
