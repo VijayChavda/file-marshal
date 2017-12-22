@@ -7,6 +7,7 @@ package me.vijaychavda.ui;
 
 import java.io.File;
 import java.util.ArrayList;
+import javafx.scene.control.CheckBox;
 import javax.swing.DefaultListModel;
 import javax.swing.JCheckBox;
 import javax.swing.JOptionPane;
@@ -49,6 +50,7 @@ public class MainFrame extends javax.swing.JFrame {
     private void initComponents() {
 
         FilePicker = new javax.swing.JFileChooser();
+        BG_FileSize = new javax.swing.ButtonGroup();
         P_Content = new javax.swing.JPanel();
         TabbedPane = new javax.swing.JTabbedPane();
         P_Sources = new javax.swing.JPanel();
@@ -81,14 +83,15 @@ public class MainFrame extends javax.swing.JFrame {
         CB_Medium = new javax.swing.JCheckBox();
         CB_Small = new javax.swing.JCheckBox();
         CB_AnySize = new javax.swing.JCheckBox();
-        Seperator23 = new javax.swing.JSeparator();
-        Seperator24 = new javax.swing.JSeparator();
         SP_GreaterThan = new javax.swing.JSpinner();
         L_SizeSign = new javax.swing.JLabel();
         SP_LessThan = new javax.swing.JSpinner();
         CB_GreaterThan = new javax.swing.JComboBox<>();
         CB_LessThan = new javax.swing.JComboBox<>();
         L_Info22 = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
         P_Settings = new javax.swing.JPanel();
         L_Info31 = new javax.swing.JLabel();
         Info32 = new javax.swing.JLabel();
@@ -308,25 +311,67 @@ public class MainFrame extends javax.swing.JFrame {
 
         P_FilterSize.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
+        BG_FileSize.add(CB_CustomSize);
+        CB_CustomSize.setSelected(true);
         CB_CustomSize.setText("Custom");
+        CB_CustomSize.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CB_SizeActionPerformed(evt);
+            }
+        });
 
+        BG_FileSize.add(CB_Large);
         CB_Large.setText("Large");
+        CB_Large.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CB_SizeActionPerformed(evt);
+            }
+        });
 
+        BG_FileSize.add(CB_Medium);
         CB_Medium.setText("Medium");
+        CB_Medium.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CB_SizeActionPerformed(evt);
+            }
+        });
 
+        BG_FileSize.add(CB_Small);
         CB_Small.setText("Small");
+        CB_Small.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CB_SizeActionPerformed(evt);
+            }
+        });
 
+        BG_FileSize.add(CB_AnySize);
         CB_AnySize.setText("Any");
+        CB_AnySize.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CB_SizeActionPerformed(evt);
+            }
+        });
+
+        SP_GreaterThan.setModel(new javax.swing.SpinnerNumberModel(500, 1, null, 1));
 
         L_SizeSign.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         L_SizeSign.setText("<   size   < ");
         L_SizeSign.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
-        CB_GreaterThan.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "GB", "MB", "KB" }));
+        SP_LessThan.setModel(new javax.swing.SpinnerNumberModel(1, 1, null, 1));
+
+        CB_GreaterThan.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "GB", "MB", "KB", "B" }));
+        CB_GreaterThan.setSelectedIndex(1);
 
         CB_LessThan.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "GB", "MB", "KB" }));
 
         L_Info22.setText("File size:");
+
+        jLabel1.setText("< 10 MB");
+
+        jLabel2.setText("[ 10, 100 ] MB");
+
+        jLabel3.setText("> 100 MB");
 
         javax.swing.GroupLayout P_FilterSizeLayout = new javax.swing.GroupLayout(P_FilterSize);
         P_FilterSize.setLayout(P_FilterSizeLayout);
@@ -335,24 +380,29 @@ public class MainFrame extends javax.swing.JFrame {
             .addGroup(P_FilterSizeLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(P_FilterSizeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(CB_AnySize, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(CB_Small, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(CB_Medium, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(CB_Large, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(Seperator23)
-                    .addComponent(Seperator24)
                     .addComponent(L_Info22, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(CB_CustomSize, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(P_FilterSizeLayout.createSequentialGroup()
-                        .addComponent(CB_GreaterThan, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(CB_LessThan, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(P_FilterSizeLayout.createSequentialGroup()
-                        .addComponent(SP_GreaterThan, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(P_FilterSizeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(CB_GreaterThan, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(SP_GreaterThan, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(L_SizeSign, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(SP_LessThan, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(P_FilterSizeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(CB_LessThan, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(SP_LessThan, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(P_FilterSizeLayout.createSequentialGroup()
+                        .addGroup(P_FilterSizeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(CB_Large, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(CB_Medium, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 125, Short.MAX_VALUE)
+                            .addComponent(CB_Small, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(P_FilterSizeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(CB_AnySize, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -368,30 +418,40 @@ public class MainFrame extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(CB_AnySize)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(Seperator23, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(P_FilterSizeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(CB_Small)
+                    .addComponent(jLabel1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(CB_Small)
+                .addGroup(P_FilterSizeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(CB_Medium)
+                    .addComponent(jLabel2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(CB_Medium)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(CB_Large)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(Seperator24, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(P_FilterSizeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(CB_Large)
+                    .addComponent(jLabel3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(CB_CustomSize)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(P_FilterSizeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(SP_GreaterThan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(L_SizeSign)
-                    .addComponent(SP_LessThan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(P_FilterSizeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(CB_GreaterThan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(CB_LessThan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(26, Short.MAX_VALUE))
+                .addGroup(P_FilterSizeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(P_FilterSizeLayout.createSequentialGroup()
+                        .addGroup(P_FilterSizeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                            .addComponent(SP_GreaterThan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(SP_LessThan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(P_FilterSizeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(CB_GreaterThan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(CB_LessThan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(L_SizeSign, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(58, Short.MAX_VALUE))
         );
 
-        P_FilterSizeLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {CB_GreaterThan, CB_LessThan, L_SizeSign, SP_GreaterThan, SP_LessThan});
+        P_FilterSizeLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {CB_GreaterThan, CB_LessThan, SP_GreaterThan, SP_LessThan});
+
+        P_FilterSizeLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {CB_Small, jLabel1});
+
+        P_FilterSizeLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {CB_Medium, jLabel2});
+
+        P_FilterSizeLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {CB_Large, jLabel3});
 
         javax.swing.GroupLayout P_FileOptionsLayout = new javax.swing.GroupLayout(P_FileOptions);
         P_FileOptions.setLayout(P_FileOptionsLayout);
@@ -711,6 +771,13 @@ public class MainFrame extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_CB_TypeActionPerformed
 
+    private void CB_SizeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CB_SizeActionPerformed
+        SP_GreaterThan.setEnabled(CB_CustomSize.isSelected());
+        SP_LessThan.setEnabled(CB_CustomSize.isSelected());
+        CB_GreaterThan.setEnabled(CB_CustomSize.isSelected());
+        CB_LessThan.setEnabled(CB_CustomSize.isSelected());
+    }//GEN-LAST:event_CB_SizeActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -748,6 +815,7 @@ public class MainFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.ButtonGroup BG_FileSize;
     private javax.swing.JButton B_AddSource;
     private javax.swing.JButton B_Browse;
     private javax.swing.JButton B_Declone;
@@ -805,11 +873,12 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JSeparator Seperator2;
     private javax.swing.JSeparator Seperator21;
     private javax.swing.JSeparator Seperator22;
-    private javax.swing.JSeparator Seperator23;
-    private javax.swing.JSeparator Seperator24;
     private javax.swing.JToggleButton TB_Advance;
     private javax.swing.JTextArea TB_Extensions;
     private javax.swing.JTextField T_SourcePath;
     private javax.swing.JTabbedPane TabbedPane;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     // End of variables declaration//GEN-END:variables
 }
