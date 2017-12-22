@@ -8,6 +8,7 @@ package me.vijaychavda.ui;
 import java.io.File;
 import java.util.ArrayList;
 import javax.swing.DefaultListModel;
+import javax.swing.JCheckBox;
 import javax.swing.JOptionPane;
 
 /**
@@ -26,14 +27,14 @@ public class MainFrame extends javax.swing.JFrame {
 
         B_RemoveSource.setVisible(false);
         L_Sources.addListSelectionListener(
-                e -> B_RemoveSource.setVisible(L_Sources.getSelectedIndices().length > 0)
-        );        
+            e -> B_RemoveSource.setVisible(L_Sources.getSelectedIndices().length > 0)
+        );
     }
 
-    private void getAllFiles(File directory, ArrayList<File> files) {
+    private void getAllFiles(ArrayList<File> files, File directory) {
         for (File file : directory.listFiles()) {
             if (file.isDirectory())
-                getAllFiles(file, files);
+                getAllFiles(files, file);
             files.add(file);
         }
     }
@@ -63,9 +64,9 @@ public class MainFrame extends javax.swing.JFrame {
         L_Info2 = new javax.swing.JLabel();
         P_FilterType = new javax.swing.JPanel();
         L_Info21 = new javax.swing.JLabel();
-        CB_TypeCustom = new javax.swing.JCheckBox();
+        CB_CustomType = new javax.swing.JCheckBox();
         CB_Pictures = new javax.swing.JCheckBox();
-        CB_Docs = new javax.swing.JCheckBox();
+        CB_Others = new javax.swing.JCheckBox();
         CB_Videos = new javax.swing.JCheckBox();
         CB_Audios = new javax.swing.JCheckBox();
         CB_TypeAll = new javax.swing.JCheckBox();
@@ -206,23 +207,55 @@ public class MainFrame extends javax.swing.JFrame {
 
         L_Info21.setText("File type:");
 
-        CB_TypeCustom.setText("Custom");
+        CB_CustomType.setText("Custom");
+        CB_CustomType.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CB_TypeActionPerformed(evt);
+            }
+        });
 
         CB_Pictures.setText("Pictures");
+        CB_Pictures.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CB_TypeActionPerformed(evt);
+            }
+        });
 
-        CB_Docs.setText("Documents");
+        CB_Others.setText("Others");
+        CB_Others.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CB_TypeActionPerformed(evt);
+            }
+        });
 
         CB_Videos.setText("Video");
+        CB_Videos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CB_TypeActionPerformed(evt);
+            }
+        });
 
         CB_Audios.setText("Audio");
+        CB_Audios.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CB_TypeActionPerformed(evt);
+            }
+        });
 
+        CB_TypeAll.setSelected(true);
         CB_TypeAll.setText("All");
+        CB_TypeAll.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CB_TypeActionPerformed(evt);
+            }
+        });
 
+        TB_Extensions.setEditable(false);
         TB_Extensions.setColumns(20);
         TB_Extensions.setLineWrap(true);
         TB_Extensions.setRows(3);
         TB_Extensions.setTabSize(1);
-        TB_Extensions.setText(".jpg .png .gif .mp3 .mp4");
+        TB_Extensions.setText(".*");
         TB_Extensions.setWrapStyleWord(true);
         SP_Extensions.setViewportView(TB_Extensions);
 
@@ -234,9 +267,9 @@ public class MainFrame extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(P_FilterTypeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(SP_Extensions, javax.swing.GroupLayout.DEFAULT_SIZE, 255, Short.MAX_VALUE)
-                    .addComponent(CB_TypeCustom, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(CB_CustomType, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(Seperator22)
-                    .addComponent(CB_Docs, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(CB_Others, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(CB_Pictures, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(CB_Videos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(CB_Audios, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -261,11 +294,11 @@ public class MainFrame extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(CB_Pictures)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(CB_Docs)
+                .addComponent(CB_Others)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(Seperator22, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(CB_TypeCustom)
+                .addComponent(CB_CustomType)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(SP_Extensions, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -629,6 +662,55 @@ public class MainFrame extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_B_RemoveSourceActionPerformed
 
+    private void CB_TypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CB_TypeActionPerformed
+        TB_Extensions.setText("");
+        TB_Extensions.setEditable(false);
+
+        JCheckBox cb = (JCheckBox) evt.getSource();
+
+        if (cb == CB_Audios || cb == CB_Videos || cb == CB_Pictures || cb == CB_Others) {
+            CB_TypeAll.setSelected(false);
+            CB_CustomType.setSelected(false);
+        }
+
+        if (cb == CB_TypeAll) {
+            CB_Audios.setSelected(false);
+            CB_Videos.setSelected(false);
+            CB_Pictures.setSelected(false);
+            CB_Others.setSelected(false);
+            CB_CustomType.setSelected(false);
+        }
+
+        if (cb == CB_CustomType) {
+            CB_Audios.setSelected(false);
+            CB_Videos.setSelected(false);
+            CB_Pictures.setSelected(false);
+            CB_Others.setSelected(false);
+            CB_TypeAll.setSelected(false);
+        }
+
+        if (CB_Audios.isSelected())
+            TB_Extensions.append(".aif .cda .mid .midi .mp3 .mpa .ogg .wav .wma .wpl ");
+
+        if (CB_Videos.isSelected())
+            TB_Extensions.append(".3g2 .3gp .avi .flv .m4v .mkv .mov .mp4 .mpg .mpeg .rm .swf .vob .wmv ");
+
+        if (CB_Pictures.isSelected())
+            TB_Extensions.append(".ai .bmp .gif .ico .jpeg .jpg .png .ps .psd .svg .tif .tiff ");
+
+        if (CB_Others.isSelected())
+            TB_Extensions.append(".doc .docx .odt .pdf .rtf .txt .wks .wps .wpd .ods .xlr .xls .xlsx .key .odp .pps .ppt .pptx .zip .tar.gz .rpm .7z .rar ");
+
+        if (CB_TypeAll.isSelected())
+            TB_Extensions.setText(".*");
+
+        if (CB_CustomType.isSelected()) {
+            TB_Extensions.setText("");
+            TB_Extensions.setEditable(true);
+            TB_Extensions.requestFocus();
+        }
+    }//GEN-LAST:event_CB_TypeActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -674,17 +756,17 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JCheckBox CB_Audios;
     private javax.swing.JCheckBox CB_Content;
     private javax.swing.JCheckBox CB_CustomSize;
-    private javax.swing.JCheckBox CB_Docs;
+    private javax.swing.JCheckBox CB_CustomType;
     private javax.swing.JComboBox<String> CB_GreaterThan;
     private javax.swing.JCheckBox CB_Large;
     private javax.swing.JComboBox<String> CB_LessThan;
     private javax.swing.JCheckBox CB_Medium;
     private javax.swing.JCheckBox CB_Name;
+    private javax.swing.JCheckBox CB_Others;
     private javax.swing.JCheckBox CB_Pictures;
     private javax.swing.JCheckBox CB_Size;
     private javax.swing.JCheckBox CB_Small;
     private javax.swing.JCheckBox CB_TypeAll;
-    private javax.swing.JCheckBox CB_TypeCustom;
     private javax.swing.JCheckBox CB_Videos;
     private javax.swing.JFileChooser FilePicker;
     private javax.swing.JLabel Info32;

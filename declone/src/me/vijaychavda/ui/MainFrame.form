@@ -296,9 +296,9 @@
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="SP_Extensions" pref="255" max="32767" attributes="0"/>
-                                  <Component id="CB_TypeCustom" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="CB_CustomType" alignment="0" max="32767" attributes="0"/>
                                   <Component id="Seperator22" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="CB_Docs" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="CB_Others" alignment="0" max="32767" attributes="0"/>
                                   <Component id="CB_Pictures" alignment="0" max="32767" attributes="0"/>
                                   <Component id="CB_Videos" alignment="0" max="32767" attributes="0"/>
                                   <Component id="CB_Audios" alignment="0" max="32767" attributes="0"/>
@@ -326,11 +326,11 @@
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="CB_Pictures" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="CB_Docs" min="-2" max="-2" attributes="0"/>
+                              <Component id="CB_Others" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="Seperator22" min="-2" pref="10" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="CB_TypeCustom" min="-2" max="-2" attributes="0"/>
+                              <Component id="CB_CustomType" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="SP_Extensions" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
@@ -344,35 +344,54 @@
                         <Property name="text" type="java.lang.String" value="File type:"/>
                       </Properties>
                     </Component>
-                    <Component class="javax.swing.JCheckBox" name="CB_TypeCustom">
+                    <Component class="javax.swing.JCheckBox" name="CB_CustomType">
                       <Properties>
                         <Property name="text" type="java.lang.String" value="Custom"/>
                       </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="CB_TypeActionPerformed"/>
+                      </Events>
                     </Component>
                     <Component class="javax.swing.JCheckBox" name="CB_Pictures">
                       <Properties>
                         <Property name="text" type="java.lang.String" value="Pictures"/>
                       </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="CB_TypeActionPerformed"/>
+                      </Events>
                     </Component>
-                    <Component class="javax.swing.JCheckBox" name="CB_Docs">
+                    <Component class="javax.swing.JCheckBox" name="CB_Others">
                       <Properties>
-                        <Property name="text" type="java.lang.String" value="Documents"/>
+                        <Property name="text" type="java.lang.String" value="Others"/>
                       </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="CB_TypeActionPerformed"/>
+                      </Events>
                     </Component>
                     <Component class="javax.swing.JCheckBox" name="CB_Videos">
                       <Properties>
                         <Property name="text" type="java.lang.String" value="Video"/>
                       </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="CB_TypeActionPerformed"/>
+                      </Events>
                     </Component>
                     <Component class="javax.swing.JCheckBox" name="CB_Audios">
                       <Properties>
                         <Property name="text" type="java.lang.String" value="Audio"/>
                       </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="CB_TypeActionPerformed"/>
+                      </Events>
                     </Component>
                     <Component class="javax.swing.JCheckBox" name="CB_TypeAll">
                       <Properties>
+                        <Property name="selected" type="boolean" value="true"/>
                         <Property name="text" type="java.lang.String" value="All"/>
                       </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="CB_TypeActionPerformed"/>
+                      </Events>
                     </Component>
                     <Container class="javax.swing.JScrollPane" name="SP_Extensions">
                       <AuxValues>
@@ -383,11 +402,12 @@
                       <SubComponents>
                         <Component class="javax.swing.JTextArea" name="TB_Extensions">
                           <Properties>
+                            <Property name="editable" type="boolean" value="false"/>
                             <Property name="columns" type="int" value="20"/>
                             <Property name="lineWrap" type="boolean" value="true"/>
                             <Property name="rows" type="int" value="3"/>
                             <Property name="tabSize" type="int" value="1"/>
-                            <Property name="text" type="java.lang.String" value=".jpg .png .gif .mp3 .mp4"/>
+                            <Property name="text" type="java.lang.String" value=".*"/>
                             <Property name="wrapStyleWord" type="boolean" value="true"/>
                           </Properties>
                         </Component>
