@@ -66,7 +66,7 @@
     <AuxValue name="FormSettings_listenerGenerationStyle" type="java.lang.Integer" value="0"/>
     <AuxValue name="FormSettings_variablesLocal" type="java.lang.Boolean" value="false"/>
     <AuxValue name="FormSettings_variablesModifier" type="java.lang.Integer" value="2"/>
-    <AuxValue name="designerSize" type="java.awt.Dimension" value="-84,-19,0,5,115,114,0,18,106,97,118,97,46,97,119,116,46,68,105,109,101,110,115,105,111,110,65,-114,-39,-41,-84,95,68,20,2,0,2,73,0,6,104,101,105,103,104,116,73,0,5,119,105,100,116,104,120,112,0,0,2,44,0,0,2,78"/>
+    <AuxValue name="designerSize" type="java.awt.Dimension" value="-84,-19,0,5,115,114,0,18,106,97,118,97,46,97,119,116,46,68,105,109,101,110,115,105,111,110,65,-114,-39,-41,-84,95,68,20,2,0,2,73,0,6,104,101,105,103,104,116,73,0,5,119,105,100,116,104,120,112,0,0,1,-20,0,0,2,90"/>
   </AuxValues>
 
   <Layout class="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout"/>
@@ -108,8 +108,8 @@
               </Properties>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
-                  <JTabbedPaneConstraints tabName="Basic options">
-                    <Property name="tabTitle" type="java.lang.String" value="Basic options"/>
+                  <JTabbedPaneConstraints tabName="Sources">
+                    <Property name="tabTitle" type="java.lang.String" value="Sources"/>
                   </JTabbedPaneConstraints>
                 </Constraint>
               </Constraints>
@@ -127,18 +127,13 @@
                               </Group>
                               <Component id="S_Sources" max="32767" attributes="0"/>
                               <Group type="102" alignment="0" attributes="0">
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Group type="102" attributes="0">
-                                          <Component id="L_WhereDoWeLook" min="-2" max="-2" attributes="0"/>
-                                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                                      </Group>
-                                      <Component id="T_SourcePath" max="32767" attributes="0"/>
-                                  </Group>
+                                  <Component id="T_SourcePath" max="32767" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Component id="B_AddSource" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Component id="B_Browse" min="-2" max="-2" attributes="0"/>
                               </Group>
+                              <Component id="L_WhereDoWeLook" pref="588" max="32767" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                       </Group>
@@ -147,22 +142,22 @@
                 <DimensionLayout dim="1">
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="1" attributes="0">
-                          <EmptySpace max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
                           <Component id="L_WhereDoWeLook" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="T_SourcePath" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="B_AddSource" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="B_Browse" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
-                          <Component id="S_Sources" min="-2" pref="373" max="-2" attributes="0"/>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="B_Declone" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="B_RemoveSource" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="S_Sources" pref="282" max="32767" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="B_RemoveSource" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="B_Declone" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace max="32767" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -234,8 +229,8 @@
               </Properties>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
-                  <JTabbedPaneConstraints tabName="File options">
-                    <Property name="tabTitle" type="java.lang.String" value="File options"/>
+                  <JTabbedPaneConstraints tabName="File select">
+                    <Property name="tabTitle" type="java.lang.String" value="File select"/>
                   </JTabbedPaneConstraints>
                 </Constraint>
               </Constraints>
@@ -244,28 +239,28 @@
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="1" attributes="0">
-                          <EmptySpace min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="1" attributes="0">
                               <Component id="L_Info2" max="32767" attributes="0"/>
-                              <Group type="102" attributes="0">
-                                  <Component id="P_FilterType" linkSize="7" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace type="separate" max="32767" attributes="0"/>
+                              <Group type="102" alignment="1" attributes="0">
+                                  <Component id="P_FilterType" linkSize="18" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
                                   <Component id="Seperator2" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace type="separate" max="32767" attributes="0"/>
-                                  <Component id="P_FilterSize" linkSize="7" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="P_FilterSize" linkSize="18" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace pref="6" max="32767" attributes="0"/>
                               </Group>
                           </Group>
-                          <EmptySpace min="-2" pref="0" max="-2" attributes="0"/>
+                          <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
                 <DimensionLayout dim="1">
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
                           <Component id="L_Info2" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
                               <Component id="Seperator2" max="32767" attributes="0"/>
                               <Component id="P_FilterType" linkSize="8" max="32767" attributes="0"/>
@@ -279,7 +274,7 @@
               <SubComponents>
                 <Component class="javax.swing.JLabel" name="L_Info2">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="Specify what type of files should be checked for duplicates?"/>
+                    <Property name="text" type="java.lang.String" value="Which files from the sources should be checked for duplicates?"/>
                   </Properties>
                 </Component>
                 <Container class="javax.swing.JPanel" name="P_FilterType">
@@ -297,7 +292,7 @@
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="SP_Extensions" pref="255" max="32767" attributes="0"/>
+                                  <Component id="SP_Extensions" pref="273" max="32767" attributes="0"/>
                                   <Component id="CB_CustomType" alignment="0" max="32767" attributes="0"/>
                                   <Component id="Seperator22" alignment="0" max="32767" attributes="0"/>
                                   <Component id="CB_Others" alignment="0" max="32767" attributes="0"/>
@@ -448,9 +443,9 @@
                                           <Component id="CB_GreaterThan" linkSize="10" alignment="0" min="-2" pref="70" max="-2" attributes="0"/>
                                           <Component id="SP_GreaterThan" linkSize="10" alignment="0" min="-2" pref="75" max="-2" attributes="0"/>
                                       </Group>
-                                      <EmptySpace max="32767" attributes="0"/>
+                                      <EmptySpace pref="15" max="32767" attributes="0"/>
                                       <Component id="L_SizeSign" min="-2" pref="93" max="-2" attributes="0"/>
-                                      <EmptySpace max="32767" attributes="0"/>
+                                      <EmptySpace pref="15" max="32767" attributes="0"/>
                                       <Group type="103" groupAlignment="0" attributes="0">
                                           <Component id="CB_LessThan" linkSize="11" alignment="1" min="-2" pref="70" max="-2" attributes="0"/>
                                           <Component id="SP_LessThan" linkSize="11" alignment="1" min="-2" pref="75" max="-2" attributes="0"/>
@@ -459,7 +454,7 @@
                                   <Group type="102" alignment="0" attributes="0">
                                       <Group type="103" groupAlignment="1" max="-2" attributes="0">
                                           <Component id="CB_Large" alignment="0" max="32767" attributes="0"/>
-                                          <Component id="CB_Medium" alignment="0" pref="125" max="32767" attributes="0"/>
+                                          <Component id="CB_Medium" alignment="0" max="32767" attributes="0"/>
                                           <Component id="CB_Small" alignment="0" max="32767" attributes="0"/>
                                       </Group>
                                       <EmptySpace max="-2" attributes="0"/>
@@ -657,8 +652,8 @@
               </Properties>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
-                  <JTabbedPaneConstraints tabName="Settings">
-                    <Property name="tabTitle" type="java.lang.String" value="Settings"/>
+                  <JTabbedPaneConstraints tabName="Options">
+                    <Property name="tabTitle" type="java.lang.String" value="Options"/>
                   </JTabbedPaneConstraints>
                 </Constraint>
               </Constraints>
@@ -676,16 +671,14 @@
                                   <EmptySpace max="32767" attributes="0"/>
                                   <Component id="TB_Advance" min="-2" max="-2" attributes="0"/>
                               </Group>
-                              <Group type="102" attributes="0">
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="CB_Name" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      <Component id="CB_Size" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      <Group type="102" alignment="0" attributes="0">
-                                          <Component id="CB_Content" min="-2" max="-2" attributes="0"/>
-                                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                                          <Component id="L_Info33" min="-2" max="-2" attributes="0"/>
-                                      </Group>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                                      <Component id="CB_Name" alignment="0" max="32767" attributes="0"/>
+                                      <Component id="CB_Size" alignment="0" max="32767" attributes="0"/>
+                                      <Component id="CB_Content" alignment="0" max="32767" attributes="0"/>
                                   </Group>
+                                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                                  <Component id="L_Info33" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                               </Group>
                           </Group>
@@ -696,9 +689,9 @@
                 <DimensionLayout dim="1">
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
                           <Component id="L_Info31" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
                           <Component id="Info32" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="CB_Name" min="-2" max="-2" attributes="0"/>
@@ -721,7 +714,7 @@
               <SubComponents>
                 <Component class="javax.swing.JLabel" name="L_Info31">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="Specify what type of files should be checked for duplicates?"/>
+                    <Property name="text" type="java.lang.String" value="How should files be compared?"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="Info32">
@@ -731,21 +724,33 @@
                 </Component>
                 <Component class="javax.swing.JCheckBox" name="CB_Name">
                   <Properties>
+                    <Property name="selected" type="boolean" value="true"/>
                     <Property name="text" type="java.lang.String" value="Name"/>
                     <Property name="opaque" type="boolean" value="false"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="CB_AdvanceActionPerformed"/>
+                  </Events>
                 </Component>
                 <Component class="javax.swing.JCheckBox" name="CB_Size">
                   <Properties>
+                    <Property name="selected" type="boolean" value="true"/>
                     <Property name="text" type="java.lang.String" value="Size"/>
                     <Property name="opaque" type="boolean" value="false"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="CB_AdvanceActionPerformed"/>
+                  </Events>
                 </Component>
                 <Component class="javax.swing.JCheckBox" name="CB_Content">
                   <Properties>
+                    <Property name="selected" type="boolean" value="true"/>
                     <Property name="text" type="java.lang.String" value="Content"/>
                     <Property name="opaque" type="boolean" value="false"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="CB_AdvanceActionPerformed"/>
+                  </Events>
                 </Component>
                 <Component class="javax.swing.JLabel" name="L_Info33">
                   <Properties>
@@ -754,8 +759,11 @@
                 </Component>
                 <Component class="javax.swing.JToggleButton" name="TB_Advance">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="Advance settings"/>
+                    <Property name="text" type="java.lang.String" value="Enable Advance settings"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="TB_AdvanceActionPerformed"/>
+                  </Events>
                 </Component>
                 <Container class="javax.swing.JPanel" name="P_AdvanceSettings">
 
@@ -825,6 +833,7 @@
                         <Property name="snapToTicks" type="boolean" value="true"/>
                         <Property name="toolTipText" type="java.lang.String" value="100% =&gt; Names should be exactly same."/>
                         <Property name="value" type="int" value="70"/>
+                        <Property name="enabled" type="boolean" value="false"/>
                       </Properties>
                     </Component>
                     <Component class="javax.swing.JLabel" name="L_AdSize">
@@ -842,6 +851,7 @@
                         <Property name="snapToTicks" type="boolean" value="true"/>
                         <Property name="toolTipText" type="java.lang.String" value="100% =&gt; Sizes should be exactly same."/>
                         <Property name="value" type="int" value="90"/>
+                        <Property name="enabled" type="boolean" value="false"/>
                       </Properties>
                     </Component>
                     <Component class="javax.swing.JLabel" name="L_Content">
@@ -859,6 +869,7 @@
                         <Property name="snapToTicks" type="boolean" value="true"/>
                         <Property name="toolTipText" type="java.lang.String" value="100% =&gt; Entire file will be scanned for content."/>
                         <Property name="value" type="int" value="30"/>
+                        <Property name="enabled" type="boolean" value="false"/>
                       </Properties>
                     </Component>
                   </SubComponents>

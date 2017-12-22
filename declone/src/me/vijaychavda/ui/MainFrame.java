@@ -170,41 +170,38 @@ public class MainFrame extends javax.swing.JFrame {
                         .addComponent(B_Declone))
                     .addComponent(S_Sources)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, P_SourcesLayout.createSequentialGroup()
-                        .addGroup(P_SourcesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(P_SourcesLayout.createSequentialGroup()
-                                .addComponent(L_WhereDoWeLook)
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addComponent(T_SourcePath))
+                        .addComponent(T_SourcePath)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(B_AddSource)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(B_Browse)))
+                        .addComponent(B_Browse))
+                    .addComponent(L_WhereDoWeLook, javax.swing.GroupLayout.DEFAULT_SIZE, 588, Short.MAX_VALUE))
                 .addContainerGap())
         );
         P_SourcesLayout.setVerticalGroup(
             P_SourcesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, P_SourcesLayout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(15, 15, 15)
                 .addComponent(L_WhereDoWeLook)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(30, 30, 30)
                 .addGroup(P_SourcesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(T_SourcePath, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(B_AddSource)
                     .addComponent(B_Browse))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(S_Sources, javax.swing.GroupLayout.PREFERRED_SIZE, 373, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(P_SourcesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(B_Declone)
-                    .addComponent(B_RemoveSource))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(S_Sources, javax.swing.GroupLayout.DEFAULT_SIZE, 282, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(P_SourcesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(B_RemoveSource)
+                    .addComponent(B_Declone))
+                .addContainerGap())
         );
 
-        TabbedPane.addTab("Basic options", P_Sources);
+        TabbedPane.addTab("Sources", P_Sources);
 
         P_FileOptions.setOpaque(false);
 
-        L_Info2.setText("Specify what type of files should be checked for duplicates?");
+        L_Info2.setText("Which files from the sources should be checked for duplicates?");
 
         P_FilterType.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
@@ -269,7 +266,7 @@ public class MainFrame extends javax.swing.JFrame {
             .addGroup(P_FilterTypeLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(P_FilterTypeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(SP_Extensions, javax.swing.GroupLayout.DEFAULT_SIZE, 255, Short.MAX_VALUE)
+                    .addComponent(SP_Extensions, javax.swing.GroupLayout.DEFAULT_SIZE, 273, Short.MAX_VALUE)
                     .addComponent(CB_CustomType, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(Seperator22)
                     .addComponent(CB_Others, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -386,16 +383,16 @@ public class MainFrame extends javax.swing.JFrame {
                         .addGroup(P_FilterSizeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(CB_GreaterThan, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(SP_GreaterThan, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
                         .addComponent(L_SizeSign, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
                         .addGroup(P_FilterSizeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(CB_LessThan, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(SP_LessThan, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(P_FilterSizeLayout.createSequentialGroup()
                         .addGroup(P_FilterSizeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(CB_Large, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(CB_Medium, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 125, Short.MAX_VALUE)
+                            .addComponent(CB_Medium, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(CB_Small, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(P_FilterSizeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -463,11 +460,11 @@ public class MainFrame extends javax.swing.JFrame {
                     .addComponent(L_Info2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(P_FileOptionsLayout.createSequentialGroup()
                         .addComponent(P_FilterType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(Seperator2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(P_FilterSize, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(6, 6, 6)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 6, Short.MAX_VALUE)))
                 .addGap(0, 0, 0))
         );
 
@@ -476,9 +473,9 @@ public class MainFrame extends javax.swing.JFrame {
         P_FileOptionsLayout.setVerticalGroup(
             P_FileOptionsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(P_FileOptionsLayout.createSequentialGroup()
-                .addGap(24, 24, 24)
+                .addGap(15, 15, 15)
                 .addComponent(L_Info2)
-                .addGap(18, 18, 18)
+                .addGap(30, 30, 30)
                 .addGroup(P_FileOptionsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(Seperator2)
                     .addComponent(P_FilterType, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -488,26 +485,49 @@ public class MainFrame extends javax.swing.JFrame {
 
         P_FileOptionsLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {P_FilterSize, P_FilterType});
 
-        TabbedPane.addTab("File options", P_FileOptions);
+        TabbedPane.addTab("File select", P_FileOptions);
 
         P_Settings.setOpaque(false);
 
-        L_Info31.setText("Specify what type of files should be checked for duplicates?");
+        L_Info31.setText("How should files be compared?");
 
         Info32.setText("Parameters:");
 
+        CB_Name.setSelected(true);
         CB_Name.setText("Name");
         CB_Name.setOpaque(false);
+        CB_Name.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CB_AdvanceActionPerformed(evt);
+            }
+        });
 
+        CB_Size.setSelected(true);
         CB_Size.setText("Size");
         CB_Size.setOpaque(false);
+        CB_Size.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CB_AdvanceActionPerformed(evt);
+            }
+        });
 
+        CB_Content.setSelected(true);
         CB_Content.setText("Content");
         CB_Content.setOpaque(false);
+        CB_Content.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CB_AdvanceActionPerformed(evt);
+            }
+        });
 
         L_Info33.setText("(Slow for large files)");
 
-        TB_Advance.setText("Advance settings");
+        TB_Advance.setText("Enable Advance settings");
+        TB_Advance.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                TB_AdvanceActionPerformed(evt);
+            }
+        });
 
         L_AdName.setText("Name similarity:");
 
@@ -519,6 +539,7 @@ public class MainFrame extends javax.swing.JFrame {
         SL_Name.setSnapToTicks(true);
         SL_Name.setToolTipText("100% => Names should be exactly same.");
         SL_Name.setValue(70);
+        SL_Name.setEnabled(false);
 
         L_AdSize.setText("Size similarity:");
 
@@ -530,6 +551,7 @@ public class MainFrame extends javax.swing.JFrame {
         SL_Size.setSnapToTicks(true);
         SL_Size.setToolTipText("100% => Sizes should be exactly same.");
         SL_Size.setValue(90);
+        SL_Size.setEnabled(false);
 
         L_Content.setText("Content volume:");
 
@@ -541,6 +563,7 @@ public class MainFrame extends javax.swing.JFrame {
         SL_Content.setSnapToTicks(true);
         SL_Content.setToolTipText("100% => Entire file will be scanned for content.");
         SL_Content.setValue(30);
+        SL_Content.setEnabled(false);
 
         javax.swing.GroupLayout P_AdvanceSettingsLayout = new javax.swing.GroupLayout(P_AdvanceSettings);
         P_AdvanceSettings.setLayout(P_AdvanceSettingsLayout);
@@ -600,22 +623,21 @@ public class MainFrame extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(TB_Advance))
                     .addGroup(P_SettingsLayout.createSequentialGroup()
-                        .addGroup(P_SettingsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(CB_Name)
-                            .addComponent(CB_Size)
-                            .addGroup(P_SettingsLayout.createSequentialGroup()
-                                .addComponent(CB_Content)
-                                .addGap(18, 18, 18)
-                                .addComponent(L_Info33)))
+                        .addGroup(P_SettingsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(CB_Name, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(CB_Size, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(CB_Content, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(18, 18, 18)
+                        .addComponent(L_Info33)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         P_SettingsLayout.setVerticalGroup(
             P_SettingsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(P_SettingsLayout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(15, 15, 15)
                 .addComponent(L_Info31)
-                .addGap(33, 33, 33)
+                .addGap(30, 30, 30)
                 .addComponent(Info32)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(CB_Name)
@@ -632,7 +654,7 @@ public class MainFrame extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        TabbedPane.addTab("Settings", P_Settings);
+        TabbedPane.addTab("Options", P_Settings);
 
         javax.swing.GroupLayout P_ContentLayout = new javax.swing.GroupLayout(P_Content);
         P_Content.setLayout(P_ContentLayout);
@@ -749,6 +771,15 @@ public class MainFrame extends javax.swing.JFrame {
             CB_TypeAll.setSelected(false);
         }
 
+        if (!CB_TypeAll.isSelected()
+            && !CB_Audios.isSelected()
+            && !CB_Videos.isSelected()
+            && !CB_Pictures.isSelected()
+            && !CB_Others.isSelected()
+            && !CB_CustomType.isSelected()) {
+            CB_TypeAll.setSelected(true);
+        }
+
         if (CB_Audios.isSelected())
             TB_Extensions.append(".aif .cda .mid .midi .mp3 .mpa .ogg .wav .wma .wpl ");
 
@@ -777,6 +808,18 @@ public class MainFrame extends javax.swing.JFrame {
         CB_GreaterThan.setEnabled(CB_CustomSize.isSelected());
         CB_LessThan.setEnabled(CB_CustomSize.isSelected());
     }//GEN-LAST:event_CB_SizeActionPerformed
+
+    private void TB_AdvanceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TB_AdvanceActionPerformed
+        SL_Name.setEnabled(TB_Advance.isSelected());
+        SL_Size.setEnabled(TB_Advance.isSelected());
+        SL_Content.setEnabled(TB_Advance.isSelected());
+        TB_Advance.setText(TB_Advance.isSelected() ? "Disable Advance settings" : "Enable Advance settings");
+    }//GEN-LAST:event_TB_AdvanceActionPerformed
+
+    private void CB_AdvanceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CB_AdvanceActionPerformed
+        if (!CB_Name.isSelected() && !CB_Size.isSelected() && !CB_Content.isSelected())
+            CB_Size.setSelected(true);
+    }//GEN-LAST:event_CB_AdvanceActionPerformed
 
     /**
      * @param args the command line arguments
