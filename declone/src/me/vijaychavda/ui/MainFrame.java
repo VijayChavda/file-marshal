@@ -6,10 +6,16 @@
 package me.vijaychavda.ui;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.JCheckBox;
 import javax.swing.JOptionPane;
+import me.vijaychavda.AppContext;
+import me.vijaychavda.FileInfo;
+import me.vijaychavda.SearchSettings;
 
 /**
  *
@@ -17,7 +23,13 @@ import javax.swing.JOptionPane;
  */
 public class MainFrame extends javax.swing.JFrame {
 
-    private ArrayList<File> inputFiles = new ArrayList<>();
+    private static final long _1GB = 1073741824L;
+    private static final long _1MB = 1048576L;
+    private static final long _1KB = 1024L;
+
+    private final ArrayList<File> inputFiles = new ArrayList<>();
+
+    long customLowerSize, customUpperSize, sizeLowerLimit, sizeUpperLimit;
 
     /**
      * Creates new form MainFrame
@@ -45,35 +57,6 @@ public class MainFrame extends javax.swing.JFrame {
 
     private boolean trySelectFile(File file) {
         String name = file.getName();
-
-        final long _1GB = 1073741824L;
-        final long _1MB = 1048576L;
-        final long _1KB = 1024L;
-
-        long customLowerSize = (long) SP_GreaterThan.getValue()
-            * (CB_GreaterThan.getSelectedIndex() == 0 ? _1GB
-            : CB_GreaterThan.getSelectedIndex() == 1 ? _1MB
-            : CB_GreaterThan.getSelectedIndex() == 2 ? _1KB : 1L);
-
-        long customUpperSize = (long) SP_LessThan.getValue()
-            * (CB_LessThan.getSelectedIndex() == 0 ? _1GB
-            : CB_LessThan.getSelectedIndex() == 1 ? _1MB
-            : CB_LessThan.getSelectedIndex() == 2 ? _1KB : 1L);
-
-        long sizeLowerLimit
-            = CB_Small.isSelected() || CB_AnySize.isSelected() ? 0L
-            : CB_Medium.isSelected() ? 10L * _1MB
-            : CB_Large.isSelected() ? 100L * _1MB
-            : customLowerSize;
-
-        long sizeUpperLimit
-            = CB_Small.isSelected() ? 10L * _1MB
-            : CB_Medium.isSelected() ? 100L * _1MB
-            : CB_Large.isSelected() || CB_AnySize.isSelected() ? Long.MAX_VALUE
-            : customUpperSize;
-
-        System.out.println(sizeLowerLimit);
-        System.out.println(sizeUpperLimit);
 
         if (file.length() < sizeLowerLimit || file.length() > sizeUpperLimit)
             return false;
@@ -884,14 +867,50 @@ public class MainFrame extends javax.swing.JFrame {
     private void B_DecloneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_B_DecloneActionPerformed
         inputFiles.clear();
 
+        customLowerSize = (long) SP_GreaterThan.getValue()
+            * (CB_GreaterThan.getSelectedIndex() == 0 ? _1GB
+            : CB_GreaterThan.getSelectedIndex() == 1 ? _1MB
+            : CB_GreaterThan.getSelectedIndex() == 2 ? _1KB : 1L);
+
+        customUpperSize = (long) SP_LessThan.getValue()
+            * (CB_LessThan.getSelectedIndex() == 0 ? _1GB
+            : CB_LessThan.getSelectedIndex() == 1 ? _1MB
+            : CB_LessThan.getSelectedIndex() == 2 ? _1KB : 1L);
+
+        sizeLowerLimit
+            = CB_Small.isSelected() || CB_AnySize.isSelected() ? 0L
+            : CB_Medium.isSelected() ? 10L * _1MB
+            : CB_Large.isSelected() ? 100L * _1MB
+            : customLowerSize;
+
+        sizeUpperLimit
+            = CB_Small.isSelected() ? 10L * _1MB
+            : CB_Medium.isSelected() ? 100L * _1MB
+            : CB_Large.isSelected() || CB_AnySize.isSelected() ? Long.MAX_VALUE
+            : customUpperSize;
+
         DefaultListModel model = (DefaultListModel) L_Sources.getModel();
         for (Object source : model.toArray()) {
             File directory = new File(source.toString());
             getAllFiles(inputFiles, directory);
         }
 
+        SearchSettings settings = AppContext.getSettings();
+        settings.setName(CB_Name.isSelected());
+        settings.setSize(CB_Size.isSelected());
+        settings.setContent(CB_Content.isSelected());
+        settings.setNameDelta(1 - (SL_Name.getValue() / 100F));
+        settings.setSizeDelta(1 - (SL_Size.getValue() / 100F));
+        settings.setContentVolumePercent(SL_Content.getValue() / 100F);
+
+        ArrayList<FileInfo> fileInfos = new ArrayList<>();
         for (File inputFile : inputFiles) {
-            System.out.println("[" + inputFile.length() + "] - " + inputFile.getAbsoluteFile());
+            String path = inputFile.getPath();
+            try {
+                fileInfos.add(FileInfo.init(path));
+            } catch (IOException ex) {
+                Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }//GEN-LAST:event_B_DecloneActionPerformed
 
