@@ -6,10 +6,10 @@ package me.vijaychavda;
  */
 public class AppContext {
 
-    private static SearchSettings settings;
+    private static final SearchSettings settings = new SearchSettings();
 
-    public AppContext() {
-        settings = new SearchSettings();
+    private AppContext() {
+
     }
 
     public static SearchSettings getSettings() {
