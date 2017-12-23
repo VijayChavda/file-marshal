@@ -7,7 +7,6 @@ package me.vijaychavda.ui;
 
 import java.io.File;
 import java.util.ArrayList;
-import javafx.scene.control.CheckBox;
 import javax.swing.DefaultListModel;
 import javax.swing.JCheckBox;
 import javax.swing.JOptionPane;
@@ -34,10 +33,66 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void getAllFiles(ArrayList<File> files, File directory) {
         for (File file : directory.listFiles()) {
-            if (file.isDirectory())
+            if (file.isDirectory()) {
                 getAllFiles(files, file);
-            files.add(file);
+                continue;
+            }
+
+            if (trySelectFile(file))
+                files.add(file);
         }
+    }
+
+    private boolean trySelectFile(File file) {
+        String name = file.getName();
+
+        final long _1GB = 1073741824L;
+        final long _1MB = 1048576L;
+        final long _1KB = 1024L;
+
+        long customLowerSize = (long) SP_GreaterThan.getValue()
+            * (CB_GreaterThan.getSelectedIndex() == 0 ? _1GB
+            : CB_GreaterThan.getSelectedIndex() == 1 ? _1MB
+            : CB_GreaterThan.getSelectedIndex() == 2 ? _1KB : 1L);
+
+        long customUpperSize = (long) SP_LessThan.getValue()
+            * (CB_LessThan.getSelectedIndex() == 0 ? _1GB
+            : CB_LessThan.getSelectedIndex() == 1 ? _1MB
+            : CB_LessThan.getSelectedIndex() == 2 ? _1KB : 1L);
+
+        long sizeLowerLimit
+            = CB_Small.isSelected() || CB_AnySize.isSelected() ? 0L
+            : CB_Medium.isSelected() ? 10L * _1MB
+            : CB_Large.isSelected() ? 100L * _1MB
+            : customLowerSize;
+
+        long sizeUpperLimit
+            = CB_Small.isSelected() ? 10L * _1MB
+            : CB_Medium.isSelected() ? 100L * _1MB
+            : CB_Large.isSelected() || CB_AnySize.isSelected() ? Long.MAX_VALUE
+            : customUpperSize;
+
+        System.out.println(sizeLowerLimit);
+        System.out.println(sizeUpperLimit);
+
+        if (file.length() < sizeLowerLimit || file.length() > sizeUpperLimit)
+            return false;
+
+        if (CB_TypeAll.isSelected())
+            return true;
+
+        int doti = name.lastIndexOf('.');
+        if (doti == -1)
+            return true;
+
+        String ext = name.substring(doti, name.length());
+
+        String[] extensions = TB_Extensions.getText().split(" ");
+        for (String extension : extensions) {
+            if (extension.equals(ext))
+                return true;
+        }
+        return false;
     }
 
     /**
@@ -156,6 +211,11 @@ public class MainFrame extends javax.swing.JFrame {
         });
 
         B_Declone.setText("Declone");
+        B_Declone.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                B_DecloneActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout P_SourcesLayout = new javax.swing.GroupLayout(P_Sources);
         P_Sources.setLayout(P_SourcesLayout);
@@ -349,18 +409,18 @@ public class MainFrame extends javax.swing.JFrame {
             }
         });
 
-        SP_GreaterThan.setModel(new javax.swing.SpinnerNumberModel(500, 1, null, 1));
+        SP_GreaterThan.setModel(new javax.swing.SpinnerNumberModel(500L, 1L, null, 1L));
 
         L_SizeSign.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         L_SizeSign.setText("<   size   < ");
         L_SizeSign.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
-        SP_LessThan.setModel(new javax.swing.SpinnerNumberModel(1, 1, null, 1));
+        SP_LessThan.setModel(new javax.swing.SpinnerNumberModel(1L, 1L, null, 1L));
 
         CB_GreaterThan.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "GB", "MB", "KB", "B" }));
         CB_GreaterThan.setSelectedIndex(1);
 
-        CB_LessThan.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "GB", "MB", "KB" }));
+        CB_LessThan.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "GB", "MB", "KB", "B" }));
 
         L_Info22.setText("File size:");
 
@@ -820,6 +880,20 @@ public class MainFrame extends javax.swing.JFrame {
         if (!CB_Name.isSelected() && !CB_Size.isSelected() && !CB_Content.isSelected())
             CB_Size.setSelected(true);
     }//GEN-LAST:event_CB_AdvanceActionPerformed
+
+    private void B_DecloneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_B_DecloneActionPerformed
+        inputFiles.clear();
+
+        DefaultListModel model = (DefaultListModel) L_Sources.getModel();
+        for (Object source : model.toArray()) {
+            File directory = new File(source.toString());
+            getAllFiles(inputFiles, directory);
+        }
+
+        for (File inputFile : inputFiles) {
+            System.out.println("[" + inputFile.length() + "] - " + inputFile.getAbsoluteFile());
+        }
+    }//GEN-LAST:event_B_DecloneActionPerformed
 
     /**
      * @param args the command line arguments
