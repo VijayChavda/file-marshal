@@ -3,7 +3,11 @@ package me.vijaychavda;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.text.MessageFormat;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.zip.Adler32;
+import org.apache.commons.lang3.SerializationUtils;
 
 /**
  *
@@ -40,16 +44,60 @@ public class FileInfo {
 
     public static FileInfo init(String path) throws IOException {
         File file = new File(path);
+        Adler32 adler = new Adler32();
 
-        byte data[] = new byte[(int) file.length()];
+        int partScanLength = 1048576;
+        long totalLength = file.length();
 
-        try (FileInputStream stream = new FileInputStream(file)) {
-            //TODO: Generate hash according to settings
-            while (stream.read(data) != -1);
+        if (totalLength < partScanLength) {
+            byte data[] = new byte[(int) totalLength];
+
+            try (FileInputStream stream = new FileInputStream(file)) {
+                while (stream.read(data) != -1);
+            }
+
+            adler.update(data);
+
+            FileInfo info = new FileInfo();
+            info.path = path;
+            info.hash = adler.getValue();
+            info.size = file.length();
+
+            return info;
         }
 
-        Adler32 adler = new Adler32();
-        adler.update(data);
+        double scanPercent = AppContext.getSettings().getContentVolumePercent();
+        long scanLength = Math.round(totalLength * scanPercent);
+        long partitions = scanLength / partScanLength;
+        long partLength = totalLength / partitions;
+        long skipLength = partLength - partScanLength;
+        if (scanPercent != 1d)
+            System.out.println("\t" + (MessageFormat.format(
+                "Skipping {0} and scanning {1} bytes. In total, scanning {2} out of {3} bytes ({4}%).",
+                skipLength, partScanLength, scanLength, totalLength, scanPercent * 100))
+            );
+
+        HashSet<Long> partialHashes = new HashSet<>();
+        try (FileInputStream stream = new FileInputStream(file)) {
+            byte data[] = new byte[partScanLength];
+
+            long scanned = 0;
+            while (scanned < scanLength) {
+                if (stream.read(data) == -1)
+                    break;
+
+                adler.update(data);
+                partialHashes.add(adler.getValue());
+
+                if (scanPercent != 1d)
+                    stream.skip(skipLength);
+
+                scanned += partScanLength;
+            }
+        }
+
+        byte[] hashBytes = SerializationUtils.serialize(partialHashes);
+        adler.update(hashBytes);
 
         FileInfo info = new FileInfo();
         info.name = file.getName();

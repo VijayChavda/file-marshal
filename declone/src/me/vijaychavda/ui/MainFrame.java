@@ -898,7 +898,7 @@ public class MainFrame extends javax.swing.JFrame {
             System.out.println("Scanning: " + directory.getPath());
             getAllFiles(inputFiles, directory);
         }
-        System.out.println("Done.");
+        System.out.println("Done.\n");
 
         System.out.println("Step 2. Initializing settings.");
         SearchSettings settings = AppContext.getSettings();
@@ -915,9 +915,10 @@ public class MainFrame extends javax.swing.JFrame {
         for (File inputFile : inputFiles) {
             String path = inputFile.getPath();
             try {
+                System.out.println("\tAnalyzing: " + path);
                 FileInfo info = FileInfo.init(path);
                 fileInfos.add(info);
-                System.out.println("\t" + info);
+//                System.out.println("\tHash = " + info.getHash());
             } catch (IOException ex) {
                 System.out.println("\tFailed! Error was logged.");
                 Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
