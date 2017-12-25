@@ -17,6 +17,8 @@ import me.vijaychavda.SearchSettings;
 
 public class MainFrame extends javax.swing.JFrame {
 
+    private final ProcessingFrame processingFrame = new ProcessingFrame();
+
     private static final long _1GB = 1073741824L;
     private static final long _1MB = 1048576L;
     private static final long _1KB = 1024L;
@@ -890,6 +892,8 @@ public class MainFrame extends javax.swing.JFrame {
             : CB_Medium.isSelected() ? 100L * _1MB
             : CB_Large.isSelected() || CB_AnySize.isSelected() ? Long.MAX_VALUE
             : customUpperSize;
+
+        processingFrame.setVisible(true);
 
         System.out.println("Step 1. Gathering files.");
         DefaultListModel model = (DefaultListModel) L_Sources.getModel();
