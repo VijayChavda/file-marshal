@@ -9,6 +9,146 @@
     </Component>
     <Component class="javax.swing.ButtonGroup" name="BG_FileSize">
     </Component>
+    <Container class="javax.swing.JDialog" name="ProgressDialog">
+      <Properties>
+        <Property name="defaultCloseOperation" type="int" value="2"/>
+        <Property name="title" type="java.lang.String" value="Working on it..."/>
+        <Property name="alwaysOnTop" type="boolean" value="true"/>
+        <Property name="modal" type="boolean" value="true"/>
+        <Property name="resizable" type="boolean" value="false"/>
+        <Property name="type" type="java.awt.Window$Type" editor="org.netbeans.modules.form.editors.EnumEditor">
+          <Value id="UTILITY"/>
+        </Property>
+      </Properties>
+
+      <Layout>
+        <DimensionLayout dim="0">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Component id="P_ProgressContent" alignment="1" max="32767" attributes="0"/>
+          </Group>
+        </DimensionLayout>
+        <DimensionLayout dim="1">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Component id="P_ProgressContent" alignment="1" max="32767" attributes="0"/>
+          </Group>
+        </DimensionLayout>
+      </Layout>
+      <SubComponents>
+        <Container class="javax.swing.JPanel" name="P_ProgressContent">
+          <Properties>
+            <Property name="opaque" type="boolean" value="false"/>
+          </Properties>
+
+          <Layout>
+            <DimensionLayout dim="0">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="SP_Status" alignment="0" max="32767" attributes="0"/>
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace min="-2" pref="0" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="CB_ScanningFiles" alignment="0" min="-2" pref="200" max="-2" attributes="0"/>
+                                  <Component id="CB_ScanningFiles1" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="CB_AnalyzingFiles" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="CB_FindingDuplicates" alignment="0" max="32767" attributes="0"/>
+                                  <Group type="102" alignment="1" attributes="0">
+                                      <Group type="103" groupAlignment="1" attributes="0">
+                                          <Component id="ProgressBar" alignment="0" max="32767" attributes="0"/>
+                                          <Component id="Seperator1" alignment="1" max="32767" attributes="0"/>
+                                          <Component id="L_Info" alignment="1" pref="654" max="32767" attributes="0"/>
+                                      </Group>
+                                      <EmptySpace min="-2" pref="0" max="-2" attributes="0"/>
+                                  </Group>
+                              </Group>
+                          </Group>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                  </Group>
+              </Group>
+            </DimensionLayout>
+            <DimensionLayout dim="1">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="L_Info" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
+                      <Component id="Seperator1" min="-2" pref="10" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" max="-2" attributes="0"/>
+                      <Component id="CB_ScanningFiles" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" max="-2" attributes="0"/>
+                      <Component id="CB_ScanningFiles1" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
+                      <Component id="CB_AnalyzingFiles" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
+                      <Component id="CB_FindingDuplicates" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
+                      <Component id="ProgressBar" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
+                      <Component id="SP_Status" pref="89" max="32767" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                  </Group>
+              </Group>
+            </DimensionLayout>
+          </Layout>
+          <SubComponents>
+            <Component class="javax.swing.JLabel" name="L_Info">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="&lt;html&gt; The magical elves are doing their job.&lt;br&gt; Why don&apos;t you make sure Dobby gets his wages? Hermionie will be pleased :) &lt;/html&gt;"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JCheckBox" name="CB_ScanningFiles">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Scanning files"/>
+                <Property name="enabled" type="boolean" value="false"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JCheckBox" name="CB_AnalyzingFiles">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Analizing files"/>
+                <Property name="enabled" type="boolean" value="false"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JCheckBox" name="CB_FindingDuplicates">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Finding duplicates"/>
+                <Property name="enabled" type="boolean" value="false"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JProgressBar" name="ProgressBar">
+              <Properties>
+                <Property name="toolTipText" type="java.lang.String" value="Estimated progress."/>
+              </Properties>
+            </Component>
+            <Container class="javax.swing.JScrollPane" name="SP_Status">
+              <AuxValues>
+                <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
+              </AuxValues>
+
+              <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
+              <SubComponents>
+                <Component class="javax.swing.JTextArea" name="TA_Status">
+                  <Properties>
+                    <Property name="editable" type="boolean" value="false"/>
+                    <Property name="columns" type="int" value="20"/>
+                    <Property name="rows" type="int" value="5"/>
+                  </Properties>
+                </Component>
+              </SubComponents>
+            </Container>
+            <Component class="javax.swing.JSeparator" name="Seperator1">
+            </Component>
+            <Component class="javax.swing.JCheckBox" name="CB_ScanningFiles1">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Initializing settings"/>
+                <Property name="enabled" type="boolean" value="false"/>
+              </Properties>
+            </Component>
+          </SubComponents>
+        </Container>
+      </SubComponents>
+    </Container>
     <Menu class="javax.swing.JMenuBar" name="Menubar">
       <SubComponents>
         <Menu class="javax.swing.JMenu" name="M_Help">

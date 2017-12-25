@@ -17,8 +17,6 @@ import me.vijaychavda.SearchSettings;
 
 public class MainFrame extends javax.swing.JFrame {
 
-    private final ProcessingFrame processingFrame = new ProcessingFrame();
-
     private static final long _1GB = 1073741824L;
     private static final long _1MB = 1048576L;
     private static final long _1KB = 1024L;
@@ -91,6 +89,17 @@ public class MainFrame extends javax.swing.JFrame {
 
         FilePicker = new javax.swing.JFileChooser();
         BG_FileSize = new javax.swing.ButtonGroup();
+        ProgressDialog = new javax.swing.JDialog();
+        P_ProgressContent = new javax.swing.JPanel();
+        L_Info = new javax.swing.JLabel();
+        CB_ScanningFiles = new javax.swing.JCheckBox();
+        CB_AnalyzingFiles = new javax.swing.JCheckBox();
+        CB_FindingDuplicates = new javax.swing.JCheckBox();
+        ProgressBar = new javax.swing.JProgressBar();
+        SP_Status = new javax.swing.JScrollPane();
+        TA_Status = new javax.swing.JTextArea();
+        Seperator1 = new javax.swing.JSeparator();
+        CB_ScanningFiles1 = new javax.swing.JCheckBox();
         P_Content = new javax.swing.JPanel();
         TabbedPane = new javax.swing.JTabbedPane();
         P_Sources = new javax.swing.JPanel();
@@ -156,6 +165,92 @@ public class MainFrame extends javax.swing.JFrame {
         MI_Donate = new javax.swing.JMenuItem();
 
         FilePicker.setFileSelectionMode(javax.swing.JFileChooser.DIRECTORIES_ONLY);
+
+        ProgressDialog.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        ProgressDialog.setTitle("Working on it...");
+        ProgressDialog.setAlwaysOnTop(true);
+        ProgressDialog.setModal(true);
+        ProgressDialog.setResizable(false);
+        ProgressDialog.setType(java.awt.Window.Type.UTILITY);
+
+        P_ProgressContent.setOpaque(false);
+
+        L_Info.setText("<html> The magical elves are doing their job.<br> Why don't you make sure Dobby gets his wages? Hermionie will be pleased :) </html>");
+
+        CB_ScanningFiles.setText("Scanning files");
+        CB_ScanningFiles.setEnabled(false);
+
+        CB_AnalyzingFiles.setText("Analizing files");
+        CB_AnalyzingFiles.setEnabled(false);
+
+        CB_FindingDuplicates.setText("Finding duplicates");
+        CB_FindingDuplicates.setEnabled(false);
+
+        ProgressBar.setToolTipText("Estimated progress.");
+
+        TA_Status.setEditable(false);
+        TA_Status.setColumns(20);
+        TA_Status.setRows(5);
+        SP_Status.setViewportView(TA_Status);
+
+        CB_ScanningFiles1.setText("Initializing settings");
+        CB_ScanningFiles1.setEnabled(false);
+
+        javax.swing.GroupLayout P_ProgressContentLayout = new javax.swing.GroupLayout(P_ProgressContent);
+        P_ProgressContent.setLayout(P_ProgressContentLayout);
+        P_ProgressContentLayout.setHorizontalGroup(
+            P_ProgressContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(P_ProgressContentLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(P_ProgressContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(SP_Status)
+                    .addGroup(P_ProgressContentLayout.createSequentialGroup()
+                        .addGap(0, 0, 0)
+                        .addGroup(P_ProgressContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(CB_ScanningFiles, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(CB_ScanningFiles1)
+                            .addComponent(CB_AnalyzingFiles, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(CB_FindingDuplicates, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, P_ProgressContentLayout.createSequentialGroup()
+                                .addGroup(P_ProgressContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(ProgressBar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(Seperator1)
+                                    .addComponent(L_Info, javax.swing.GroupLayout.DEFAULT_SIZE, 654, Short.MAX_VALUE))
+                                .addGap(0, 0, 0)))))
+                .addContainerGap())
+        );
+        P_ProgressContentLayout.setVerticalGroup(
+            P_ProgressContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(P_ProgressContentLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(L_Info, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(Seperator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(CB_ScanningFiles)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(CB_ScanningFiles1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(CB_AnalyzingFiles)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(CB_FindingDuplicates)
+                .addGap(18, 18, 18)
+                .addComponent(ProgressBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(SP_Status, javax.swing.GroupLayout.DEFAULT_SIZE, 89, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        javax.swing.GroupLayout ProgressDialogLayout = new javax.swing.GroupLayout(ProgressDialog.getContentPane());
+        ProgressDialog.getContentPane().setLayout(ProgressDialogLayout);
+        ProgressDialogLayout.setHorizontalGroup(
+            ProgressDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(P_ProgressContent, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        ProgressDialogLayout.setVerticalGroup(
+            ProgressDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(P_ProgressContent, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Declone - Find and remove duplicate files");
@@ -893,7 +988,9 @@ public class MainFrame extends javax.swing.JFrame {
             : CB_Large.isSelected() || CB_AnySize.isSelected() ? Long.MAX_VALUE
             : customUpperSize;
 
-        processingFrame.setVisible(true);
+        ProgressDialog.pack();
+        ProgressDialog.setLocationRelativeTo(null);
+        ProgressDialog.setVisible(true);
 
         System.out.println("Step 1. Gathering files.");
         DefaultListModel model = (DefaultListModel) L_Sources.getModel();
@@ -936,11 +1033,13 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JButton B_Browse;
     private javax.swing.JButton B_Declone;
     private javax.swing.JButton B_RemoveSource;
+    private javax.swing.JCheckBox CB_AnalyzingFiles;
     private javax.swing.JCheckBox CB_AnySize;
     private javax.swing.JCheckBox CB_Audios;
     private javax.swing.JCheckBox CB_Content;
     private javax.swing.JCheckBox CB_CustomSize;
     private javax.swing.JCheckBox CB_CustomType;
+    private javax.swing.JCheckBox CB_FindingDuplicates;
     private javax.swing.JComboBox<String> CB_GreaterThan;
     private javax.swing.JCheckBox CB_Large;
     private javax.swing.JComboBox<String> CB_LessThan;
@@ -948,6 +1047,8 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JCheckBox CB_Name;
     private javax.swing.JCheckBox CB_Others;
     private javax.swing.JCheckBox CB_Pictures;
+    private javax.swing.JCheckBox CB_ScanningFiles;
+    private javax.swing.JCheckBox CB_ScanningFiles1;
     private javax.swing.JCheckBox CB_Size;
     private javax.swing.JCheckBox CB_Small;
     private javax.swing.JCheckBox CB_TypeAll;
@@ -957,6 +1058,7 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JLabel L_AdName;
     private javax.swing.JLabel L_AdSize;
     private javax.swing.JLabel L_Content;
+    private javax.swing.JLabel L_Info;
     private javax.swing.JLabel L_Info2;
     private javax.swing.JLabel L_Info21;
     private javax.swing.JLabel L_Info22;
@@ -977,18 +1079,24 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JPanel P_FileOptions;
     private javax.swing.JPanel P_FilterSize;
     private javax.swing.JPanel P_FilterType;
+    private javax.swing.JPanel P_ProgressContent;
     private javax.swing.JPanel P_Settings;
     private javax.swing.JPanel P_Sources;
+    private javax.swing.JProgressBar ProgressBar;
+    private javax.swing.JDialog ProgressDialog;
     private javax.swing.JSlider SL_Content;
     private javax.swing.JSlider SL_Name;
     private javax.swing.JSlider SL_Size;
     private javax.swing.JScrollPane SP_Extensions;
     private javax.swing.JSpinner SP_GreaterThan;
     private javax.swing.JSpinner SP_LessThan;
+    private javax.swing.JScrollPane SP_Status;
     private javax.swing.JScrollPane S_Sources;
+    private javax.swing.JSeparator Seperator1;
     private javax.swing.JSeparator Seperator2;
     private javax.swing.JSeparator Seperator21;
     private javax.swing.JSeparator Seperator22;
+    private javax.swing.JTextArea TA_Status;
     private javax.swing.JToggleButton TB_Advance;
     private javax.swing.JTextArea TB_Extensions;
     private javax.swing.JTextField T_SourcePath;
