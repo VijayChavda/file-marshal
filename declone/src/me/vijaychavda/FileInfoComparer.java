@@ -11,15 +11,15 @@ public class FileInfoComparer {
     public boolean areSame(FileInfo f1, FileInfo f2) {
         boolean same = true;
 
-        SearchSettings settings = AppContext.getSettings();
+        CompareSettings settings = AppContext.getSettings();
 
-        if (settings.isName())
+        if (settings.isUsingNames())
             same = nameSimilar(f1.getName(), f2.getName(), settings.getNameDelta());
 
-        if (same && settings.isSize())
+        if (same && settings.isUsingSize())
             same = sizeSimilar(f1.getSize(), f2.getSize(), settings.getSizeDelta());
 
-        if (same && settings.isContent())
+        if (same && settings.isUsingContent())
             same = contentSimilar(f1.getHash(), f2.getHash());
 
         return same;

@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.text.MessageFormat;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.zip.Adler32;
 import org.apache.commons.lang3.SerializationUtils;
@@ -44,12 +43,23 @@ public class FileInfo {
 
     public static FileInfo init(String path) throws IOException {
         File file = new File(path);
+
+        if (!AppContext.getSettings().isUsingContent()) {
+            FileInfo info = new FileInfo();
+            info.name = file.getName();
+            info.size = file.length();
+            info.path = path;
+            return info;
+        }
+
         Adler32 adler = new Adler32();
 
         int partScanLength = 1048576;
         long totalLength = file.length();
+        double scanPercent = AppContext.getSettings().getContentVolumePercent();
+        long scanLength = Math.round(totalLength * scanPercent);
 
-        if (totalLength < partScanLength) {
+        if (scanLength < partScanLength) {
             byte data[] = new byte[(int) totalLength];
 
             try (FileInputStream stream = new FileInputStream(file)) {
@@ -66,16 +76,9 @@ public class FileInfo {
             return info;
         }
 
-        double scanPercent = AppContext.getSettings().getContentVolumePercent();
-        long scanLength = Math.round(totalLength * scanPercent);
         long partitions = scanLength / partScanLength;
         long partLength = totalLength / partitions;
         long skipLength = partLength - partScanLength;
-        if (scanPercent != 1d)
-            System.out.println("\t" + (MessageFormat.format(
-                "Skipping {0} and scanning {1} bytes. In total, scanning {2} out of {3} bytes ({4}%).",
-                skipLength, partScanLength, scanLength, totalLength, scanPercent * 100))
-            );
 
         HashSet<Long> partialHashes = new HashSet<>();
         try (FileInputStream stream = new FileInputStream(file)) {

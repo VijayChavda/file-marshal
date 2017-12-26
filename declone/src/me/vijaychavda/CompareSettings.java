@@ -1,41 +1,37 @@
 package me.vijaychavda;
 
-/**
- *
- * @author Vijay
- */
-public class SearchSettings {
+public class CompareSettings {
 
-    private boolean name;
-    private boolean size;
-    private boolean content;
+    private boolean usingNames;
+    private boolean usingSize;
+    private boolean usingContent;
 
     private float nameDelta;
     private float sizeDelta;
     private float contentVolumePercent;
 
-    public boolean isName() {
-        return name;
+    public boolean isUsingNames() {
+        return usingNames;
     }
 
-    public void setName(boolean name) {
-        this.name = name;
+    public void setUsingNames(boolean usingNames) {
+        this.usingNames = usingNames;
     }
 
-    public boolean isSize() {
-        return size;
+    public boolean isUsingSize() {
+        return usingSize;
     }
 
-    public void setSize(boolean size) {
-        this.size = size;
+    public void setUsingSize(boolean usingSize) {
+        this.usingSize = usingSize;
     }
 
-    public boolean isContent() {
-        return content;
+    public boolean isUsingContent() {
+        return usingContent;
     }
 
-    public void setContent(boolean content) {
-        this.content = content;
+    public void setUsingContent(boolean usingContent) {
+        this.usingContent = usingContent;
     }
 
     public float getNameDelta() {

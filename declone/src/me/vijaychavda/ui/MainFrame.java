@@ -4,26 +4,25 @@ import java.awt.EventQueue;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.JCheckBox;
 import javax.swing.JOptionPane;
+import javax.swing.SwingWorker;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import me.vijaychavda.AppContext;
+import me.vijaychavda.CompareSettings;
 import me.vijaychavda.FileInfo;
-import me.vijaychavda.SearchSettings;
+import me.vijaychavda.SelectionSettings;
 
 public class MainFrame extends javax.swing.JFrame {
 
     private static final long _1GB = 1073741824L;
     private static final long _1MB = 1048576L;
     private static final long _1KB = 1024L;
-
-    private final ArrayList<File> inputFiles = new ArrayList<>();
-
-    private long customLowerSize, customUpperSize, sizeLowerLimit, sizeUpperLimit;
 
     public MainFrame() {
         initComponents();
@@ -34,41 +33,115 @@ public class MainFrame extends javax.swing.JFrame {
         );
     }
 
-    private void getAllFiles(ArrayList<File> files, File directory) {
-        for (File file : directory.listFiles()) {
-            if (file.isDirectory()) {
-                getAllFiles(files, file);
-                continue;
-            }
+    public class DecloneWorker extends SwingWorker<Void, String> {
 
-            if (trySelectFile(file)) {
-                files.add(file);
-                System.out.println("\tSelected: " + file.getPath());
+        private final ArrayList<File> sources;
+
+        public DecloneWorker() {
+            sources = new ArrayList<>();
+        }
+
+        public DecloneWorker(ArrayList<File> sources) {
+            this.sources = sources;
+        }
+
+        @Override
+        protected Void doInBackground() throws Exception {
+            ArrayList<File> inputFiles = new ArrayList<>();
+
+            publish("\n\nStart declone.\n");
+            publish("Step 1. Scanning sources.");
+            setProgress(0);
+
+            inputFiles.clear();
+            for (File directory : sources) {
+                publish("Scanning: " + directory.getPath());
+                getAllFiles(inputFiles, directory);
+            }
+            publish("Done.\n");
+            setProgress(100);
+            Thread.sleep(1000);
+
+            publish("Step 2. Analyzing files.");
+            setProgress(0);
+            ArrayList<FileInfo> fileInfos = new ArrayList<>();
+            for (int i = 0; i < inputFiles.size(); i++) {
+                File inputFile = inputFiles.get(i);
+
+                String path = inputFile.getPath();
+                try {
+                    publish("\tAnalyzing: " + path);
+                    FileInfo info = FileInfo.init(path);
+                    fileInfos.add(info);
+//                publish("\tHash = " + info.getHash());
+                } catch (IOException ex) {
+                    publish("\tFailed! Error was logged.");
+                    Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
+                setProgress((int) Math.round(100 * (double) i / inputFiles.size()));
+            }
+            publish("Done.\n");
+            setProgress(100);
+            Thread.sleep(1000);
+
+            return null;
+        }
+
+        @Override
+        protected void process(List<String> chunks) {
+            chunks.forEach((chunk) -> TA_Status.append(chunk + "\n"));
+//            System.out.println(getProgress());
+            ProgressBar.setValue(getProgress());
+
+            if (getProgress() == 100) {
+                if (!CB_Step1.isSelected())
+                    CB_Step1.setSelected(true);
+                else if (!CB_Step2.isSelected())
+                    CB_Step2.setSelected(true);
+                else if (!CB_Step3.isSelected())
+                    CB_Step3.setSelected(true);
             }
         }
-    }
 
-    private boolean trySelectFile(File file) {
-        String name = file.getName();
+        private void getAllFiles(ArrayList<File> files, File directory) {
+            for (File file : directory.listFiles()) {
+                if (file.isDirectory()) {
+                    getAllFiles(files, file);
+                    continue;
+                }
 
-        if (file.length() < sizeLowerLimit || file.length() > sizeUpperLimit)
-            return false;
+                if (trySelectFile(file)) {
+                    files.add(file);
+                    publish("\tSelected: " + file.getPath());
+                }
+            }
+        }
 
-        if (CB_TypeAll.isSelected())
-            return true;
+        private boolean trySelectFile(File file) {
+            SelectionSettings settings = AppContext.getSelectionSettings();
 
-        int doti = name.lastIndexOf('.');
-        if (doti == -1)
-            return true;
+            String name = file.getName();
 
-        String ext = name.substring(doti, name.length());
+            if (file.length() < settings.getSizeLowerLimit() || file.length() > settings.getSizeUpperLimit())
+                return false;
 
-        String[] extensions = TB_Extensions.getText().split(" ");
-        for (String extension : extensions) {
-            if (extension.equals(ext))
+            if (settings.getExtensionCS().equals(".*"))
                 return true;
+
+            int doti = name.lastIndexOf('.');
+            if (doti == -1)
+                return true;
+
+            String ext = name.substring(doti, name.length());
+
+            String[] extensions = settings.getExtensionCS().split(" ");
+            for (String extension : extensions) {
+                if (extension.equals(ext))
+                    return true;
+            }
+            return false;
         }
-        return false;
     }
 
     public static void main(String args[]) {
@@ -92,14 +165,16 @@ public class MainFrame extends javax.swing.JFrame {
         ProgressDialog = new javax.swing.JDialog();
         P_ProgressContent = new javax.swing.JPanel();
         L_Info = new javax.swing.JLabel();
-        CB_ScanningFiles = new javax.swing.JCheckBox();
-        CB_AnalyzingFiles = new javax.swing.JCheckBox();
-        CB_FindingDuplicates = new javax.swing.JCheckBox();
+        CB_Step1 = new javax.swing.JCheckBox();
+        CB_Step2 = new javax.swing.JCheckBox();
+        CB_Step3 = new javax.swing.JCheckBox();
         ProgressBar = new javax.swing.JProgressBar();
         SP_Status = new javax.swing.JScrollPane();
         TA_Status = new javax.swing.JTextArea();
         Seperator1 = new javax.swing.JSeparator();
-        CB_ScanningFiles1 = new javax.swing.JCheckBox();
+        L_Step1 = new javax.swing.JLabel();
+        L_Step2 = new javax.swing.JLabel();
+        L_Step3 = new javax.swing.JLabel();
         P_Content = new javax.swing.JPanel();
         TabbedPane = new javax.swing.JTabbedPane();
         P_Sources = new javax.swing.JPanel();
@@ -165,6 +240,7 @@ public class MainFrame extends javax.swing.JFrame {
         MI_Donate = new javax.swing.JMenuItem();
 
         FilePicker.setFileSelectionMode(javax.swing.JFileChooser.DIRECTORIES_ONLY);
+        FilePicker.setMultiSelectionEnabled(true);
 
         ProgressDialog.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         ProgressDialog.setTitle("Working on it...");
@@ -177,14 +253,11 @@ public class MainFrame extends javax.swing.JFrame {
 
         L_Info.setText("<html> The magical elves are doing their job.<br> Why don't you make sure Dobby gets his wages? Hermionie will be pleased :) </html>");
 
-        CB_ScanningFiles.setText("Scanning files");
-        CB_ScanningFiles.setEnabled(false);
+        CB_Step1.setEnabled(false);
 
-        CB_AnalyzingFiles.setText("Analizing files");
-        CB_AnalyzingFiles.setEnabled(false);
+        CB_Step2.setEnabled(false);
 
-        CB_FindingDuplicates.setText("Finding duplicates");
-        CB_FindingDuplicates.setEnabled(false);
+        CB_Step3.setEnabled(false);
 
         ProgressBar.setToolTipText("Estimated progress.");
 
@@ -193,8 +266,11 @@ public class MainFrame extends javax.swing.JFrame {
         TA_Status.setRows(5);
         SP_Status.setViewportView(TA_Status);
 
-        CB_ScanningFiles1.setText("Initializing settings");
-        CB_ScanningFiles1.setEnabled(false);
+        L_Step1.setText("Scanning sources");
+
+        L_Step2.setText("Analizing files");
+
+        L_Step3.setText("Finding duplicates");
 
         javax.swing.GroupLayout P_ProgressContentLayout = new javax.swing.GroupLayout(P_ProgressContent);
         P_ProgressContent.setLayout(P_ProgressContentLayout);
@@ -204,19 +280,20 @@ public class MainFrame extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(P_ProgressContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(SP_Status)
+                    .addComponent(ProgressBar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(Seperator1, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(L_Info, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 654, Short.MAX_VALUE)
                     .addGroup(P_ProgressContentLayout.createSequentialGroup()
-                        .addGap(0, 0, 0)
-                        .addGroup(P_ProgressContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(CB_ScanningFiles, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(CB_ScanningFiles1)
-                            .addComponent(CB_AnalyzingFiles, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(CB_FindingDuplicates, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, P_ProgressContentLayout.createSequentialGroup()
-                                .addGroup(P_ProgressContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(ProgressBar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(Seperator1)
-                                    .addComponent(L_Info, javax.swing.GroupLayout.DEFAULT_SIZE, 654, Short.MAX_VALUE))
-                                .addGap(0, 0, 0)))))
+                        .addGroup(P_ProgressContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(CB_Step3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(CB_Step2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(CB_Step1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(P_ProgressContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(L_Step1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(L_Step2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(L_Step3, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         P_ProgressContentLayout.setVerticalGroup(
@@ -227,19 +304,29 @@ public class MainFrame extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(Seperator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(CB_ScanningFiles)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(CB_ScanningFiles1)
+                .addGroup(P_ProgressContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(CB_Step1)
+                    .addComponent(L_Step1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(CB_AnalyzingFiles)
+                .addGroup(P_ProgressContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(CB_Step2)
+                    .addComponent(L_Step2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(CB_FindingDuplicates)
+                .addGroup(P_ProgressContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(CB_Step3)
+                    .addComponent(L_Step3))
                 .addGap(18, 18, 18)
                 .addComponent(ProgressBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(SP_Status, javax.swing.GroupLayout.DEFAULT_SIZE, 89, Short.MAX_VALUE)
+                .addComponent(SP_Status, javax.swing.GroupLayout.DEFAULT_SIZE, 119, Short.MAX_VALUE)
                 .addContainerGap())
         );
+
+        P_ProgressContentLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {CB_Step1, L_Step1});
+
+        P_ProgressContentLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {CB_Step2, L_Step2});
+
+        P_ProgressContentLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {CB_Step3, L_Step3});
 
         javax.swing.GroupLayout ProgressDialogLayout = new javax.swing.GroupLayout(ProgressDialog.getContentPane());
         ProgressDialog.getContentPane().setLayout(ProgressDialogLayout);
@@ -860,16 +947,18 @@ public class MainFrame extends javax.swing.JFrame {
     private void B_BrowseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_B_BrowseActionPerformed
         FilePicker.showOpenDialog(this);
 
-        File file = FilePicker.getSelectedFile();
+        File[] files = FilePicker.getSelectedFiles();
 
-        if (file == null)
+        if (files == null || files.length == 0)
             return;
 
-        DefaultListModel model = (DefaultListModel) L_Sources.getModel();
-        if (model.contains(file.getAbsolutePath()))
-            JOptionPane.showMessageDialog(this, "This source is already added.");
-        else
-            model.addElement(file.getAbsolutePath());
+        for (File file : files) {
+            DefaultListModel model = (DefaultListModel) L_Sources.getModel();
+            if (model.contains(file.getAbsolutePath()))
+                JOptionPane.showMessageDialog(this, "This source is already added.");
+            else
+                model.addElement(file.getAbsolutePath());
+        }
     }//GEN-LAST:event_B_BrowseActionPerformed
 
     private void T_SourcePathActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_T_SourcePathActionPerformed
@@ -962,9 +1051,7 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_CB_AdvanceActionPerformed
 
     private void B_DecloneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_B_DecloneActionPerformed
-        System.out.println("\n\nStart declone.\n");
-
-        inputFiles.clear();
+        long customLowerSize, customUpperSize, sizeLowerLimit, sizeUpperLimit;
 
         customLowerSize = (long) SP_GreaterThan.getValue()
             * (CB_GreaterThan.getSelectedIndex() == 0 ? _1GB
@@ -988,58 +1075,53 @@ public class MainFrame extends javax.swing.JFrame {
             : CB_Large.isSelected() || CB_AnySize.isSelected() ? Long.MAX_VALUE
             : customUpperSize;
 
+        CompareSettings compareSettings = AppContext.getSettings();
+        compareSettings.setUsingNames(CB_Name.isSelected());
+        compareSettings.setUsingSize(CB_Size.isSelected());
+        compareSettings.setUsingContent(CB_Content.isSelected());
+        compareSettings.setNameDelta(1 - (SL_Name.getValue() / 100F));
+        compareSettings.setSizeDelta(1 - (SL_Size.getValue() / 100F));
+        compareSettings.setContentVolumePercent(SL_Content.getValue() / 100F);
+
+        SelectionSettings selectionSettings = AppContext.getSelectionSettings();
+        selectionSettings.setExtensionCS(TB_Extensions.getText());
+        selectionSettings.setSizeLowerLimit(sizeLowerLimit);
+        selectionSettings.setSizeUpperLimit(sizeUpperLimit);
+
+        ArrayList<File> sources = new ArrayList<>();
+        DefaultListModel model = (DefaultListModel) L_Sources.getModel();
+        for (Object sourcePath : model.toArray()) {
+            File file = new File(sourcePath.toString());
+            if (file.isDirectory())
+                sources.add(file);
+        }
+
+        TA_Status.setText("");
+        CB_Step1.setSelected(false);
+        CB_Step2.setSelected(false);
+        CB_Step3.setSelected(false);
+
         ProgressDialog.pack();
         ProgressDialog.setLocationRelativeTo(null);
+
+        DecloneWorker worker = new DecloneWorker(sources);
+        worker.execute();
+
         ProgressDialog.setVisible(true);
-
-        System.out.println("Step 1. Gathering files.");
-        DefaultListModel model = (DefaultListModel) L_Sources.getModel();
-        for (Object source : model.toArray()) {
-            File directory = new File(source.toString());
-            System.out.println("Scanning: " + directory.getPath());
-            getAllFiles(inputFiles, directory);
-        }
-        System.out.println("Done.\n");
-
-        System.out.println("Step 2. Initializing settings.");
-        SearchSettings settings = AppContext.getSettings();
-        settings.setName(CB_Name.isSelected());
-        settings.setSize(CB_Size.isSelected());
-        settings.setContent(CB_Content.isSelected());
-        settings.setNameDelta(1 - (SL_Name.getValue() / 100F));
-        settings.setSizeDelta(1 - (SL_Size.getValue() / 100F));
-        settings.setContentVolumePercent(SL_Content.getValue() / 100F);
-        System.out.println("Done.\n");
-
-        System.out.println("Step 3. Analyzing files.");
-        ArrayList<FileInfo> fileInfos = new ArrayList<>();
-        for (File inputFile : inputFiles) {
-            String path = inputFile.getPath();
-            try {
-                System.out.println("\tAnalyzing: " + path);
-                FileInfo info = FileInfo.init(path);
-                fileInfos.add(info);
-//                System.out.println("\tHash = " + info.getHash());
-            } catch (IOException ex) {
-                System.out.println("\tFailed! Error was logged.");
-                Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-        System.out.println("Done.\n");
     }//GEN-LAST:event_B_DecloneActionPerformed
+
+    // <editor-fold defaultstate="collapsed" desc="GUI Variables">
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup BG_FileSize;
     private javax.swing.JButton B_AddSource;
     private javax.swing.JButton B_Browse;
     private javax.swing.JButton B_Declone;
     private javax.swing.JButton B_RemoveSource;
-    private javax.swing.JCheckBox CB_AnalyzingFiles;
     private javax.swing.JCheckBox CB_AnySize;
     private javax.swing.JCheckBox CB_Audios;
     private javax.swing.JCheckBox CB_Content;
     private javax.swing.JCheckBox CB_CustomSize;
     private javax.swing.JCheckBox CB_CustomType;
-    private javax.swing.JCheckBox CB_FindingDuplicates;
     private javax.swing.JComboBox<String> CB_GreaterThan;
     private javax.swing.JCheckBox CB_Large;
     private javax.swing.JComboBox<String> CB_LessThan;
@@ -1047,10 +1129,11 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JCheckBox CB_Name;
     private javax.swing.JCheckBox CB_Others;
     private javax.swing.JCheckBox CB_Pictures;
-    private javax.swing.JCheckBox CB_ScanningFiles;
-    private javax.swing.JCheckBox CB_ScanningFiles1;
     private javax.swing.JCheckBox CB_Size;
     private javax.swing.JCheckBox CB_Small;
+    private javax.swing.JCheckBox CB_Step1;
+    private javax.swing.JCheckBox CB_Step2;
+    private javax.swing.JCheckBox CB_Step3;
     private javax.swing.JCheckBox CB_TypeAll;
     private javax.swing.JCheckBox CB_Videos;
     private javax.swing.JFileChooser FilePicker;
@@ -1066,6 +1149,9 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JLabel L_Info33;
     private javax.swing.JLabel L_SizeSign;
     private javax.swing.JList<String> L_Sources;
+    private javax.swing.JLabel L_Step1;
+    private javax.swing.JLabel L_Step2;
+    private javax.swing.JLabel L_Step3;
     private javax.swing.JLabel L_WhereDoWeLook;
     private javax.swing.JMenuItem MI_About;
     private javax.swing.JMenuItem MI_Contact;
@@ -1105,4 +1191,6 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     // End of variables declaration//GEN-END:variables
+    // </editor-fold>
+
 }

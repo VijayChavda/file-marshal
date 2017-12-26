@@ -6,14 +6,19 @@ package me.vijaychavda;
  */
 public class AppContext {
 
-    private static final SearchSettings settings = new SearchSettings();
+    private static final CompareSettings compareSettings = new CompareSettings();
+    private static final SelectionSettings selectionSettings = new SelectionSettings();
 
     private AppContext() {
 
     }
 
-    public static SearchSettings getSettings() {
-        return settings;
+    public static CompareSettings getSettings() {
+        return compareSettings;
+    }
+
+    public static SelectionSettings getSelectionSettings() {
+        return selectionSettings;
     }
 
 }

@@ -5,6 +5,7 @@
     <Component class="javax.swing.JFileChooser" name="FilePicker">
       <Properties>
         <Property name="fileSelectionMode" type="int" value="1"/>
+        <Property name="multiSelectionEnabled" type="boolean" value="true"/>
       </Properties>
     </Component>
     <Component class="javax.swing.ButtonGroup" name="BG_FileSize">
@@ -46,22 +47,22 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="SP_Status" alignment="0" max="32767" attributes="0"/>
+                          <Component id="ProgressBar" alignment="0" max="32767" attributes="0"/>
+                          <Component id="Seperator1" alignment="1" max="32767" attributes="0"/>
+                          <Component id="L_Info" alignment="1" pref="654" max="32767" attributes="0"/>
                           <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace min="-2" pref="0" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="CB_ScanningFiles" alignment="0" min="-2" pref="200" max="-2" attributes="0"/>
-                                  <Component id="CB_ScanningFiles1" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="CB_AnalyzingFiles" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="CB_FindingDuplicates" alignment="0" max="32767" attributes="0"/>
-                                  <Group type="102" alignment="1" attributes="0">
-                                      <Group type="103" groupAlignment="1" attributes="0">
-                                          <Component id="ProgressBar" alignment="0" max="32767" attributes="0"/>
-                                          <Component id="Seperator1" alignment="1" max="32767" attributes="0"/>
-                                          <Component id="L_Info" alignment="1" pref="654" max="32767" attributes="0"/>
-                                      </Group>
-                                      <EmptySpace min="-2" pref="0" max="-2" attributes="0"/>
-                                  </Group>
+                              <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                                  <Component id="CB_Step3" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="CB_Step2" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="CB_Step1" alignment="0" max="32767" attributes="0"/>
                               </Group>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                  <Component id="L_Step1" max="32767" attributes="0"/>
+                                  <Component id="L_Step2" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="L_Step3" alignment="0" pref="150" max="32767" attributes="0"/>
+                              </Group>
+                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
@@ -76,17 +77,24 @@
                       <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
                       <Component id="Seperator1" min="-2" pref="10" max="-2" attributes="0"/>
                       <EmptySpace min="-2" max="-2" attributes="0"/>
-                      <Component id="CB_ScanningFiles" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" max="-2" attributes="0"/>
-                      <Component id="CB_ScanningFiles1" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
-                      <Component id="CB_AnalyzingFiles" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
-                      <Component id="CB_FindingDuplicates" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="CB_Step1" linkSize="19" min="-2" max="-2" attributes="0"/>
+                          <Component id="L_Step1" linkSize="19" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="CB_Step2" linkSize="20" min="-2" max="-2" attributes="0"/>
+                          <Component id="L_Step2" linkSize="20" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="CB_Step3" linkSize="21" min="-2" max="-2" attributes="0"/>
+                          <Component id="L_Step3" linkSize="21" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="ProgressBar" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
-                      <Component id="SP_Status" pref="89" max="32767" attributes="0"/>
+                      <Component id="SP_Status" pref="119" max="32767" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -98,21 +106,18 @@
                 <Property name="text" type="java.lang.String" value="&lt;html&gt; The magical elves are doing their job.&lt;br&gt; Why don&apos;t you make sure Dobby gets his wages? Hermionie will be pleased :) &lt;/html&gt;"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JCheckBox" name="CB_ScanningFiles">
+            <Component class="javax.swing.JCheckBox" name="CB_Step1">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Scanning files"/>
                 <Property name="enabled" type="boolean" value="false"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JCheckBox" name="CB_AnalyzingFiles">
+            <Component class="javax.swing.JCheckBox" name="CB_Step2">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Analizing files"/>
                 <Property name="enabled" type="boolean" value="false"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JCheckBox" name="CB_FindingDuplicates">
+            <Component class="javax.swing.JCheckBox" name="CB_Step3">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Finding duplicates"/>
                 <Property name="enabled" type="boolean" value="false"/>
               </Properties>
             </Component>
@@ -139,10 +144,19 @@
             </Container>
             <Component class="javax.swing.JSeparator" name="Seperator1">
             </Component>
-            <Component class="javax.swing.JCheckBox" name="CB_ScanningFiles1">
+            <Component class="javax.swing.JLabel" name="L_Step1">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Initializing settings"/>
-                <Property name="enabled" type="boolean" value="false"/>
+                <Property name="text" type="java.lang.String" value="Scanning sources"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="L_Step2">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Analizing files"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="L_Step3">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Finding duplicates"/>
               </Properties>
             </Component>
           </SubComponents>
