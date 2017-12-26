@@ -2,16 +2,12 @@ package me.vijaychavda;
 
 import info.debatty.java.stringsimilarity.JaroWinkler;
 
-/**
- *
- * @author Vijay
- */
 public class FileInfoComparer {
 
     public boolean areSame(FileInfo f1, FileInfo f2) {
         boolean same = true;
 
-        CompareSettings settings = AppContext.getSettings();
+        CompareSettings settings = AppContext.getCompareSettings();
 
         if (settings.isUsingNames())
             same = nameSimilar(f1.getName(), f2.getName(), settings.getNameDelta());

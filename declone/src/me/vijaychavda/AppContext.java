@@ -1,9 +1,5 @@
 package me.vijaychavda;
 
-/**
- *
- * @author Vijay
- */
 public class AppContext {
 
     private static final CompareSettings compareSettings = new CompareSettings();
@@ -13,7 +9,7 @@ public class AppContext {
 
     }
 
-    public static CompareSettings getSettings() {
+    public static CompareSettings getCompareSettings() {
         return compareSettings;
     }
 

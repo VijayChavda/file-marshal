@@ -1,6 +1,5 @@
 package me.vijaychavda.ui;
 
-import java.awt.EventQueue;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -11,8 +10,6 @@ import javax.swing.DefaultListModel;
 import javax.swing.JCheckBox;
 import javax.swing.JOptionPane;
 import javax.swing.SwingWorker;
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
 import me.vijaychavda.AppContext;
 import me.vijaychavda.CompareSettings;
 import me.vijaychavda.FileInfo;
@@ -142,18 +139,6 @@ public class MainFrame extends javax.swing.JFrame {
             }
             return false;
         }
-    }
-
-    public static void main(String args[]) {
-        try {
-            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        } catch (ClassNotFoundException | IllegalAccessException | InstantiationException | UnsupportedLookAndFeelException ex) {
-            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        EventQueue.invokeLater(() -> {
-            new MainFrame().setVisible(true);
-        });
     }
 
     @SuppressWarnings("unchecked")
@@ -1075,7 +1060,7 @@ public class MainFrame extends javax.swing.JFrame {
             : CB_Large.isSelected() || CB_AnySize.isSelected() ? Long.MAX_VALUE
             : customUpperSize;
 
-        CompareSettings compareSettings = AppContext.getSettings();
+        CompareSettings compareSettings = AppContext.getCompareSettings();
         compareSettings.setUsingNames(CB_Name.isSelected());
         compareSettings.setUsingSize(CB_Size.isSelected());
         compareSettings.setUsingContent(CB_Content.isSelected());

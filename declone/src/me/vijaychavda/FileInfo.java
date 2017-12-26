@@ -3,15 +3,10 @@ package me.vijaychavda;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.text.MessageFormat;
 import java.util.HashSet;
 import java.util.zip.Adler32;
 import org.apache.commons.lang3.SerializationUtils;
 
-/**
- *
- * @author Vijay
- */
 public class FileInfo {
 
     private String path;
@@ -44,7 +39,7 @@ public class FileInfo {
     public static FileInfo init(String path) throws IOException {
         File file = new File(path);
 
-        if (!AppContext.getSettings().isUsingContent()) {
+        if (!AppContext.getCompareSettings().isUsingContent()) {
             FileInfo info = new FileInfo();
             info.name = file.getName();
             info.size = file.length();
@@ -56,7 +51,7 @@ public class FileInfo {
 
         int partScanLength = 1048576;
         long totalLength = file.length();
-        double scanPercent = AppContext.getSettings().getContentVolumePercent();
+        double scanPercent = AppContext.getCompareSettings().getContentVolumePercent();
         long scanLength = Math.round(totalLength * scanPercent);
 
         if (scanLength < partScanLength) {
