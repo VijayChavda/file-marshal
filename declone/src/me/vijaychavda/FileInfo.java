@@ -36,6 +36,10 @@ public class FileInfo {
         return hash;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public static FileInfo init(String path) throws IOException {
         File file = new File(path);
 
@@ -119,7 +123,7 @@ public class FileInfo {
         if (!obj.getClass().equals(FileInfo.class))
             return false;
 
-        return new FileInfoComparer().areSame(this, (FileInfo) obj);
+        return FileInfoComparer.areSame(this, (FileInfo) obj);
     }
 
     @Override

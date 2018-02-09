@@ -3,7 +3,12 @@ package me.vijaychavda.ui;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.function.Predicate;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
@@ -13,7 +18,9 @@ import javax.swing.SwingWorker;
 import me.vijaychavda.AppContext;
 import me.vijaychavda.CompareSettings;
 import me.vijaychavda.FileInfo;
+import me.vijaychavda.FileInfoComparer;
 import me.vijaychavda.SelectionSettings;
+import me.vijaychavda.util.MapUtil;
 
 public class MainFrame extends javax.swing.JFrame {
 
@@ -43,52 +50,134 @@ public class MainFrame extends javax.swing.JFrame {
         }
 
         @Override
-        protected Void doInBackground() throws Exception {
-            ArrayList<File> inputFiles = new ArrayList<>();
+        protected Void doInBackground() {
+            try {
+                ArrayList<File> inputFiles = new ArrayList<>();
+                ArrayList<FileInfo> fileInfos = new ArrayList<>();
 
-            publish("\n\nStart declone.\n");
-            publish("Step 1. Scanning sources.");
-            setProgress(0);
+                publish("\n\nStart declone.\n");
 
-            inputFiles.clear();
-            for (File directory : sources) {
-                publish("Scanning: " + directory.getPath());
-                getAllFiles(inputFiles, directory);
-            }
-            publish("Done.\n");
-            setProgress(100);
-            Thread.sleep(1000);
+                //<editor-fold defaultstate="collapsed" desc="Step 1 - Scanning sources">
+                publish("Step 1. Scanning sources.");
+                setProgress(0);
 
-            publish("Step 2. Analyzing files.");
-            setProgress(0);
-            ArrayList<FileInfo> fileInfos = new ArrayList<>();
-            for (int i = 0; i < inputFiles.size(); i++) {
-                File inputFile = inputFiles.get(i);
+                inputFiles.clear();
+                for (File directory : sources) {
+                    publish("Scanning: " + directory.getPath());
+                    getAllFiles(inputFiles, directory);
+                }
+                publish("Done.\n");
+                setProgress(100);
+                Thread.sleep(1000);
+                //</editor-fold>
 
-                String path = inputFile.getPath();
-                try {
-                    publish("\tAnalyzing: " + path);
-                    FileInfo info = FileInfo.init(path);
-                    fileInfos.add(info);
+                //<editor-fold defaultstate="collapsed" desc="Step 2 - Analyzing files">
+                publish("Step 2. Analyzing files.");
+                setProgress(0);
+                for (int i = 0; i < inputFiles.size(); i++) {
+                    File inputFile = inputFiles.get(i);
+                    String path = inputFile.getPath();
+                    try {
+                        publish("\tAnalyzing: " + path);
+                        FileInfo info = FileInfo.init(path);
+                        fileInfos.add(info);
 //                publish("\tHash = " + info.getHash());
-                } catch (IOException ex) {
-                    publish("\tFailed! Error was logged.");
-                    Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (IOException ex) {
+                        publish("\tFailed! Error was logged.");
+                        Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+
+                    setProgress((int) Math.round(100 * (double) i / inputFiles.size()));
+                }
+                publish("Done.\n");
+                setProgress(100);
+                Thread.sleep(1000);
+                //</editor-fold>
+
+                //<editor-fold defaultstate="collapsed" desc="Step 3 - Processing gathered information">
+                publish("Step 3. Processing files.");
+                setProgress(0);
+                HashMap<String, Integer> map = new HashMap<>();
+                publish("\tGathering aggregate information");
+                for (FileInfo fileInfo : fileInfos) {
+                    String newName = fileInfo.getName().trim().toLowerCase().replaceAll("[^A-Za-z0-9]", " ");
+                    fileInfo.setName(newName);
+                    List<String> words = Arrays.asList(newName.split(" "));
+                    for (String word : words) {
+                        if (map.containsKey(word) == false) {
+                            map.put(word, 1);
+                        }
+                        map.put(word, map.get(word) + 1);
+                    }
                 }
 
-                setProgress((int) Math.round(100 * (double) i / inputFiles.size()));
-            }
-            publish("Done.\n");
-            setProgress(100);
-            Thread.sleep(1000);
+                HashSet<String> commonWords = new HashSet<>();
+                for (String word : map.keySet()) {
+                    if (map.get(word) > 10) {
+                        commonWords.add(word);
+                    }
+                }
+                for (FileInfo fileInfo : fileInfos) {
+                    publish("\tProcessing: " + fileInfo.getPath());
+                    StringBuilder nameBuilder = new StringBuilder();
+                    String words[] = fileInfo.getName().split(" ");
+                    for (String word : words) {
+                        if (commonWords.contains(word) == false) {
+                            nameBuilder.append(word).append(" ");
+                        }
+                    }
+                    String newName = nameBuilder.toString();
+                    fileInfo.setName(newName);
+                }
+                publish("Done.\n");
+                setProgress(100);
+                Thread.sleep(1000);
+                //</editor-fold>
 
-            return null;
+                //<editor-fold defaultstate="collapsed" desc="Step 4 - Finding duplicates">
+                publish("Step 4. Finding duplicates.");
+                setProgress(0);
+                HashSet<ArrayList<FileInfo>> duplicates = new HashSet<>();
+                outer:
+                for (FileInfo fileInfo : fileInfos) {
+                    publish("\tChecking: " + fileInfo.getPath());
+                    for (ArrayList<FileInfo> set : duplicates) {
+                        if (FileInfoComparer.areSame(fileInfo, set.get(0))) {
+                            set.add(fileInfo);
+                            continue outer;
+                        }
+                    }
+
+                    ArrayList<FileInfo> newSet = new ArrayList<>();
+                    newSet.add(fileInfo);
+                    duplicates.add(newSet);
+                }
+                publish("Done.\n");
+                setProgress(100);
+                Thread.sleep(1000);
+                //</editor-fold>
+
+                System.out.println("RESULT");
+                for (ArrayList<FileInfo> set : duplicates) {
+                    if (set.size() > 1) {
+                        for (FileInfo fileInfo : set) {
+                            System.out.println(fileInfo);
+                        }
+                        System.out.println();
+                    }
+                }
+
+                return null;
+            } catch (InterruptedException e) {
+                Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, "an exception was thrown", e);
+                return null;
+            }
         }
 
         @Override
         protected void process(List<String> chunks) {
             chunks.forEach((chunk) -> TA_Status.append(chunk + "\n"));
-//            System.out.println(getProgress());
+
             ProgressBar.setValue(getProgress());
 
             if (getProgress() == 100) {
@@ -141,6 +230,7 @@ public class MainFrame extends javax.swing.JFrame {
         }
     }
 
+    // <editor-fold defaultstate="collapsed" desc="GUI Code">
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -768,9 +858,8 @@ public class MainFrame extends javax.swing.JFrame {
         L_Content.setText("Content volume:");
 
         SL_Content.setMajorTickSpacing(20);
-        SL_Content.setMinimum(20);
+        SL_Content.setMinimum(2);
         SL_Content.setMinorTickSpacing(1);
-        SL_Content.setPaintLabels(true);
         SL_Content.setPaintTicks(true);
         SL_Content.setSnapToTicks(true);
         SL_Content.setToolTipText("100% => Entire file will be scanned for content.");
@@ -784,18 +873,14 @@ public class MainFrame extends javax.swing.JFrame {
             .addGroup(P_AdvanceSettingsLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(P_AdvanceSettingsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(P_AdvanceSettingsLayout.createSequentialGroup()
-                        .addComponent(L_Content, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(SL_Content, javax.swing.GroupLayout.PREFERRED_SIZE, 432, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(P_AdvanceSettingsLayout.createSequentialGroup()
-                        .addGroup(P_AdvanceSettingsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(L_AdSize, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(L_AdName, javax.swing.GroupLayout.DEFAULT_SIZE, 126, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(P_AdvanceSettingsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(SL_Size, javax.swing.GroupLayout.PREFERRED_SIZE, 432, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(SL_Name, javax.swing.GroupLayout.PREFERRED_SIZE, 432, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addComponent(L_Content, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(L_AdSize, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(L_AdName, javax.swing.GroupLayout.DEFAULT_SIZE, 126, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(P_AdvanceSettingsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(SL_Content, javax.swing.GroupLayout.PREFERRED_SIZE, 432, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(SL_Size, javax.swing.GroupLayout.PREFERRED_SIZE, 432, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(SL_Name, javax.swing.GroupLayout.PREFERRED_SIZE, 432, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -1086,16 +1171,14 @@ public class MainFrame extends javax.swing.JFrame {
         CB_Step2.setSelected(false);
         CB_Step3.setSelected(false);
 
-        ProgressDialog.pack();
-        ProgressDialog.setLocationRelativeTo(null);
-
         DecloneWorker worker = new DecloneWorker(sources);
         worker.execute();
 
+        ProgressDialog.pack();
+        ProgressDialog.setLocationRelativeTo(null);
         ProgressDialog.setVisible(true);
     }//GEN-LAST:event_B_DecloneActionPerformed
 
-    // <editor-fold defaultstate="collapsed" desc="GUI Variables">
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup BG_FileSize;
     private javax.swing.JButton B_AddSource;

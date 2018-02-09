@@ -931,22 +931,15 @@
                           <Group type="102" attributes="0">
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Group type="102" attributes="0">
-                                      <Component id="L_Content" linkSize="12" min="-2" pref="126" max="-2" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="SL_Content" linkSize="13" min="-2" pref="432" max="-2" attributes="0"/>
-                                  </Group>
-                                  <Group type="102" attributes="0">
-                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                          <Component id="L_AdSize" linkSize="12" max="32767" attributes="0"/>
-                                          <Component id="L_AdName" linkSize="12" pref="126" max="32767" attributes="0"/>
-                                      </Group>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="SL_Size" linkSize="13" min="-2" pref="432" max="-2" attributes="0"/>
-                                          <Component id="SL_Name" linkSize="13" min="-2" pref="432" max="-2" attributes="0"/>
-                                      </Group>
-                                  </Group>
+                                  <Component id="L_Content" linkSize="12" min="-2" pref="126" max="-2" attributes="0"/>
+                                  <Component id="L_AdSize" linkSize="12" max="32767" attributes="0"/>
+                                  <Component id="L_AdName" linkSize="12" pref="126" max="32767" attributes="0"/>
+                              </Group>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="SL_Content" linkSize="13" alignment="0" min="-2" pref="432" max="-2" attributes="0"/>
+                                  <Component id="SL_Size" linkSize="13" alignment="0" min="-2" pref="432" max="-2" attributes="0"/>
+                                  <Component id="SL_Name" linkSize="13" alignment="0" min="-2" pref="432" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
                           </Group>
@@ -1020,9 +1013,8 @@
                     <Component class="javax.swing.JSlider" name="SL_Content">
                       <Properties>
                         <Property name="majorTickSpacing" type="int" value="20"/>
-                        <Property name="minimum" type="int" value="20"/>
+                        <Property name="minimum" type="int" value="2"/>
                         <Property name="minorTickSpacing" type="int" value="1"/>
-                        <Property name="paintLabels" type="boolean" value="true"/>
                         <Property name="paintTicks" type="boolean" value="true"/>
                         <Property name="snapToTicks" type="boolean" value="true"/>
                         <Property name="toolTipText" type="java.lang.String" value="100% =&gt; Entire file will be scanned for content."/>
