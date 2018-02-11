@@ -4,11 +4,9 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.function.Predicate;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
@@ -20,7 +18,6 @@ import me.vijaychavda.CompareSettings;
 import me.vijaychavda.FileInfo;
 import me.vijaychavda.FileInfoComparer;
 import me.vijaychavda.SelectionSettings;
-import me.vijaychavda.util.MapUtil;
 
 public class MainFrame extends javax.swing.JFrame {
 
@@ -236,7 +233,6 @@ public class MainFrame extends javax.swing.JFrame {
     private void initComponents() {
 
         FilePicker = new javax.swing.JFileChooser();
-        BG_FileSize = new javax.swing.ButtonGroup();
         ProgressDialog = new javax.swing.JDialog();
         P_ProgressContent = new javax.swing.JPanel();
         L_Info = new javax.swing.JLabel();
@@ -250,6 +246,10 @@ public class MainFrame extends javax.swing.JFrame {
         L_Step1 = new javax.swing.JLabel();
         L_Step2 = new javax.swing.JLabel();
         L_Step3 = new javax.swing.JLabel();
+        BG_FileSize = new javax.swing.ButtonGroup();
+        RBG_Name = new javax.swing.ButtonGroup();
+        RBG_Size = new javax.swing.ButtonGroup();
+        RBG_Content = new javax.swing.ButtonGroup();
         P_Content = new javax.swing.JPanel();
         TabbedPane = new javax.swing.JTabbedPane();
         P_Sources = new javax.swing.JPanel();
@@ -293,19 +293,33 @@ public class MainFrame extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         P_Settings = new javax.swing.JPanel();
         L_Info31 = new javax.swing.JLabel();
-        Info32 = new javax.swing.JLabel();
+        TB_Advance = new javax.swing.JToggleButton();
+        P_AdvanceSettings = new javax.swing.JPanel();
+        P_CustomNameSize = new javax.swing.JPanel();
+        L_Name = new javax.swing.JLabel();
+        L_Size = new javax.swing.JLabel();
+        RB_Name1 = new javax.swing.JRadioButton();
+        RB_Name2 = new javax.swing.JRadioButton();
+        RB_Name3 = new javax.swing.JRadioButton();
+        RB_Name4 = new javax.swing.JRadioButton();
+        RB_Size1 = new javax.swing.JRadioButton();
+        RB_Size2 = new javax.swing.JRadioButton();
+        RB_Size3 = new javax.swing.JRadioButton();
+        P_CustomContent = new javax.swing.JPanel();
+        L_Content = new javax.swing.JLabel();
+        RB_Content1 = new javax.swing.JRadioButton();
+        RB_Content2 = new javax.swing.JRadioButton();
+        RB_Content3 = new javax.swing.JRadioButton();
+        RB_Content4 = new javax.swing.JRadioButton();
+        RB_Content5 = new javax.swing.JRadioButton();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
         CB_Name = new javax.swing.JCheckBox();
         CB_Size = new javax.swing.JCheckBox();
         CB_Content = new javax.swing.JCheckBox();
-        L_Info33 = new javax.swing.JLabel();
-        TB_Advance = new javax.swing.JToggleButton();
-        P_AdvanceSettings = new javax.swing.JPanel();
-        L_AdName = new javax.swing.JLabel();
-        SL_Name = new javax.swing.JSlider();
-        L_AdSize = new javax.swing.JLabel();
-        SL_Size = new javax.swing.JSlider();
-        L_Content = new javax.swing.JLabel();
-        SL_Content = new javax.swing.JSlider();
         Menubar = new javax.swing.JMenuBar();
         M_Help = new javax.swing.JMenu();
         MI_About = new javax.swing.JMenuItem();
@@ -463,22 +477,27 @@ public class MainFrame extends javax.swing.JFrame {
         P_Sources.setLayout(P_SourcesLayout);
         P_SourcesLayout.setHorizontalGroup(
             P_SourcesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, P_SourcesLayout.createSequentialGroup()
+            .addGroup(P_SourcesLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(P_SourcesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, P_SourcesLayout.createSequentialGroup()
+                .addGroup(P_SourcesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(P_SourcesLayout.createSequentialGroup()
+                        .addComponent(S_Sources)
+                        .addContainerGap())
+                    .addGroup(P_SourcesLayout.createSequentialGroup()
+                        .addComponent(L_WhereDoWeLook, javax.swing.GroupLayout.DEFAULT_SIZE, 551, Short.MAX_VALUE)
+                        .addContainerGap(43, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, P_SourcesLayout.createSequentialGroup()
                         .addComponent(B_RemoveSource)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(B_Declone))
-                    .addComponent(S_Sources)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, P_SourcesLayout.createSequentialGroup()
+                        .addComponent(B_Declone)
+                        .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, P_SourcesLayout.createSequentialGroup()
                         .addComponent(T_SourcePath)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(B_AddSource)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(B_Browse))
-                    .addComponent(L_WhereDoWeLook, javax.swing.GroupLayout.DEFAULT_SIZE, 588, Short.MAX_VALUE))
-                .addContainerGap())
+                        .addComponent(B_Browse)
+                        .addContainerGap())))
         );
         P_SourcesLayout.setVerticalGroup(
             P_SourcesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -491,8 +510,8 @@ public class MainFrame extends javax.swing.JFrame {
                     .addComponent(B_AddSource)
                     .addComponent(B_Browse))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(S_Sources, javax.swing.GroupLayout.DEFAULT_SIZE, 282, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(S_Sources, javax.swing.GroupLayout.DEFAULT_SIZE, 330, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(P_SourcesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(B_RemoveSource)
                     .addComponent(B_Declone))
@@ -716,7 +735,7 @@ public class MainFrame extends javax.swing.JFrame {
                 .addComponent(L_Info22)
                 .addGap(18, 18, 18)
                 .addComponent(CB_AnySize)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(18, 18, 18)
                 .addGroup(P_FilterSizeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(CB_Small)
                     .addComponent(jLabel1))
@@ -728,7 +747,7 @@ public class MainFrame extends javax.swing.JFrame {
                 .addGroup(P_FilterSizeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(CB_Large)
                     .addComponent(jLabel3))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(18, 18, 18)
                 .addComponent(CB_CustomSize)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(P_FilterSizeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -756,18 +775,17 @@ public class MainFrame extends javax.swing.JFrame {
         P_FileOptions.setLayout(P_FileOptionsLayout);
         P_FileOptionsLayout.setHorizontalGroup(
             P_FileOptionsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, P_FileOptionsLayout.createSequentialGroup()
+            .addGroup(P_FileOptionsLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(P_FileOptionsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(P_FileOptionsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(L_Info2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(P_FileOptionsLayout.createSequentialGroup()
                         .addComponent(P_FilterType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(Seperator2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(P_FilterSize, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 6, Short.MAX_VALUE)))
-                .addGap(0, 0, 0))
+                        .addComponent(P_FilterSize, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         P_FileOptionsLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {P_FilterSize, P_FilterType});
@@ -791,9 +809,218 @@ public class MainFrame extends javax.swing.JFrame {
 
         P_Settings.setOpaque(false);
 
-        L_Info31.setText("How should files be compared?");
+        L_Info31.setText("Which parameters should be considered to consider files as duplicates?");
 
-        Info32.setText("Parameters:");
+        TB_Advance.setText("Enable custom settings");
+        TB_Advance.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                TB_AdvanceActionPerformed(evt);
+            }
+        });
+
+        P_AdvanceSettings.setOpaque(false);
+
+        L_Name.setText("Name");
+
+        L_Size.setText("Size");
+
+        RBG_Name.add(RB_Name1);
+        RB_Name1.setText("Similar");
+        RB_Name1.setEnabled(false);
+
+        RBG_Name.add(RB_Name2);
+        RB_Name2.setText("Common words");
+        RB_Name2.setEnabled(false);
+
+        RBG_Name.add(RB_Name3);
+        RB_Name3.setText("Exactly same");
+        RB_Name3.setEnabled(false);
+
+        RBG_Name.add(RB_Name4);
+        RB_Name4.setSelected(true);
+        RB_Name4.setText("Similar common words");
+        RB_Name4.setEnabled(false);
+
+        RBG_Size.add(RB_Size1);
+        RB_Size1.setSelected(true);
+        RB_Size1.setText("No huge difference");
+        RB_Size1.setEnabled(false);
+
+        RBG_Size.add(RB_Size2);
+        RB_Size2.setText("Almost same");
+        RB_Size2.setEnabled(false);
+
+        RBG_Size.add(RB_Size3);
+        RB_Size3.setText("Exactly same");
+        RB_Size3.setEnabled(false);
+
+        javax.swing.GroupLayout P_CustomNameSizeLayout = new javax.swing.GroupLayout(P_CustomNameSize);
+        P_CustomNameSize.setLayout(P_CustomNameSizeLayout);
+        P_CustomNameSizeLayout.setHorizontalGroup(
+            P_CustomNameSizeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(P_CustomNameSizeLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(P_CustomNameSizeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(L_Name)
+                    .addComponent(L_Size)
+                    .addGroup(P_CustomNameSizeLayout.createSequentialGroup()
+                        .addGap(6, 6, 6)
+                        .addGroup(P_CustomNameSizeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(RB_Size1)
+                            .addComponent(RB_Name2)
+                            .addComponent(RB_Name3)
+                            .addComponent(RB_Size2)
+                            .addComponent(RB_Size3)
+                            .addComponent(RB_Name1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(RB_Name4))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        P_CustomNameSizeLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {L_Name, L_Size});
+
+        P_CustomNameSizeLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {RB_Name1, RB_Name2, RB_Name3, RB_Size1, RB_Size2, RB_Size3});
+
+        P_CustomNameSizeLayout.setVerticalGroup(
+            P_CustomNameSizeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(P_CustomNameSizeLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(L_Name)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(RB_Name1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(RB_Name2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(RB_Name4)
+                .addGap(3, 3, 3)
+                .addComponent(RB_Name3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(L_Size)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(RB_Size1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(RB_Size2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(RB_Size3)
+                .addContainerGap())
+        );
+
+        L_Content.setText("Content");
+
+        RBG_Content.add(RB_Content1);
+        RB_Content1.setSelected(true);
+        RB_Content1.setText("2 %");
+        RB_Content1.setEnabled(false);
+
+        RBG_Content.add(RB_Content2);
+        RB_Content2.setText("10 %");
+        RB_Content2.setEnabled(false);
+
+        RBG_Content.add(RB_Content3);
+        RB_Content3.setText("20 %");
+        RB_Content3.setEnabled(false);
+
+        RBG_Content.add(RB_Content4);
+        RB_Content4.setText("50 %");
+        RB_Content4.setEnabled(false);
+
+        RBG_Content.add(RB_Content5);
+        RB_Content5.setText("100 %");
+        RB_Content5.setEnabled(false);
+
+        jLabel4.setText("Least");
+
+        jLabel5.setText("Very less");
+
+        jLabel6.setText("Less");
+
+        jLabel7.setText("Half");
+
+        jLabel8.setText("Complete");
+
+        javax.swing.GroupLayout P_CustomContentLayout = new javax.swing.GroupLayout(P_CustomContent);
+        P_CustomContent.setLayout(P_CustomContentLayout);
+        P_CustomContentLayout.setHorizontalGroup(
+            P_CustomContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(P_CustomContentLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(P_CustomContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(L_Content)
+                    .addGroup(P_CustomContentLayout.createSequentialGroup()
+                        .addGap(6, 6, 6)
+                        .addGroup(P_CustomContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(P_CustomContentLayout.createSequentialGroup()
+                                .addComponent(RB_Content1, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jLabel4))
+                            .addGroup(P_CustomContentLayout.createSequentialGroup()
+                                .addComponent(RB_Content2, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jLabel5))
+                            .addGroup(P_CustomContentLayout.createSequentialGroup()
+                                .addComponent(RB_Content3, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jLabel6))
+                            .addGroup(P_CustomContentLayout.createSequentialGroup()
+                                .addComponent(RB_Content4, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jLabel7))
+                            .addGroup(P_CustomContentLayout.createSequentialGroup()
+                                .addComponent(RB_Content5, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jLabel8)))))
+                .addContainerGap(107, Short.MAX_VALUE))
+        );
+
+        P_CustomContentLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jLabel4, jLabel5, jLabel6, jLabel7, jLabel8});
+
+        P_CustomContentLayout.setVerticalGroup(
+            P_CustomContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(P_CustomContentLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(L_Content)
+                .addGap(24, 24, 24)
+                .addGroup(P_CustomContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(RB_Content1)
+                    .addComponent(jLabel4))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(P_CustomContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(RB_Content2)
+                    .addComponent(jLabel5))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(P_CustomContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(RB_Content3)
+                    .addComponent(jLabel6))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(P_CustomContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(RB_Content4)
+                    .addComponent(jLabel7))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(P_CustomContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(RB_Content5)
+                    .addComponent(jLabel8))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout P_AdvanceSettingsLayout = new javax.swing.GroupLayout(P_AdvanceSettings);
+        P_AdvanceSettings.setLayout(P_AdvanceSettingsLayout);
+        P_AdvanceSettingsLayout.setHorizontalGroup(
+            P_AdvanceSettingsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(P_AdvanceSettingsLayout.createSequentialGroup()
+                .addGap(0, 0, 0)
+                .addComponent(P_CustomNameSize, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(P_CustomContent, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0))
+        );
+        P_AdvanceSettingsLayout.setVerticalGroup(
+            P_AdvanceSettingsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(P_AdvanceSettingsLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(P_AdvanceSettingsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(P_CustomContent, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(P_CustomNameSize, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
 
         CB_Name.setSelected(true);
         CB_Name.setText("Name");
@@ -813,96 +1040,13 @@ public class MainFrame extends javax.swing.JFrame {
             }
         });
 
-        CB_Content.setSelected(true);
-        CB_Content.setText("Content");
+        CB_Content.setText("Content (Slow for large files)");
         CB_Content.setOpaque(false);
         CB_Content.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 CB_AdvanceActionPerformed(evt);
             }
         });
-
-        L_Info33.setText("(Slow for large files)");
-
-        TB_Advance.setText("Enable Advance settings");
-        TB_Advance.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                TB_AdvanceActionPerformed(evt);
-            }
-        });
-
-        L_AdName.setText("Name similarity:");
-
-        SL_Name.setMajorTickSpacing(1);
-        SL_Name.setMaximum(3);
-        SL_Name.setMinimum(1);
-        SL_Name.setPaintTicks(true);
-        SL_Name.setSnapToTicks(true);
-        SL_Name.setToolTipText("");
-        SL_Name.setEnabled(false);
-
-        L_AdSize.setText("Size similarity:");
-
-        SL_Size.setMajorTickSpacing(20);
-        SL_Size.setMinimum(20);
-        SL_Size.setMinorTickSpacing(1);
-        SL_Size.setPaintLabels(true);
-        SL_Size.setPaintTicks(true);
-        SL_Size.setSnapToTicks(true);
-        SL_Size.setToolTipText("100% => Sizes should be exactly same.");
-        SL_Size.setValue(90);
-        SL_Size.setEnabled(false);
-
-        L_Content.setText("Content volume:");
-
-        SL_Content.setMajorTickSpacing(20);
-        SL_Content.setMinimum(2);
-        SL_Content.setMinorTickSpacing(1);
-        SL_Content.setPaintTicks(true);
-        SL_Content.setSnapToTicks(true);
-        SL_Content.setToolTipText("100% => Entire file will be scanned for content.");
-        SL_Content.setValue(30);
-        SL_Content.setEnabled(false);
-
-        javax.swing.GroupLayout P_AdvanceSettingsLayout = new javax.swing.GroupLayout(P_AdvanceSettings);
-        P_AdvanceSettings.setLayout(P_AdvanceSettingsLayout);
-        P_AdvanceSettingsLayout.setHorizontalGroup(
-            P_AdvanceSettingsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(P_AdvanceSettingsLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(P_AdvanceSettingsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(L_Content, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(L_AdSize, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(L_AdName, javax.swing.GroupLayout.DEFAULT_SIZE, 126, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(P_AdvanceSettingsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(SL_Content, javax.swing.GroupLayout.PREFERRED_SIZE, 432, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(SL_Size, javax.swing.GroupLayout.PREFERRED_SIZE, 432, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(SL_Name, javax.swing.GroupLayout.PREFERRED_SIZE, 432, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
-        );
-
-        P_AdvanceSettingsLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {L_AdName, L_AdSize, L_Content});
-
-        P_AdvanceSettingsLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {SL_Content, SL_Name, SL_Size});
-
-        P_AdvanceSettingsLayout.setVerticalGroup(
-            P_AdvanceSettingsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(P_AdvanceSettingsLayout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addGroup(P_AdvanceSettingsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(SL_Name, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(L_AdName))
-                .addGap(18, 18, 18)
-                .addGroup(P_AdvanceSettingsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(L_AdSize)
-                    .addComponent(SL_Size, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(P_AdvanceSettingsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(L_Content)
-                    .addComponent(SL_Content, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
 
         javax.swing.GroupLayout P_SettingsLayout = new javax.swing.GroupLayout(P_Settings);
         P_Settings.setLayout(P_SettingsLayout);
@@ -912,41 +1056,37 @@ public class MainFrame extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(P_SettingsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(P_AdvanceSettings, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(L_Info31, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(P_SettingsLayout.createSequentialGroup()
-                        .addComponent(Info32)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, P_SettingsLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(TB_Advance))
                     .addGroup(P_SettingsLayout.createSequentialGroup()
-                        .addGroup(P_SettingsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(CB_Name, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(CB_Size, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(CB_Content, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(18, 18, 18)
-                        .addComponent(L_Info33)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGroup(P_SettingsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(CB_Name, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(CB_Size, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(CB_Content, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
+                            .addComponent(L_Info31))
+                        .addGap(0, 77, Short.MAX_VALUE)))
                 .addContainerGap())
         );
+
+        P_SettingsLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {CB_Content, CB_Name, CB_Size});
+
         P_SettingsLayout.setVerticalGroup(
             P_SettingsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(P_SettingsLayout.createSequentialGroup()
                 .addGap(15, 15, 15)
                 .addComponent(L_Info31)
-                .addGap(30, 30, 30)
-                .addComponent(Info32)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(CB_Name)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(CB_Size)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(P_SettingsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(CB_Content)
-                    .addComponent(L_Info33))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(CB_Content)
+                .addGap(12, 12, 12)
                 .addComponent(TB_Advance)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(P_AdvanceSettings, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(P_AdvanceSettings, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         TabbedPane.addTab("Options", P_Settings);
@@ -957,7 +1097,7 @@ public class MainFrame extends javax.swing.JFrame {
             P_ContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(P_ContentLayout.createSequentialGroup()
                 .addComponent(TabbedPane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         P_ContentLayout.setVerticalGroup(
             P_ContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1107,15 +1247,25 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_CB_SizeActionPerformed
 
     private void TB_AdvanceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TB_AdvanceActionPerformed
-        SL_Name.setEnabled(TB_Advance.isSelected());
-        SL_Size.setEnabled(TB_Advance.isSelected());
-        SL_Content.setEnabled(TB_Advance.isSelected());
+        RB_Content1.setEnabled(TB_Advance.isSelected());
+        RB_Content2.setEnabled(TB_Advance.isSelected());
+        RB_Content3.setEnabled(TB_Advance.isSelected());
+        RB_Content4.setEnabled(TB_Advance.isSelected());
+        RB_Content5.setEnabled(TB_Advance.isSelected());
+        RB_Name1.setEnabled(TB_Advance.isSelected());
+        RB_Name2.setEnabled(TB_Advance.isSelected());
+        RB_Name3.setEnabled(TB_Advance.isSelected());
+        RB_Name4.setEnabled(TB_Advance.isSelected());
+        RB_Size1.setEnabled(TB_Advance.isSelected());
+        RB_Size2.setEnabled(TB_Advance.isSelected());
+        RB_Size3.setEnabled(TB_Advance.isSelected());
+
         TB_Advance.setText(TB_Advance.isSelected() ? "Disable Advance settings" : "Enable Advance settings");
     }//GEN-LAST:event_TB_AdvanceActionPerformed
 
     private void CB_AdvanceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CB_AdvanceActionPerformed
         if (!CB_Name.isSelected() && !CB_Size.isSelected() && !CB_Content.isSelected())
-            CB_Size.setSelected(true);
+            CB_Name.setSelected(true);
     }//GEN-LAST:event_CB_AdvanceActionPerformed
 
     private void B_DecloneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_B_DecloneActionPerformed
@@ -1148,12 +1298,9 @@ public class MainFrame extends javax.swing.JFrame {
         compareSettings.setUsingSize(CB_Size.isSelected());
         compareSettings.setUsingContent(CB_Content.isSelected());
 
-//        compareSettings.setNameDelta(1 - (SL_Name.getValue() / 100F));
-//        compareSettings.setSizeDelta(1 - (SL_Size.getValue() / 100F));
-//        compareSettings.setContentVolumePercent(SL_Content.getValue() / 100F);
-        compareSettings.setNameDelta(1 - (100 / 100F));
-        compareSettings.setSizeDelta(1 - (90 / 100F));
-        compareSettings.setContentVolumePercent(1 / 100F);
+        //compareSettings.setNameDelta(1 - (100 / 100F));
+        //compareSettings.setSizeDelta(1 - (90 / 100F));
+        //compareSettings.setContentVolumePercent(1 / 100F);
 
         SelectionSettings selectionSettings = AppContext.getSelectionSettings();
         selectionSettings.setExtensionCS(TB_Extensions.getText());
@@ -1207,16 +1354,14 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JCheckBox CB_TypeAll;
     private javax.swing.JCheckBox CB_Videos;
     private javax.swing.JFileChooser FilePicker;
-    private javax.swing.JLabel Info32;
-    private javax.swing.JLabel L_AdName;
-    private javax.swing.JLabel L_AdSize;
     private javax.swing.JLabel L_Content;
     private javax.swing.JLabel L_Info;
     private javax.swing.JLabel L_Info2;
     private javax.swing.JLabel L_Info21;
     private javax.swing.JLabel L_Info22;
     private javax.swing.JLabel L_Info31;
-    private javax.swing.JLabel L_Info33;
+    private javax.swing.JLabel L_Name;
+    private javax.swing.JLabel L_Size;
     private javax.swing.JLabel L_SizeSign;
     private javax.swing.JList<String> L_Sources;
     private javax.swing.JLabel L_Step1;
@@ -1232,6 +1377,8 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JMenuBar Menubar;
     private javax.swing.JPanel P_AdvanceSettings;
     private javax.swing.JPanel P_Content;
+    private javax.swing.JPanel P_CustomContent;
+    private javax.swing.JPanel P_CustomNameSize;
     private javax.swing.JPanel P_FileOptions;
     private javax.swing.JPanel P_FilterSize;
     private javax.swing.JPanel P_FilterType;
@@ -1240,9 +1387,21 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JPanel P_Sources;
     private javax.swing.JProgressBar ProgressBar;
     private javax.swing.JDialog ProgressDialog;
-    private javax.swing.JSlider SL_Content;
-    private javax.swing.JSlider SL_Name;
-    private javax.swing.JSlider SL_Size;
+    private javax.swing.ButtonGroup RBG_Content;
+    private javax.swing.ButtonGroup RBG_Name;
+    private javax.swing.ButtonGroup RBG_Size;
+    private javax.swing.JRadioButton RB_Content1;
+    private javax.swing.JRadioButton RB_Content2;
+    private javax.swing.JRadioButton RB_Content3;
+    private javax.swing.JRadioButton RB_Content4;
+    private javax.swing.JRadioButton RB_Content5;
+    private javax.swing.JRadioButton RB_Name1;
+    private javax.swing.JRadioButton RB_Name2;
+    private javax.swing.JRadioButton RB_Name3;
+    private javax.swing.JRadioButton RB_Name4;
+    private javax.swing.JRadioButton RB_Size1;
+    private javax.swing.JRadioButton RB_Size2;
+    private javax.swing.JRadioButton RB_Size3;
     private javax.swing.JScrollPane SP_Extensions;
     private javax.swing.JSpinner SP_GreaterThan;
     private javax.swing.JSpinner SP_LessThan;
@@ -1260,6 +1419,11 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     // End of variables declaration//GEN-END:variables
     // </editor-fold>
 
