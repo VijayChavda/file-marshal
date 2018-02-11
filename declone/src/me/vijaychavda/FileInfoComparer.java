@@ -1,6 +1,8 @@
 package me.vijaychavda;
 
 import info.debatty.java.stringsimilarity.JaroWinkler;
+import java.util.Arrays;
+import java.util.HashSet;
 
 public class FileInfoComparer {
 
@@ -22,7 +24,34 @@ public class FileInfoComparer {
     }
 
     private static boolean nameSimilar(String name1, String name2, float delta) {
-        return 1 - new JaroWinkler().similarity(name1, name2) <= delta;
+        //return 1 - new JaroWinkler().similarity(name1, name2) <= delta;
+
+        int similarWords = 0;
+        String wordsIn1[] = name1.split(" ");
+        HashSet<String> wordsIn2 = new HashSet<>(Arrays.asList(name2.split(" ")));
+        for (String word1 : wordsIn1) {
+            for (String word2 : wordsIn2) {
+                double j = new JaroWinkler().similarity(word1, word2);
+                if (1 - j <= delta) {
+                    similarWords++;
+                    break;
+                }
+            }
+        }
+
+        int largerLength = wordsIn1.length > wordsIn2.size() ? wordsIn1.length : wordsIn2.size();
+
+        if (largerLength == 1) {
+            return similarWords == largerLength;
+        }
+        if (largerLength <= 5) {
+            return similarWords > largerLength - 2;
+        }
+        if (largerLength <= 8) {
+            return similarWords > largerLength - 3;
+        }
+
+        return similarWords >= 8;
     }
 
     private static boolean sizeSimilar(long size1, long size2, float delta) {

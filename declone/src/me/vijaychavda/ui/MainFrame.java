@@ -113,7 +113,7 @@ public class MainFrame extends javax.swing.JFrame {
 
                 HashSet<String> commonWords = new HashSet<>();
                 for (String word : map.keySet()) {
-                    if (map.get(word) > 10) {
+                    if (map.get(word) > 8) {
                         commonWords.add(word);
                     }
                 }
@@ -161,7 +161,7 @@ public class MainFrame extends javax.swing.JFrame {
                 for (ArrayList<FileInfo> set : duplicates) {
                     if (set.size() > 1) {
                         for (FileInfo fileInfo : set) {
-                            System.out.println(fileInfo);
+                            System.out.println(fileInfo.getName());
                         }
                         System.out.println();
                     }
@@ -833,14 +833,12 @@ public class MainFrame extends javax.swing.JFrame {
 
         L_AdName.setText("Name similarity:");
 
-        SL_Name.setMajorTickSpacing(20);
-        SL_Name.setMinimum(20);
-        SL_Name.setMinorTickSpacing(1);
-        SL_Name.setPaintLabels(true);
+        SL_Name.setMajorTickSpacing(1);
+        SL_Name.setMaximum(3);
+        SL_Name.setMinimum(1);
         SL_Name.setPaintTicks(true);
         SL_Name.setSnapToTicks(true);
-        SL_Name.setToolTipText("100% => Names should be exactly same.");
-        SL_Name.setValue(70);
+        SL_Name.setToolTipText("");
         SL_Name.setEnabled(false);
 
         L_AdSize.setText("Size similarity:");
@@ -1149,9 +1147,13 @@ public class MainFrame extends javax.swing.JFrame {
         compareSettings.setUsingNames(CB_Name.isSelected());
         compareSettings.setUsingSize(CB_Size.isSelected());
         compareSettings.setUsingContent(CB_Content.isSelected());
-        compareSettings.setNameDelta(1 - (SL_Name.getValue() / 100F));
-        compareSettings.setSizeDelta(1 - (SL_Size.getValue() / 100F));
-        compareSettings.setContentVolumePercent(SL_Content.getValue() / 100F);
+
+//        compareSettings.setNameDelta(1 - (SL_Name.getValue() / 100F));
+//        compareSettings.setSizeDelta(1 - (SL_Size.getValue() / 100F));
+//        compareSettings.setContentVolumePercent(SL_Content.getValue() / 100F);
+        compareSettings.setNameDelta(1 - (100 / 100F));
+        compareSettings.setSizeDelta(1 - (90 / 100F));
+        compareSettings.setContentVolumePercent(1 / 100F);
 
         SelectionSettings selectionSettings = AppContext.getSelectionSettings();
         selectionSettings.setExtensionCS(TB_Extensions.getText());
