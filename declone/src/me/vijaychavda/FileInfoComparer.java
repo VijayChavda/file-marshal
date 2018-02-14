@@ -9,18 +9,19 @@ public class FileInfoComparer {
     public static boolean areSame(FileInfo f1, FileInfo f2) {
         CompareSettings settings = AppContext.getCompareSettings();
 
-        if (settings.isUsingContent()) {
-            return contentSimilar(f1.getHash(), f2.getHash());
-        }
+        if (settings.isUsingSize())
+            if (!sizeSimilar(f1.getSize(), f2.getSize()))
+                return false;
 
-        boolean same = true;
         if (settings.isUsingNames())
-            same = nameSimilar(f1.getName(), f2.getName());
+            if (!nameSimilar(f1.getName(), f2.getName()))
+                return false;
 
-        if (settings.isUsingSize() && same)
-            same = sizeSimilar(f1.getSize(), f2.getSize());
+        if (settings.isUsingContent())
+            if (!contentSimilar(f1.getHash(), f2.getHash()))
+                return false;
 
-        return same;
+        return true;
     }
 
     private static boolean nameSimilar(String name1, String name2) {

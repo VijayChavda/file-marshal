@@ -58,7 +58,7 @@ public class FileInfo {
         int partScanLength = 1048576;
         long totalLength = file.length();
         double scanPercent = getContentVolumePercent();
-        long scanLength = Math.round(totalLength * scanPercent);
+        long scanLength = Math.round(totalLength * scanPercent / 100);
 
         if (scanLength < partScanLength) {
             byte data[] = new byte[(int) totalLength];

@@ -159,7 +159,7 @@ public class MainFrame extends javax.swing.JFrame {
                 setProgress(0);
                 p = 0;
                 CompareSettings settings = AppContext.getCompareSettings();
-                if (settings.isNameCommonWords() || settings.isNameSimilarCommonWords()) {
+                if (settings.isUsingNames() && (settings.isNameCommonWords() || settings.isNameSimilarCommonWords())) {
                     HashMap<String, Integer> wordFrequencyMap = new HashMap<>();
                     publish("\tGathering aggregate information");
                     for (FileInfo fileInfo : fileInfos) {
@@ -199,9 +199,11 @@ public class MainFrame extends javax.swing.JFrame {
                         String newName = nameBuilder.toString();
                         fileInfo.setName(newName);
 
-                    setProgress(50 + 100 * (int) Math.round((double) (p / fileInfos.size() / 2)));
+                        setProgress(50 + 100 * (int) Math.round((double) (p / fileInfos.size() / 2)));
                         p++;
                     }
+                } else {
+                    publish("No operation needed based on current settings.");
                 }
                 publish("Done.\n");
                 setProgress(100);
@@ -544,7 +546,7 @@ public class MainFrame extends javax.swing.JFrame {
 
         L_WhereDoWeLook.setText("Where do we look for duplicate files?");
 
-        T_SourcePath.setText("/home/v/Desktop/test");
+        T_SourcePath.setText("/media/v/2TB_Vijay_9409472874/.Collection/Movies");
         T_SourcePath.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 T_SourcePathActionPerformed(evt);
@@ -935,11 +937,11 @@ public class MainFrame extends javax.swing.JFrame {
         RB_Name1.setEnabled(false);
 
         RBG_Name.add(RB_Name2);
+        RB_Name2.setSelected(true);
         RB_Name2.setText("Common words");
         RB_Name2.setEnabled(false);
 
         RBG_Name.add(RB_Name3);
-        RB_Name3.setSelected(true);
         RB_Name3.setText("Similar common words");
         RB_Name3.setEnabled(false);
 
