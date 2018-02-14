@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.HashSet;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.zip.Adler32;
 import org.apache.commons.lang3.SerializationUtils;
 
@@ -55,7 +57,7 @@ public class FileInfo {
 
         int partScanLength = 1048576;
         long totalLength = file.length();
-        double scanPercent = AppContext.getCompareSettings().getContentVolumePercent();
+        double scanPercent = getContentVolumePercent();
         long scanLength = Math.round(totalLength * scanPercent);
 
         if (scanLength < partScanLength) {
@@ -131,4 +133,25 @@ public class FileInfo {
         return Long.hashCode(hash);
     }
 
+    private static double getContentVolumePercent() {
+        CompareSettings settings = AppContext.getCompareSettings();
+
+        if (settings.isContent2p())
+            return 2;
+
+        if (settings.isContent10p())
+            return 5;
+
+        if (settings.isContent20p())
+            return 20;
+
+        if (settings.isContent50p())
+            return 50;
+
+        if (settings.isContent100p())
+            return 100;
+
+        Logger.getLogger(FileInfo.class.getName()).log(Level.SEVERE, "Invalid content volume percent state detected.");
+        return 0;
+    }
 }

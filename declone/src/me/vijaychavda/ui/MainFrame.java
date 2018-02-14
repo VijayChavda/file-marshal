@@ -25,26 +25,83 @@ public class MainFrame extends javax.swing.JFrame {
     private static final long _1MB = 1048576L;
     private static final long _1KB = 1024L;
 
+    private final ArrayList<File> sources;
+
     public MainFrame() {
         initComponents();
 
+        sources = new ArrayList<>();
         B_RemoveSource.setVisible(false);
         L_Sources.addListSelectionListener(
             e -> B_RemoveSource.setVisible(L_Sources.getSelectedIndices().length > 0)
         );
     }
 
+    private void setSelectionSettings() {
+        long customLowerSize, customUpperSize, sizeLowerLimit, sizeUpperLimit;
+
+        customLowerSize = (long) SP_GreaterThan.getValue()
+            * (CB_GreaterThan.getSelectedIndex() == 0 ? _1GB
+            : CB_GreaterThan.getSelectedIndex() == 1 ? _1MB
+            : CB_GreaterThan.getSelectedIndex() == 2 ? _1KB : 1L);
+
+        customUpperSize = (long) SP_LessThan.getValue()
+            * (CB_LessThan.getSelectedIndex() == 0 ? _1GB
+            : CB_LessThan.getSelectedIndex() == 1 ? _1MB
+            : CB_LessThan.getSelectedIndex() == 2 ? _1KB : 1L);
+
+        sizeLowerLimit
+            = CB_Small.isSelected() || CB_AnySize.isSelected() ? 0L
+            : CB_Medium.isSelected() ? 10L * _1MB
+            : CB_Large.isSelected() ? 100L * _1MB
+            : customLowerSize;
+
+        sizeUpperLimit
+            = CB_Small.isSelected() ? 10L * _1MB
+            : CB_Medium.isSelected() ? 100L * _1MB
+            : CB_Large.isSelected() || CB_AnySize.isSelected() ? Long.MAX_VALUE
+            : customUpperSize;
+
+        SelectionSettings settings = AppContext.getSelectionSettings();
+        settings.setExtensionCS(TB_Extensions.getText());
+        settings.setSizeLowerLimit(sizeLowerLimit);
+        settings.setSizeUpperLimit(sizeUpperLimit);
+    }
+
+    private void setCompareSettings() {
+        CompareSettings settings = AppContext.getCompareSettings();
+        settings.setUsingNames(CB_Name.isSelected());
+        settings.setUsingSize(CB_Size.isSelected());
+        settings.setUsingContent(CB_Content.isSelected());
+
+        settings.setNameSimilar(RB_Name1.isSelected());
+        settings.setNameCommonWords(RB_Name2.isSelected());
+        settings.setNameSimilarCommonWords(RB_Name3.isSelected());
+        settings.setNameExactlySame(RB_Name4.isSelected());
+
+        settings.setSizeNoHugeDifference(RB_Size1.isSelected());
+        settings.setSizeAlmostSame(RB_Size2.isSelected());
+        settings.setSizeExactlySame(RB_Size3.isSelected());
+
+        settings.setContent2p(RB_Content1.isSelected());
+        settings.setContent10p(RB_Content2.isSelected());
+        settings.setContent20p(RB_Content3.isSelected());
+        settings.setContent50p(RB_Content4.isSelected());
+        settings.setContent100p(RB_Content5.isSelected());
+    }
+
+    private void setSources() {
+        sources.clear();
+
+        DefaultListModel model = (DefaultListModel) L_Sources.getModel();
+        for (Object sourcePath : model.toArray()) {
+            File file = new File(sourcePath.toString());
+            if (file.isDirectory())
+                sources.add(file);
+        }
+    }
+
     public class DecloneWorker extends SwingWorker<Void, String> {
-
-        private final ArrayList<File> sources;
-
-        public DecloneWorker() {
-            sources = new ArrayList<>();
-        }
-
-        public DecloneWorker(ArrayList<File> sources) {
-            this.sources = sources;
-        }
 
         @Override
         protected Void doInBackground() {
@@ -53,15 +110,20 @@ public class MainFrame extends javax.swing.JFrame {
                 ArrayList<FileInfo> fileInfos = new ArrayList<>();
 
                 publish("\n\nStart declone.\n");
+                int p;
 
                 //<editor-fold defaultstate="collapsed" desc="Step 1 - Scanning sources">
                 publish("Step 1. Scanning sources.");
                 setProgress(0);
+                p = 0;
 
                 inputFiles.clear();
                 for (File directory : sources) {
                     publish("Scanning: " + directory.getPath());
                     getAllFiles(inputFiles, directory);
+
+                    setProgress((int) Math.round(100 * (double) p / sources.size()));
+                    p++;
                 }
                 publish("Done.\n");
                 setProgress(100);
@@ -71,20 +133,21 @@ public class MainFrame extends javax.swing.JFrame {
                 //<editor-fold defaultstate="collapsed" desc="Step 2 - Analyzing files">
                 publish("Step 2. Analyzing files.");
                 setProgress(0);
-                for (int i = 0; i < inputFiles.size(); i++) {
-                    File inputFile = inputFiles.get(i);
+                p = 0;
+                for (File inputFile : inputFiles) {
                     String path = inputFile.getPath();
                     try {
                         publish("\tAnalyzing: " + path);
                         FileInfo info = FileInfo.init(path);
                         fileInfos.add(info);
-//                publish("\tHash = " + info.getHash());
+//                      publish("\tHash = " + info.getHash());
                     } catch (IOException ex) {
                         publish("\tFailed! Error was logged.");
                         Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
                     }
 
-                    setProgress((int) Math.round(100 * (double) i / inputFiles.size()));
+                    setProgress((int) Math.round(100 * (double) p / inputFiles.size()));
+                    p++;
                 }
                 publish("Done.\n");
                 setProgress(100);
@@ -94,37 +157,51 @@ public class MainFrame extends javax.swing.JFrame {
                 //<editor-fold defaultstate="collapsed" desc="Step 3 - Processing gathered information">
                 publish("Step 3. Processing files.");
                 setProgress(0);
-                HashMap<String, Integer> map = new HashMap<>();
-                publish("\tGathering aggregate information");
-                for (FileInfo fileInfo : fileInfos) {
-                    String newName = fileInfo.getName().trim().toLowerCase().replaceAll("[^A-Za-z0-9]", " ");
-                    fileInfo.setName(newName);
-                    List<String> words = Arrays.asList(newName.split(" "));
-                    for (String word : words) {
-                        if (map.containsKey(word) == false) {
-                            map.put(word, 1);
+                p = 0;
+                CompareSettings settings = AppContext.getCompareSettings();
+                if (settings.isNameCommonWords() || settings.isNameSimilarCommonWords()) {
+                    HashMap<String, Integer> wordFrequencyMap = new HashMap<>();
+                    publish("\tGathering aggregate information");
+                    for (FileInfo fileInfo : fileInfos) {
+                        String newName = fileInfo.getName().trim().toLowerCase().replaceAll("[^A-Za-z0-9]", " ");
+                        fileInfo.setName(newName);
+                        List<String> words = Arrays.asList(newName.split(" "));
+                        for (String word : words) {
+                            if (wordFrequencyMap.containsKey(word) == false) {
+                                wordFrequencyMap.put(word, 1);
+                            }
+                            wordFrequencyMap.put(word, wordFrequencyMap.get(word) + 1);
                         }
-                        map.put(word, map.get(word) + 1);
+                        setProgress((int) Math.round(100 * (double) (p / fileInfos.size() / 2)));
+                        p++;
                     }
-                }
 
-                HashSet<String> commonWords = new HashSet<>();
-                for (String word : map.keySet()) {
-                    if (map.get(word) > 8) {
-                        commonWords.add(word);
-                    }
-                }
-                for (FileInfo fileInfo : fileInfos) {
-                    publish("\tProcessing: " + fileInfo.getPath());
-                    StringBuilder nameBuilder = new StringBuilder();
-                    String words[] = fileInfo.getName().split(" ");
-                    for (String word : words) {
-                        if (commonWords.contains(word) == false) {
-                            nameBuilder.append(word).append(" ");
+                    HashSet<String> commonWords = new HashSet<>();
+                    for (String word : wordFrequencyMap.keySet()) {
+                        if (wordFrequencyMap.get(word) > 8) {
+                            commonWords.add(word);
                         }
                     }
-                    String newName = nameBuilder.toString();
-                    fileInfo.setName(newName);
+
+                    setProgress(50);
+                    p = 0;
+
+                    publish("\tProcessing files");
+                    for (FileInfo fileInfo : fileInfos) {
+                        publish("\tProcessing: " + fileInfo.getPath());
+                        StringBuilder nameBuilder = new StringBuilder();
+                        String words[] = fileInfo.getName().split(" ");
+                        for (String word : words) {
+                            if (commonWords.contains(word) == false) {
+                                nameBuilder.append(word).append(" ");
+                            }
+                        }
+                        String newName = nameBuilder.toString();
+                        fileInfo.setName(newName);
+
+                    setProgress(50 + 100 * (int) Math.round((double) (p / fileInfos.size() / 2)));
+                        p++;
+                    }
                 }
                 publish("Done.\n");
                 setProgress(100);
@@ -134,6 +211,7 @@ public class MainFrame extends javax.swing.JFrame {
                 //<editor-fold defaultstate="collapsed" desc="Step 4 - Finding duplicates">
                 publish("Step 4. Finding duplicates.");
                 setProgress(0);
+                p = 0;
                 HashSet<ArrayList<FileInfo>> duplicates = new HashSet<>();
                 outer:
                 for (FileInfo fileInfo : fileInfos) {
@@ -148,6 +226,9 @@ public class MainFrame extends javax.swing.JFrame {
                     ArrayList<FileInfo> newSet = new ArrayList<>();
                     newSet.add(fileInfo);
                     duplicates.add(newSet);
+
+                    setProgress(100 * (int) Math.round((double) (p / fileInfos.size())));
+                    p++;
                 }
                 publish("Done.\n");
                 setProgress(100);
@@ -159,8 +240,10 @@ public class MainFrame extends javax.swing.JFrame {
                     if (set.size() > 1) {
                         for (FileInfo fileInfo : set) {
                             System.out.println(fileInfo.getName());
+                            System.out.println(fileInfo);
+                            System.out.println();
                         }
-                        System.out.println();
+                        System.out.println("\n");
                     }
                 }
 
@@ -177,13 +260,23 @@ public class MainFrame extends javax.swing.JFrame {
 
             ProgressBar.setValue(getProgress());
 
-            if (getProgress() == 100) {
+            boolean done = false;
+            for (String chunk : chunks) {
+                if (chunk.equals("Done.\n")) {
+                    done = true;
+                    break;
+                }
+            }
+
+            if (done) {
                 if (!CB_Step1.isSelected())
                     CB_Step1.setSelected(true);
                 else if (!CB_Step2.isSelected())
                     CB_Step2.setSelected(true);
                 else if (!CB_Step3.isSelected())
                     CB_Step3.setSelected(true);
+                else if (!CB_Step4.isSelected())
+                    CB_Step4.setSelected(true);
             }
         }
 
@@ -239,6 +332,7 @@ public class MainFrame extends javax.swing.JFrame {
         CB_Step1 = new javax.swing.JCheckBox();
         CB_Step2 = new javax.swing.JCheckBox();
         CB_Step3 = new javax.swing.JCheckBox();
+        CB_Step4 = new javax.swing.JCheckBox();
         ProgressBar = new javax.swing.JProgressBar();
         SP_Status = new javax.swing.JScrollPane();
         TA_Status = new javax.swing.JTextArea();
@@ -246,6 +340,7 @@ public class MainFrame extends javax.swing.JFrame {
         L_Step1 = new javax.swing.JLabel();
         L_Step2 = new javax.swing.JLabel();
         L_Step3 = new javax.swing.JLabel();
+        L_Step4 = new javax.swing.JLabel();
         BG_FileSize = new javax.swing.ButtonGroup();
         RBG_Name = new javax.swing.ButtonGroup();
         RBG_Size = new javax.swing.ButtonGroup();
@@ -348,6 +443,8 @@ public class MainFrame extends javax.swing.JFrame {
 
         CB_Step3.setEnabled(false);
 
+        CB_Step4.setEnabled(false);
+
         ProgressBar.setToolTipText("Estimated progress.");
 
         TA_Status.setEditable(false);
@@ -359,7 +456,9 @@ public class MainFrame extends javax.swing.JFrame {
 
         L_Step2.setText("Analizing files");
 
-        L_Step3.setText("Finding duplicates");
+        L_Step3.setText("Processing files");
+
+        L_Step4.setText("Finding duplicates");
 
         javax.swing.GroupLayout P_ProgressContentLayout = new javax.swing.GroupLayout(P_ProgressContent);
         P_ProgressContent.setLayout(P_ProgressContentLayout);
@@ -374,14 +473,16 @@ public class MainFrame extends javax.swing.JFrame {
                     .addComponent(L_Info, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 654, Short.MAX_VALUE)
                     .addGroup(P_ProgressContentLayout.createSequentialGroup()
                         .addGroup(P_ProgressContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(CB_Step3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(CB_Step4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(CB_Step2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(CB_Step1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(CB_Step1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(CB_Step3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(P_ProgressContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(L_Step1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(L_Step2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(L_Step3, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE))
+                            .addComponent(L_Step4, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
+                            .addComponent(L_Step3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -401,13 +502,17 @@ public class MainFrame extends javax.swing.JFrame {
                     .addComponent(CB_Step2)
                     .addComponent(L_Step2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(P_ProgressContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(P_ProgressContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(CB_Step3)
                     .addComponent(L_Step3))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(P_ProgressContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(CB_Step4)
+                    .addComponent(L_Step4))
                 .addGap(18, 18, 18)
                 .addComponent(ProgressBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(SP_Status, javax.swing.GroupLayout.DEFAULT_SIZE, 119, Short.MAX_VALUE)
+                .addComponent(SP_Status, javax.swing.GroupLayout.DEFAULT_SIZE, 83, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -415,7 +520,7 @@ public class MainFrame extends javax.swing.JFrame {
 
         P_ProgressContentLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {CB_Step2, L_Step2});
 
-        P_ProgressContentLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {CB_Step3, L_Step3});
+        P_ProgressContentLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {CB_Step4, L_Step4});
 
         javax.swing.GroupLayout ProgressDialogLayout = new javax.swing.GroupLayout(ProgressDialog.getContentPane());
         ProgressDialog.getContentPane().setLayout(ProgressDialogLayout);
@@ -439,6 +544,7 @@ public class MainFrame extends javax.swing.JFrame {
 
         L_WhereDoWeLook.setText("Where do we look for duplicate files?");
 
+        T_SourcePath.setText("/home/v/Desktop/test");
         T_SourcePath.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 T_SourcePathActionPerformed(evt);
@@ -630,7 +736,6 @@ public class MainFrame extends javax.swing.JFrame {
         P_FilterSize.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         BG_FileSize.add(CB_CustomSize);
-        CB_CustomSize.setSelected(true);
         CB_CustomSize.setText("Custom");
         CB_CustomSize.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -663,6 +768,7 @@ public class MainFrame extends javax.swing.JFrame {
         });
 
         BG_FileSize.add(CB_AnySize);
+        CB_AnySize.setSelected(true);
         CB_AnySize.setText("Any");
         CB_AnySize.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -833,12 +939,12 @@ public class MainFrame extends javax.swing.JFrame {
         RB_Name2.setEnabled(false);
 
         RBG_Name.add(RB_Name3);
-        RB_Name3.setText("Exactly same");
+        RB_Name3.setSelected(true);
+        RB_Name3.setText("Similar common words");
         RB_Name3.setEnabled(false);
 
         RBG_Name.add(RB_Name4);
-        RB_Name4.setSelected(true);
-        RB_Name4.setText("Similar common words");
+        RB_Name4.setText("Exactly same");
         RB_Name4.setEnabled(false);
 
         RBG_Size.add(RB_Size1);
@@ -868,17 +974,17 @@ public class MainFrame extends javax.swing.JFrame {
                         .addGroup(P_CustomNameSizeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(RB_Size1)
                             .addComponent(RB_Name2)
-                            .addComponent(RB_Name3)
+                            .addComponent(RB_Name4)
                             .addComponent(RB_Size2)
                             .addComponent(RB_Size3)
                             .addComponent(RB_Name1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(RB_Name4))))
+                            .addComponent(RB_Name3))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         P_CustomNameSizeLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {L_Name, L_Size});
 
-        P_CustomNameSizeLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {RB_Name1, RB_Name2, RB_Name3, RB_Size1, RB_Size2, RB_Size3});
+        P_CustomNameSizeLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {RB_Name1, RB_Name2, RB_Name4, RB_Size1, RB_Size2, RB_Size3});
 
         P_CustomNameSizeLayout.setVerticalGroup(
             P_CustomNameSizeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -890,9 +996,9 @@ public class MainFrame extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(RB_Name2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(RB_Name4)
-                .addGap(3, 3, 3)
                 .addComponent(RB_Name3)
+                .addGap(3, 3, 3)
+                .addComponent(RB_Name4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(L_Size)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -1031,7 +1137,6 @@ public class MainFrame extends javax.swing.JFrame {
             }
         });
 
-        CB_Size.setSelected(true);
         CB_Size.setText("Size");
         CB_Size.setOpaque(false);
         CB_Size.addActionListener(new java.awt.event.ActionListener() {
@@ -1254,8 +1359,8 @@ public class MainFrame extends javax.swing.JFrame {
         RB_Content5.setEnabled(TB_Advance.isSelected());
         RB_Name1.setEnabled(TB_Advance.isSelected());
         RB_Name2.setEnabled(TB_Advance.isSelected());
-        RB_Name3.setEnabled(TB_Advance.isSelected());
         RB_Name4.setEnabled(TB_Advance.isSelected());
+        RB_Name3.setEnabled(TB_Advance.isSelected());
         RB_Size1.setEnabled(TB_Advance.isSelected());
         RB_Size2.setEnabled(TB_Advance.isSelected());
         RB_Size3.setEnabled(TB_Advance.isSelected());
@@ -1269,58 +1374,19 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_CB_AdvanceActionPerformed
 
     private void B_DecloneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_B_DecloneActionPerformed
-        long customLowerSize, customUpperSize, sizeLowerLimit, sizeUpperLimit;
+        setSelectionSettings();
 
-        customLowerSize = (long) SP_GreaterThan.getValue()
-            * (CB_GreaterThan.getSelectedIndex() == 0 ? _1GB
-            : CB_GreaterThan.getSelectedIndex() == 1 ? _1MB
-            : CB_GreaterThan.getSelectedIndex() == 2 ? _1KB : 1L);
+        setCompareSettings();
 
-        customUpperSize = (long) SP_LessThan.getValue()
-            * (CB_LessThan.getSelectedIndex() == 0 ? _1GB
-            : CB_LessThan.getSelectedIndex() == 1 ? _1MB
-            : CB_LessThan.getSelectedIndex() == 2 ? _1KB : 1L);
-
-        sizeLowerLimit
-            = CB_Small.isSelected() || CB_AnySize.isSelected() ? 0L
-            : CB_Medium.isSelected() ? 10L * _1MB
-            : CB_Large.isSelected() ? 100L * _1MB
-            : customLowerSize;
-
-        sizeUpperLimit
-            = CB_Small.isSelected() ? 10L * _1MB
-            : CB_Medium.isSelected() ? 100L * _1MB
-            : CB_Large.isSelected() || CB_AnySize.isSelected() ? Long.MAX_VALUE
-            : customUpperSize;
-
-        CompareSettings compareSettings = AppContext.getCompareSettings();
-        compareSettings.setUsingNames(CB_Name.isSelected());
-        compareSettings.setUsingSize(CB_Size.isSelected());
-        compareSettings.setUsingContent(CB_Content.isSelected());
-
-        //compareSettings.setNameDelta(1 - (100 / 100F));
-        //compareSettings.setSizeDelta(1 - (90 / 100F));
-        //compareSettings.setContentVolumePercent(1 / 100F);
-
-        SelectionSettings selectionSettings = AppContext.getSelectionSettings();
-        selectionSettings.setExtensionCS(TB_Extensions.getText());
-        selectionSettings.setSizeLowerLimit(sizeLowerLimit);
-        selectionSettings.setSizeUpperLimit(sizeUpperLimit);
-
-        ArrayList<File> sources = new ArrayList<>();
-        DefaultListModel model = (DefaultListModel) L_Sources.getModel();
-        for (Object sourcePath : model.toArray()) {
-            File file = new File(sourcePath.toString());
-            if (file.isDirectory())
-                sources.add(file);
-        }
+        setSources();
 
         TA_Status.setText("");
         CB_Step1.setSelected(false);
         CB_Step2.setSelected(false);
         CB_Step3.setSelected(false);
+        CB_Step4.setSelected(false);
 
-        DecloneWorker worker = new DecloneWorker(sources);
+        DecloneWorker worker = new DecloneWorker();
         worker.execute();
 
         ProgressDialog.pack();
@@ -1351,6 +1417,7 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JCheckBox CB_Step1;
     private javax.swing.JCheckBox CB_Step2;
     private javax.swing.JCheckBox CB_Step3;
+    private javax.swing.JCheckBox CB_Step4;
     private javax.swing.JCheckBox CB_TypeAll;
     private javax.swing.JCheckBox CB_Videos;
     private javax.swing.JFileChooser FilePicker;
@@ -1367,6 +1434,7 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JLabel L_Step1;
     private javax.swing.JLabel L_Step2;
     private javax.swing.JLabel L_Step3;
+    private javax.swing.JLabel L_Step4;
     private javax.swing.JLabel L_WhereDoWeLook;
     private javax.swing.JMenuItem MI_About;
     private javax.swing.JMenuItem MI_Contact;
