@@ -22,3 +22,6 @@
 hs_err_pid*
 
 declone/build/
+declone/nbproject/
+declone/build.xml
+declone/manifest.mf
