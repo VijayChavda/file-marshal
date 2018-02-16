@@ -372,9 +372,6 @@
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JTextField" name="T_SourcePath">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="/media/v/2TB_Vijay_9409472874/.Collection/Movies"/>
-                  </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="T_SourcePathActionPerformed"/>
                   </Events>

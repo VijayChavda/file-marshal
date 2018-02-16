@@ -219,7 +219,7 @@ public class MainFrame extends javax.swing.JFrame {
                 for (FileInfo fileInfo : fileInfos) {
                     publish("\tChecking: " + fileInfo.getPath());
                     for (ArrayList<FileInfo> set : duplicates) {
-                        if (FileInfoComparer.areSame(fileInfo, set.get(0))) {
+                        if (fileInfo.equals(set.get(0))) {
                             set.add(fileInfo);
                             continue outer;
                         }
@@ -546,7 +546,6 @@ public class MainFrame extends javax.swing.JFrame {
 
         L_WhereDoWeLook.setText("Where do we look for duplicate files?");
 
-        T_SourcePath.setText("/media/v/2TB_Vijay_9409472874/.Collection/Movies");
         T_SourcePath.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 T_SourcePathActionPerformed(evt);

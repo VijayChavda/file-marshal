@@ -70,6 +70,7 @@ public class FileInfo {
             adler.update(data);
 
             FileInfo info = new FileInfo();
+            info.name = file.getName();
             info.path = path;
             info.hash = adler.getValue();
             info.size = file.length();
