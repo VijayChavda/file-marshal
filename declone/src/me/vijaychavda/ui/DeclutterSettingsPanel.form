@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<Form version="1.5" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JPanelFormInfo">
+  <NonVisualComponents>
+    <Component class="javax.swing.ButtonGroup" name="RBG_OrganizeBy">
+    </Component>
+  </NonVisualComponents>
+  <AuxValues>
+    <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
+    <AuxValue name="FormSettings_autoSetComponentName" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_generateFQN" type="java.lang.Boolean" value="true"/>
+    <AuxValue name="FormSettings_generateMnemonicsCode" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_i18nAutoMode" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_layoutCodeTarget" type="java.lang.Integer" value="1"/>
+    <AuxValue name="FormSettings_listenerGenerationStyle" type="java.lang.Integer" value="0"/>
+    <AuxValue name="FormSettings_variablesLocal" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_variablesModifier" type="java.lang.Integer" value="2"/>
+  </AuxValues>
+
+  <Layout>
+    <DimensionLayout dim="0">
+      <Group type="103" groupAlignment="0" attributes="0">
+          <Group type="102" attributes="0">
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" attributes="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="L_Info1" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="L_Info2" alignment="0" min="-2" pref="156" max="-2" attributes="0"/>
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                                  <Component id="RB_Both" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="RB_Extension" alignment="0" pref="170" max="32767" attributes="0"/>
+                                  <Component id="RB_Type" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="RB_Custom" max="32767" attributes="0"/>
+                              </Group>
+                          </Group>
+                      </Group>
+                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="1" attributes="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" attributes="0">
+                              <Component id="CB_DontGroup" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="SP_DontGroupCount" min="-2" pref="65" max="-2" attributes="0"/>
+                              <EmptySpace min="0" pref="211" max="32767" attributes="0"/>
+                          </Group>
+                          <Group type="102" attributes="0">
+                              <Component id="TB_OutputPath" max="32767" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="B_Browse" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                  </Group>
+              </Group>
+          </Group>
+          <Group type="102" alignment="1" attributes="0">
+              <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="1" attributes="0">
+                  <Component id="L_Info3" pref="0" max="32767" attributes="0"/>
+                  <Component id="jScrollPane1" max="32767" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+          </Group>
+      </Group>
+    </DimensionLayout>
+    <DimensionLayout dim="1">
+      <Group type="103" groupAlignment="0" attributes="0">
+          <Group type="102" alignment="0" attributes="0">
+              <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
+              <Component id="L_Info1" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="TB_OutputPath" linkSize="1" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="B_Browse" linkSize="1" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="2" attributes="0">
+                  <Component id="SP_DontGroupCount" linkSize="2" alignment="2" min="-2" max="-2" attributes="0"/>
+                  <Component id="CB_DontGroup" linkSize="2" alignment="2" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
+              <Component id="L_Info2" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="RB_Type" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="RB_Extension" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="RB_Both" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="RB_Custom" min="-2" max="-2" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Component id="L_Info3" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="jScrollPane1" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
+          </Group>
+      </Group>
+    </DimensionLayout>
+  </Layout>
+  <SubComponents>
+    <Component class="javax.swing.JLabel" name="L_Info1">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Where should all the files organized in folders go?"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="TB_OutputPath">
+    </Component>
+    <Component class="javax.swing.JCheckBox" name="CB_DontGroup">
+      <Properties>
+        <Property name="selected" type="boolean" value="true"/>
+        <Property name="text" type="java.lang.String" value="Don&apos;t group files when they are less than:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JSpinner" name="SP_DontGroupCount">
+      <Properties>
+        <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
+          <SpinnerModel initial="4" maximum="100" minimum="2" numberType="java.lang.Integer" stepSize="1" type="number"/>
+        </Property>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="L_Info2">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Organize my files by:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="B_Browse">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Browse"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JRadioButton" name="RB_Type">
+      <Properties>
+        <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+          <ComponentRef name="RBG_OrganizeBy"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="Type"/>
+        <Property name="toolTipText" type="java.lang.String" value="Files will be organized in folders like Documents, Images, Music, etc."/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JRadioButton" name="RB_Extension">
+      <Properties>
+        <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+          <ComponentRef name="RBG_OrganizeBy"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="Extension"/>
+        <Property name="toolTipText" type="java.lang.String" value="Files will be organized in folders like JPG, DOC, MP3, etc."/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JRadioButton" name="RB_Both">
+      <Properties>
+        <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+          <ComponentRef name="RBG_OrganizeBy"/>
+        </Property>
+        <Property name="selected" type="boolean" value="true"/>
+        <Property name="text" type="java.lang.String" value="Both"/>
+        <Property name="toolTipText" type="java.lang.String" value="Files will be organized in folders by their types like Documents, Images, Music, and inside them again organized by their extensions like JPG, DOC, MP3, etc."/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JRadioButton" name="RB_Custom">
+      <Properties>
+        <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+          <ComponentRef name="RBG_OrganizeBy"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="I&apos;ll decide"/>
+        <Property name="toolTipText" type="java.lang.String" value="&lt;html&gt;&#xa;&lt;b&gt;Format example:&lt;/b&gt;&lt;br&gt;&#xa;&apos;Pics&apos; ai bmp gif ico jpeg jpg png ps psd svg tif tiff&lt;br&gt;&#xa;&apos;Docs&apos; doc docx odt pdf rtf txt wks wps wpd ods xlr xls xlsx key odp pps ppt pptx&lt;br&gt;&#xa;&apos;Videos&apos; 3g2 3gp avi flv m4v mkv mov mp4 mpg mpeg rm swf vob wmv&lt;br&gt;&#xa;&apos;My Songs&apos; aif cda mid midi mp3 mpa ogg wav wma wpl&lt;br&gt;&#xa;&lt;/html&gt;"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="L_Info3">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="&lt;html&gt; In each line, enter in quotes the name of folder, followed by list of space seperated extensions of files that go in that folder. &lt;/html&gt;"/>
+      </Properties>
+    </Component>
+    <Container class="javax.swing.JScrollPane" name="jScrollPane1">
+      <AuxValues>
+        <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
+      </AuxValues>
+
+      <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
+      <SubComponents>
+        <Component class="javax.swing.JTextArea" name="TA_GroupingInfo">
+          <Properties>
+            <Property name="columns" type="int" value="20"/>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Ubuntu" size="12" style="0"/>
+            </Property>
+            <Property name="rows" type="int" value="5"/>
+            <Property name="text" type="java.lang.String" value="&apos;Pics&apos; ai bmp gif ico jpeg jpg png ps psd svg tif tiff&#xa;&apos;Docs&apos; doc docx odt pdf rtf txt wks wps wpd ods xlr xls xlsx key odp pps ppt pptx&#xa;&apos;Videos&apos; 3g2 3gp avi flv m4v mkv mov mp4 mpg mpeg rm swf vob wmv&#xa;&apos;My Songs&apos; aif cda mid midi mp3 mpa ogg wav wma wpl"/>
+          </Properties>
+        </Component>
+      </SubComponents>
+    </Container>
+  </SubComponents>
+</Form>

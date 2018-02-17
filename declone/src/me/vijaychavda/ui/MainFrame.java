@@ -20,7 +20,9 @@ public class MainFrame extends javax.swing.JFrame {
         selectSourcesPanel = new me.vijaychavda.ui.SelectSourcesPanel();
         P_FileOptions = new javax.swing.JPanel();
         selectionSettingsPanel = new me.vijaychavda.ui.SelectionSettingsPanel();
-        P_Settings = new javax.swing.JPanel();
+        P_Declutter = new javax.swing.JPanel();
+        declutterSettingsPanel = new me.vijaychavda.ui.DeclutterSettingsPanel();
+        P_Declone = new javax.swing.JPanel();
         compareSettingsPanel = new me.vijaychavda.ui.DecloneSettingsPanel();
         P_Commands = new javax.swing.JPanel();
         B_Declone = new javax.swing.JButton();
@@ -54,13 +56,40 @@ public class MainFrame extends javax.swing.JFrame {
 
         TabbedPane.addTab("File select", P_FileOptions);
 
-        P_Settings.setOpaque(false);
-        P_Settings.setLayout(new java.awt.BorderLayout());
+        P_Declutter.setOpaque(false);
+
+        declutterSettingsPanel.setOpaque(false);
+
+        javax.swing.GroupLayout P_DeclutterLayout = new javax.swing.GroupLayout(P_Declutter);
+        P_Declutter.setLayout(P_DeclutterLayout);
+        P_DeclutterLayout.setHorizontalGroup(
+            P_DeclutterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 622, Short.MAX_VALUE)
+            .addGroup(P_DeclutterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(P_DeclutterLayout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(declutterSettingsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
+        );
+        P_DeclutterLayout.setVerticalGroup(
+            P_DeclutterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 424, Short.MAX_VALUE)
+            .addGroup(P_DeclutterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(P_DeclutterLayout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(declutterSettingsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
+        );
+
+        TabbedPane.addTab("Declutter", P_Declutter);
+
+        P_Declone.setOpaque(false);
+        P_Declone.setLayout(new java.awt.BorderLayout());
 
         compareSettingsPanel.setOpaque(false);
-        P_Settings.add(compareSettingsPanel, java.awt.BorderLayout.CENTER);
+        P_Declone.add(compareSettingsPanel, java.awt.BorderLayout.CENTER);
 
-        TabbedPane.addTab("Declone options", P_Settings);
+        TabbedPane.addTab("Declone", P_Declone);
 
         javax.swing.GroupLayout P_ContentLayout = new javax.swing.GroupLayout(P_Content);
         P_Content.setLayout(P_ContentLayout);
@@ -101,7 +130,7 @@ public class MainFrame extends javax.swing.JFrame {
         P_CommandsLayout.setHorizontalGroup(
             P_CommandsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, P_CommandsLayout.createSequentialGroup()
-                .addContainerGap(266, Short.MAX_VALUE)
+                .addContainerGap(288, Short.MAX_VALUE)
                 .addComponent(B_FindLarge)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(B_Declutter)
@@ -190,11 +219,13 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JMenuBar Menubar;
     private javax.swing.JPanel P_Commands;
     private javax.swing.JPanel P_Content;
+    private javax.swing.JPanel P_Declone;
+    private javax.swing.JPanel P_Declutter;
     private javax.swing.JPanel P_FileOptions;
-    private javax.swing.JPanel P_Settings;
     private javax.swing.JPanel P_Sources;
     private javax.swing.JTabbedPane TabbedPane;
     private me.vijaychavda.ui.DecloneSettingsPanel compareSettingsPanel;
+    private me.vijaychavda.ui.DeclutterSettingsPanel declutterSettingsPanel;
     private me.vijaychavda.ui.SelectSourcesPanel selectSourcesPanel;
     private me.vijaychavda.ui.SelectionSettingsPanel selectionSettingsPanel;
     // End of variables declaration//GEN-END:variables
