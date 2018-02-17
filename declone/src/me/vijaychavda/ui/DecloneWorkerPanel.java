@@ -1,254 +1,134 @@
 package me.vijaychavda.ui;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.SwingWorker;
-import me.vijaychavda.AppContext;
 import me.vijaychavda.FileInfo;
-import me.vijaychavda.settings.CompareSettings;
-import me.vijaychavda.settings.SelectionSettings;
+import workers.DecloneWorker;
+import workers.GatherFileInfoWorker;
+import workers.ProcessFileInfosWorker;
+import workers.ScanSourcesWorker;
 
 public class DecloneWorkerPanel extends javax.swing.JPanel {
+
+    private ArrayList<File> allFiles;
+    private ArrayList<FileInfo> fileInfos;
+    private HashSet<ArrayList<FileInfo>> duplicates;
 
     public DecloneWorkerPanel() {
         initComponents();
     }
 
     public void start() {
-        new DecloneWorker().execute();
+        step1();
     }
 
-    private class DecloneWorker extends SwingWorker<Void, String> {
+    private void step1() {
+        ScanSourcesWorker scanSourcesWorker = new ScanSourcesWorker() {
+            @Override
+            protected void process(List<String> chunks) {
+                chunks.forEach((chunk) -> TA_Status.append(chunk + "\n"));
 
-        @Override
-        protected Void doInBackground() {
-            try {
-                ArrayList<File> sources = AppContext.Current.getSources();
-                ArrayList<File> inputFiles = new ArrayList<>();
-                ArrayList<FileInfo> fileInfos = new ArrayList<>();
-
-                publish("\n\nStart declone.\n");
-                int p;
-
-                //<editor-fold defaultstate="collapsed" desc="Step 1 - Scanning sources">
-                publish("Step 1. Scanning sources.");
-                setProgress(0);
-                p = 0;
-
-                inputFiles.clear();
-                for (File directory : sources) {
-                    publish("Scanning: " + directory.getPath());
-                    getAllFiles(inputFiles, directory);
-
-                    setProgress((int) Math.round(100 * (double) p / sources.size()));
-                    p++;
-                }
-                publish("Done.\n");
-                setProgress(100);
-                Thread.sleep(1000);
-                //</editor-fold>
-
-                //<editor-fold defaultstate="collapsed" desc="Step 2 - Analyzing files">
-                publish("Step 2. Analyzing files.");
-                setProgress(0);
-                p = 0;
-                for (File inputFile : inputFiles) {
-                    String path = inputFile.getPath();
-                    try {
-                        publish("\tAnalyzing: " + path);
-                        FileInfo info = FileInfo.get(path);
-                        fileInfos.add(info);
-//                      publish("\tHash = " + info.getHash());
-                    } catch (IOException ex) {
-                        publish("\tFailed! Error was logged.");
-                        Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-
-                    setProgress((int) Math.round(100 * (double) p / inputFiles.size()));
-                    p++;
-                }
-                publish("Done.\n");
-                setProgress(100);
-                Thread.sleep(1000);
-                //</editor-fold>
-
-                //<editor-fold defaultstate="collapsed" desc="Step 3 - Processing gathered information">
-                publish("Step 3. Processing files.");
-                setProgress(0);
-                p = 0;
-                CompareSettings settings = AppContext.Current.getCompareSettings();
-                if (settings.isUsingNames() && (settings.isNameCommonWords() || settings.isNameSimilarCommonWords())) {
-                    HashMap<String, Integer> wordFrequencyMap = new HashMap<>();
-                    publish("\tGathering aggregate information");
-                    for (FileInfo fileInfo : fileInfos) {
-                        String newName = fileInfo.getName().trim().toLowerCase().replaceAll("[^A-Za-z0-9]", " ");
-                        fileInfo.setName(newName);
-                        List<String> words = Arrays.asList(newName.split(" "));
-                        for (String word : words) {
-                            if (wordFrequencyMap.containsKey(word) == false) {
-                                wordFrequencyMap.put(word, 1);
-                            }
-                            wordFrequencyMap.put(word, wordFrequencyMap.get(word) + 1);
-                        }
-                        setProgress((int) Math.round(100 * (double) (p / fileInfos.size() / 2)));
-                        p++;
-                    }
-
-                    HashSet<String> commonWords = new HashSet<>();
-                    for (String word : wordFrequencyMap.keySet()) {
-                        if (wordFrequencyMap.get(word) > 8) {
-                            commonWords.add(word);
-                        }
-                    }
-
-                    setProgress(50);
-                    p = 0;
-
-                    publish("\tProcessing files");
-                    for (FileInfo fileInfo : fileInfos) {
-                        publish("\tProcessing: " + fileInfo.getPath());
-                        StringBuilder nameBuilder = new StringBuilder();
-                        String words[] = fileInfo.getName().split(" ");
-                        for (String word : words) {
-                            if (commonWords.contains(word) == false) {
-                                nameBuilder.append(word).append(" ");
-                            }
-                        }
-                        String newName = nameBuilder.toString();
-                        fileInfo.setName(newName);
-
-                        setProgress(50 + 100 * (int) Math.round((double) (p / fileInfos.size() / 2)));
-                        p++;
-                    }
-                } else {
-                    publish("No operation needed based on current settings.");
-                }
-                publish("Done.\n");
-                setProgress(100);
-                Thread.sleep(1000);
-                //</editor-fold>
-
-                //<editor-fold defaultstate="collapsed" desc="Step 4 - Finding duplicates">
-                publish("Step 4. Finding duplicates.");
-                setProgress(0);
-                p = 0;
-                HashSet<ArrayList<FileInfo>> duplicates = new HashSet<>();
-                outer:
-                for (FileInfo fileInfo : fileInfos) {
-                    publish("\tChecking: " + fileInfo.getPath());
-                    for (ArrayList<FileInfo> set : duplicates) {
-                        if (fileInfo.equals(set.get(0))) {
-                            set.add(fileInfo);
-                            continue outer;
-                        }
-                    }
-
-                    ArrayList<FileInfo> newSet = new ArrayList<>();
-                    newSet.add(fileInfo);
-                    duplicates.add(newSet);
-
-                    setProgress(100 * (int) Math.round((double) (p / fileInfos.size())));
-                    p++;
-                }
-                publish("Done.\n");
-                setProgress(100);
-                Thread.sleep(1000);
-                //</editor-fold>
-
-                System.out.println("RESULT");
-                for (ArrayList<FileInfo> set : duplicates) {
-                    if (set.size() > 1) {
-                        for (FileInfo fileInfo : set) {
-                            System.out.println(fileInfo.getName());
-                            System.out.println(fileInfo);
-                            System.out.println();
-                        }
-                        System.out.println("\n");
-                    }
-                }
-
-                return null;
-            } catch (InterruptedException e) {
-                Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, "an exception was thrown", e);
-                return null;
-            }
-        }
-
-        @Override
-        protected void process(List<String> chunks) {
-            chunks.forEach((chunk) -> TA_Status.append(chunk + "\n"));
-
-            ProgressBar.setValue(getProgress());
-
-            boolean done = false;
-            for (String chunk : chunks) {
-                if (chunk.equals("Done.\n")) {
-                    done = true;
-                    break;
-                }
+                ProgressBar.setValue(getProgress());
             }
 
-            if (done) {
-                if (!CB_Step1.isSelected())
+            @Override
+            protected void done() {
+                try {
+                    allFiles = get();
                     CB_Step1.setSelected(true);
-                else if (!CB_Step2.isSelected())
+                    step2();
+                } catch (InterruptedException | ExecutionException ex) {
+                    Logger.getLogger(DecloneWorkerPanel.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        };
+
+        scanSourcesWorker.execute();
+    }
+
+    private void step2() {
+        GatherFileInfoWorker gatherFileInfoWorker = new GatherFileInfoWorker(allFiles) {
+            @Override
+            protected void process(List<String> chunks) {
+                chunks.forEach((chunk) -> TA_Status.append(chunk + "\n"));
+
+                ProgressBar.setValue(getProgress());
+            }
+
+            @Override
+            protected void done() {
+                try {
+                    fileInfos = get();
                     CB_Step2.setSelected(true);
-                else if (!CB_Step3.isSelected())
-                    CB_Step3.setSelected(true);
-                else if (!CB_Step4.isSelected())
+                    step3();
+                } catch (InterruptedException | ExecutionException ex) {
+                    Logger.getLogger(DecloneWorkerPanel.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        };
+        gatherFileInfoWorker.execute();
+    }
+
+    private void step3() {
+        ProcessFileInfosWorker processFileInfosWorker = new ProcessFileInfosWorker(fileInfos) {
+            @Override
+            protected void process(List<String> chunks) {
+                chunks.forEach((chunk) -> TA_Status.append(chunk + "\n"));
+
+                ProgressBar.setValue(getProgress());
+            }
+
+            @Override
+            protected void done() {
+                CB_Step3.setSelected(true);
+                step4();
+            }
+        };
+
+        processFileInfosWorker.execute();
+    }
+
+    private void step4() {
+        DecloneWorker decloneWorker = new DecloneWorker(fileInfos) {
+            @Override
+            protected void process(List<String> chunks) {
+                chunks.forEach((chunk) -> TA_Status.append(chunk + "\n"));
+
+                ProgressBar.setValue(getProgress());
+            }
+
+            @Override
+            protected void done() {
+                try {
+                    duplicates = get();
                     CB_Step4.setSelected(true);
-            }
-        }
 
-        @Override
-        protected void done() {
-            System.out.println(isCancelled() ? "You cancelled it" : "Completed, yaay!!");
-        }
-
-        private void getAllFiles(ArrayList<File> files, File directory) {
-            for (File file : directory.listFiles()) {
-                if (file.isDirectory()) {
-                    getAllFiles(files, file);
-                    continue;
-                }
-
-                if (trySelectFile(file)) {
-                    files.add(file);
-                    publish("\tSelected: " + file.getPath());
+                    completed();
+                } catch (InterruptedException | ExecutionException ex) {
+                    Logger.getLogger(DecloneWorkerPanel.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
-        }
+        };
 
-        private boolean trySelectFile(File file) {
-            SelectionSettings settings = AppContext.Current.getSelectionSettings();
+        decloneWorker.execute();
+    }
 
-            String name = file.getName();
-
-            if (file.length() < settings.getSizeLowerLimit() || file.length() > settings.getSizeUpperLimit())
-                return false;
-
-            if (settings.getExtensionCS().equals(".*"))
-                return true;
-
-            int doti = name.lastIndexOf('.');
-            if (doti == -1)
-                return true;
-
-            String ext = name.substring(doti, name.length());
-
-            String[] extensions = settings.getExtensionCS().split(" ");
-            for (String extension : extensions) {
-                if (extension.equals(ext))
-                    return true;
+    private void completed() {
+        System.out.println("RESULT");
+        for (ArrayList<FileInfo> set : duplicates) {
+            if (set.size() > 1) {
+                for (FileInfo fileInfo : set) {
+                    System.out.println(fileInfo.getName());
+                    System.out.println(fileInfo);
+                    System.out.println();
+                }
+                System.out.println("\n");
             }
-            return false;
         }
     }
 
