@@ -12,15 +12,23 @@ import org.apache.commons.lang3.SerializationUtils;
 
 public class FileInfo {
 
-    private String path;
+    private final String path;
     private String name;
-    private long size;
-    private long hash;
+    private final long size;
+    private final long hash;
 
     private FileInfo() {
-        path = "";
+        path = "<Not initialized>";
+        name = "<Not initialized>";
         size = -1;
         hash = -1;
+    }
+
+    private FileInfo(String path, String name, long size, long hash) {
+        this.path = path;
+        this.name = name;
+        this.size = size;
+        this.hash = hash;
     }
 
     public String getPath() {
@@ -43,24 +51,27 @@ public class FileInfo {
         this.name = name;
     }
 
-    public static FileInfo init(String path) throws IOException {
+    public static FileInfo get(String path) throws IOException {
         File file = new File(path);
 
-        if (!AppContext.Current.getCompareSettings().isUsingContent()) {
-            FileInfo info = new FileInfo();
-            info.name = file.getName();
-            info.size = file.length();
-            info.path = path;
-            return info;
-        }
+        //<editor-fold defaultstate="collapsed" desc="Case 1: No need to check content">
+        if (AppContext.Current.getCompareSettings().isUsingContent() == false)
+            return new FileInfo(path, file.getName(), file.length(), -1);
+        //</editor-fold>
 
         Adler32 adler = new Adler32();
+        CompareSettings settings = AppContext.Current.getCompareSettings();
 
         int partScanLength = 1048576;
         long totalLength = file.length();
-        double scanPercent = getContentVolumePercent();
+        double scanPercent
+            = settings.isContent2p() ? 2
+            : settings.isContent10p() ? 10
+            : settings.isContent20p() ? 20
+            : settings.isContent50p() ? 50 : 100;
         long scanLength = Math.round(totalLength * scanPercent / 100);
 
+        //<editor-fold defaultstate="collapsed" desc="Case 2: File is very small">
         if (scanLength < partScanLength) {
             byte data[] = new byte[(int) totalLength];
 
@@ -70,19 +81,15 @@ public class FileInfo {
 
             adler.update(data);
 
-            FileInfo info = new FileInfo();
-            info.name = file.getName();
-            info.path = path;
-            info.hash = adler.getValue();
-            info.size = file.length();
-
-            return info;
+            return new FileInfo(path, file.getName(), file.length(), adler.getValue());
         }
+        //</editor-fold>
 
         long partitions = scanLength / partScanLength;
         long partLength = totalLength / partitions;
         long skipLength = partLength - partScanLength;
 
+        //<editor-fold defaultstate="collapsed" desc="Case 3: File is large">
         HashSet<Long> partialHashes = new HashSet<>();
         try (FileInputStream stream = new FileInputStream(file)) {
             byte data[] = new byte[partScanLength];
@@ -95,7 +102,7 @@ public class FileInfo {
                 adler.update(data);
                 partialHashes.add(adler.getValue());
 
-                if (scanPercent != 1d)
+                if (scanPercent != 100)
                     stream.skip(skipLength);
 
                 scanned += partScanLength;
@@ -104,14 +111,9 @@ public class FileInfo {
 
         byte[] hashBytes = SerializationUtils.serialize(partialHashes);
         adler.update(hashBytes);
+        //</editor-fold>
 
-        FileInfo info = new FileInfo();
-        info.name = file.getName();
-        info.path = path;
-        info.hash = adler.getValue();
-        info.size = file.length();
-
-        return info;
+        return new FileInfo(path, file.getName(), file.length(), adler.getValue());
     }
 
     @Override
@@ -132,28 +134,6 @@ public class FileInfo {
 
     @Override
     public int hashCode() {
-        return Long.hashCode(hash);
-    }
-
-    private static double getContentVolumePercent() {
-        CompareSettings settings = AppContext.Current.getCompareSettings();
-
-        if (settings.isContent2p())
-            return 2;
-
-        if (settings.isContent10p())
-            return 5;
-
-        if (settings.isContent20p())
-            return 20;
-
-        if (settings.isContent50p())
-            return 50;
-
-        if (settings.isContent100p())
-            return 100;
-
-        Logger.getLogger(FileInfo.class.getName()).log(Level.SEVERE, "Invalid content volume percent state detected.");
-        return 0;
+        return path.hashCode() ^ Long.hashCode(hash);
     }
 }

@@ -63,7 +63,7 @@ public class DecloneWorkerPanel extends javax.swing.JPanel {
                     String path = inputFile.getPath();
                     try {
                         publish("\tAnalyzing: " + path);
-                        FileInfo info = FileInfo.init(path);
+                        FileInfo info = FileInfo.get(path);
                         fileInfos.add(info);
 //                      publish("\tHash = " + info.getHash());
                     } catch (IOException ex) {
