@@ -161,7 +161,7 @@
 
               <Layout class="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout"/>
               <SubComponents>
-                <Component class="me.vijaychavda.ui.CompareSettingsPanel" name="compareSettingsPanel">
+                <Component class="me.vijaychavda.ui.DecloneSettingsPanel" name="compareSettingsPanel">
                   <Properties>
                     <Property name="opaque" type="boolean" value="false"/>
                   </Properties>

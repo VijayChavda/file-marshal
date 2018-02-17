@@ -21,7 +21,7 @@ public class MainFrame extends javax.swing.JFrame {
         P_FileOptions = new javax.swing.JPanel();
         selectionSettingsPanel = new me.vijaychavda.ui.SelectionSettingsPanel();
         P_Settings = new javax.swing.JPanel();
-        compareSettingsPanel = new me.vijaychavda.ui.CompareSettingsPanel();
+        compareSettingsPanel = new me.vijaychavda.ui.DecloneSettingsPanel();
         P_Commands = new javax.swing.JPanel();
         B_Declone = new javax.swing.JButton();
         B_Declutter = new javax.swing.JButton();
@@ -194,7 +194,7 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JPanel P_Settings;
     private javax.swing.JPanel P_Sources;
     private javax.swing.JTabbedPane TabbedPane;
-    private me.vijaychavda.ui.CompareSettingsPanel compareSettingsPanel;
+    private me.vijaychavda.ui.DecloneSettingsPanel compareSettingsPanel;
     private me.vijaychavda.ui.SelectSourcesPanel selectSourcesPanel;
     private me.vijaychavda.ui.SelectionSettingsPanel selectionSettingsPanel;
     // End of variables declaration//GEN-END:variables

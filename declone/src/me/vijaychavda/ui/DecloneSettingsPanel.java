@@ -2,9 +2,9 @@ package me.vijaychavda.ui;
 
 import me.vijaychavda.settings.CompareSettings;
 
-public class CompareSettingsPanel extends javax.swing.JPanel {
+public class DecloneSettingsPanel extends javax.swing.JPanel {
 
-    public CompareSettingsPanel() {
+    public DecloneSettingsPanel() {
         initComponents();
     }
 
@@ -97,7 +97,7 @@ public class CompareSettingsPanel extends javax.swing.JPanel {
         });
 
         P_AdvanceSettings.setOpaque(false);
-        P_AdvanceSettings.setLayout(new java.awt.GridLayout());
+        P_AdvanceSettings.setLayout(new java.awt.GridLayout(1, 0));
 
         L_Name.setText("Name");
 
