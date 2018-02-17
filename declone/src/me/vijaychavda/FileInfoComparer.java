@@ -1,5 +1,6 @@
 package me.vijaychavda;
 
+import me.vijaychavda.settings.CompareSettings;
 import info.debatty.java.stringsimilarity.JaroWinkler;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -7,7 +8,7 @@ import java.util.HashSet;
 public class FileInfoComparer {
 
     public static boolean areSame(FileInfo f1, FileInfo f2) {
-        CompareSettings settings = AppContext.getCompareSettings();
+        CompareSettings settings = AppContext.Current.getCompareSettings();
 
         if (settings.isUsingSize())
             if (!sizeSimilar(f1.getSize(), f2.getSize()))
@@ -25,7 +26,7 @@ public class FileInfoComparer {
     }
 
     private static boolean nameSimilar(String name1, String name2) {
-        CompareSettings settings = AppContext.getCompareSettings();
+        CompareSettings settings = AppContext.Current.getCompareSettings();
         final float delta = 0.90f;
 
         if (settings.isNameSimilar())
@@ -58,7 +59,7 @@ public class FileInfoComparer {
     }
 
     private static boolean sizeSimilar(long size1, long size2) {
-        CompareSettings settings = AppContext.getCompareSettings();
+        CompareSettings settings = AppContext.Current.getCompareSettings();
 
         if (settings.isSizeExactlySame())
             return size1 == size2;

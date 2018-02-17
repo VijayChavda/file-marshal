@@ -1,4 +1,4 @@
-package me.vijaychavda;
+package me.vijaychavda.settings;
 
 public class SelectionSettings {
 

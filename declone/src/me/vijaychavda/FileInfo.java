@@ -1,5 +1,6 @@
 package me.vijaychavda;
 
+import me.vijaychavda.settings.CompareSettings;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -45,7 +46,7 @@ public class FileInfo {
     public static FileInfo init(String path) throws IOException {
         File file = new File(path);
 
-        if (!AppContext.getCompareSettings().isUsingContent()) {
+        if (!AppContext.Current.getCompareSettings().isUsingContent()) {
             FileInfo info = new FileInfo();
             info.name = file.getName();
             info.size = file.length();
@@ -135,7 +136,7 @@ public class FileInfo {
     }
 
     private static double getContentVolumePercent() {
-        CompareSettings settings = AppContext.getCompareSettings();
+        CompareSettings settings = AppContext.Current.getCompareSettings();
 
         if (settings.isContent2p())
             return 2;
