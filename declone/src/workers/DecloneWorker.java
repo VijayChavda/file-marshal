@@ -17,7 +17,7 @@ public class DecloneWorker extends SwingWorker<HashSet<ArrayList<FileInfo>>, Str
     protected HashSet<ArrayList<FileInfo>> doInBackground() throws Exception {
         int progress = 0;
         setProgress(0);
-        publish("Running task: Finding duplicates.");
+        publish("Running task: Declone!");
 
         HashSet<ArrayList<FileInfo>> duplicates = new HashSet<>();
         outer:

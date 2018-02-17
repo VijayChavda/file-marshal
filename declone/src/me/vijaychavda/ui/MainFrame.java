@@ -88,6 +88,11 @@ public class MainFrame extends javax.swing.JFrame {
         });
 
         B_Declutter.setText("Declutter");
+        B_Declutter.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                B_DeclutterActionPerformed(evt);
+            }
+        });
 
         B_FindLarge.setText("Find large files");
 
@@ -156,6 +161,21 @@ public class MainFrame extends javax.swing.JFrame {
         decloneDialog.setVisible(true);
         decloneWorkerPanel.start();
     }//GEN-LAST:event_B_DecloneActionPerformed
+
+    private void B_DeclutterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_B_DeclutterActionPerformed
+        AppContext.Current.setSources(selectSourcesPanel.getSources());
+        AppContext.Current.setSelectionSettings(selectionSettingsPanel.getSettings());
+        AppContext.Current.setCompareSettings(compareSettingsPanel.getSettings());
+
+        JDialog decloneDialog = new JDialog(this, "File Marshal - Declutter");
+        DeclutterWorkerPanel declutterWorkerPanel = new DeclutterWorkerPanel();
+        decloneDialog.add(declutterWorkerPanel);
+        decloneDialog.pack();
+        decloneDialog.setLocationRelativeTo(this);
+//        decloneDialog.setModal(true);
+        decloneDialog.setVisible(true);
+        declutterWorkerPanel.start();
+    }//GEN-LAST:event_B_DeclutterActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton B_Declone;

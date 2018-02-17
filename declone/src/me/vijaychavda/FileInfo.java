@@ -27,6 +27,7 @@ public class FileInfo {
     private FileInfo(String path, String name, String type, long size, long hash) {
         this.path = path;
         this.name = name;
+        this.type = type;
         this.size = size;
         this.hash = hash;
     }

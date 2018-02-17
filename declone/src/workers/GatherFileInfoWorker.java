@@ -3,7 +3,6 @@ package workers;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.SwingWorker;
@@ -45,15 +44,5 @@ public class GatherFileInfoWorker extends SwingWorker<ArrayList<FileInfo>, Strin
         setProgress(100);
 
         return fileInfos;
-    }
-
-    @Override
-    protected void process(List<String> chunks) {
-
-    }
-
-    @Override
-    protected void done() {
-
     }
 }
