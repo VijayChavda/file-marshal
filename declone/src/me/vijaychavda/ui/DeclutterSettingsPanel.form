@@ -4,6 +4,11 @@
   <NonVisualComponents>
     <Component class="javax.swing.ButtonGroup" name="RBG_OrganizeBy">
     </Component>
+    <Component class="javax.swing.JFileChooser" name="FilePicker">
+      <Properties>
+        <Property name="fileSelectionMode" type="int" value="1"/>
+      </Properties>
+    </Component>
   </NonVisualComponents>
   <AuxValues>
     <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
@@ -61,7 +66,7 @@
               <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="1" attributes="0">
                   <Component id="L_Info3" pref="0" max="32767" attributes="0"/>
-                  <Component id="jScrollPane1" max="32767" attributes="0"/>
+                  <Component id="SP_GroupingInfo" max="32767" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -72,31 +77,31 @@
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
               <Component id="L_Info1" min="-2" max="-2" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
+              <EmptySpace min="-2" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="TB_OutputPath" linkSize="1" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="B_Browse" linkSize="1" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="2" attributes="0">
                   <Component id="SP_DontGroupCount" linkSize="2" alignment="2" min="-2" max="-2" attributes="0"/>
                   <Component id="CB_DontGroup" linkSize="2" alignment="2" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
               <Component id="L_Info2" min="-2" max="-2" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
+              <EmptySpace min="-2" max="-2" attributes="0"/>
               <Component id="RB_Type" min="-2" max="-2" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
+              <EmptySpace min="-2" max="-2" attributes="0"/>
               <Component id="RB_Extension" min="-2" max="-2" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
+              <EmptySpace min="-2" max="-2" attributes="0"/>
               <Component id="RB_Both" min="-2" max="-2" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
+              <EmptySpace min="-2" max="-2" attributes="0"/>
               <Component id="RB_Custom" min="-2" max="-2" attributes="0"/>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
               <Component id="L_Info3" min="-2" max="-2" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
-              <Component id="jScrollPane1" min="-2" max="-2" attributes="0"/>
-              <EmptySpace max="32767" attributes="0"/>
+              <EmptySpace min="-2" max="-2" attributes="0"/>
+              <Component id="SP_GroupingInfo" max="32767" attributes="0"/>
+              <EmptySpace min="-2" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -108,12 +113,18 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="TB_OutputPath">
+      <Events>
+        <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="TB_OutputPathFocusLost"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JCheckBox" name="CB_DontGroup">
       <Properties>
         <Property name="selected" type="boolean" value="true"/>
         <Property name="text" type="java.lang.String" value="Don&apos;t group files when they are less than:"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="CB_DontGroupActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JSpinner" name="SP_DontGroupCount">
       <Properties>
@@ -131,6 +142,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Browse"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="B_BrowseActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JRadioButton" name="RB_Type">
       <Properties>
@@ -168,13 +182,16 @@
         <Property name="text" type="java.lang.String" value="I&apos;ll decide"/>
         <Property name="toolTipText" type="java.lang.String" value="&lt;html&gt;&#xa;&lt;b&gt;Format example:&lt;/b&gt;&lt;br&gt;&#xa;&apos;Pics&apos; ai bmp gif ico jpeg jpg png ps psd svg tif tiff&lt;br&gt;&#xa;&apos;Docs&apos; doc docx odt pdf rtf txt wks wps wpd ods xlr xls xlsx key odp pps ppt pptx&lt;br&gt;&#xa;&apos;Videos&apos; 3g2 3gp avi flv m4v mkv mov mp4 mpg mpeg rm swf vob wmv&lt;br&gt;&#xa;&apos;My Songs&apos; aif cda mid midi mp3 mpa ogg wav wma wpl&lt;br&gt;&#xa;&lt;/html&gt;"/>
       </Properties>
+      <Events>
+        <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="RB_CustomStateChanged"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="L_Info3">
       <Properties>
         <Property name="text" type="java.lang.String" value="&lt;html&gt; In each line, enter in quotes the name of folder, followed by list of space seperated extensions of files that go in that folder. &lt;/html&gt;"/>
       </Properties>
     </Component>
-    <Container class="javax.swing.JScrollPane" name="jScrollPane1">
+    <Container class="javax.swing.JScrollPane" name="SP_GroupingInfo">
       <AuxValues>
         <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
       </AuxValues>

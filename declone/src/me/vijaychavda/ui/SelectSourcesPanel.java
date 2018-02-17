@@ -130,8 +130,11 @@ public class SelectSourcesPanel extends javax.swing.JPanel {
         if (!file.exists()) {
             JOptionPane.showMessageDialog(this, "This path does not exist. Please check.");
             T_SourcePath.setText("");
+            T_SourcePath.requestFocus();
         } else if (!file.isDirectory()) {
             JOptionPane.showMessageDialog(this, "The path is not a directory.");
+            T_SourcePath.setText("");
+            T_SourcePath.requestFocus();
         } else {
             DefaultListModel model = (DefaultListModel) L_Sources.getModel();
             if (model.contains(file.getAbsolutePath()))

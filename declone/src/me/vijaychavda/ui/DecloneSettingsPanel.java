@@ -1,6 +1,6 @@
 package me.vijaychavda.ui;
 
-import me.vijaychavda.settings.CompareSettings;
+import me.vijaychavda.settings.DecloneSettings;
 
 public class DecloneSettingsPanel extends javax.swing.JPanel {
 
@@ -8,8 +8,8 @@ public class DecloneSettingsPanel extends javax.swing.JPanel {
         initComponents();
     }
 
-    public final CompareSettings getSettings() {
-        CompareSettings settings = new CompareSettings();
+    public final DecloneSettings getSettings() {
+        DecloneSettings settings = new DecloneSettings();
 
         settings.setUsingNames(CB_Name.isSelected());
         settings.setUsingSize(CB_Size.isSelected());

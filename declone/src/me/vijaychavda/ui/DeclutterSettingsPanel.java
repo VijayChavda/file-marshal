@@ -1,9 +1,25 @@
 package me.vijaychavda.ui;
 
+import java.io.File;
+import javax.swing.JOptionPane;
+import me.vijaychavda.AppContext;
+import me.vijaychavda.settings.DeclutterSettings;
+
 public class DeclutterSettingsPanel extends javax.swing.JPanel {
 
     public DeclutterSettingsPanel() {
         initComponents();
+        initOtherThings();
+    }
+
+    public final DeclutterSettings getSettings() {
+        DeclutterSettings settings = new DeclutterSettings();
+
+        settings.setGrouping(TA_GroupingInfo.getText());
+        settings.setOutputPath(TB_OutputPath.getText());
+        settings.setMinimumGroupCardinality((int) SP_DontGroupCount.getValue());
+
+        return settings;
     }
 
     //<editor-fold defaultstate="collapsed" desc="GUI stuff">
@@ -12,6 +28,7 @@ public class DeclutterSettingsPanel extends javax.swing.JPanel {
     private void initComponents() {
 
         RBG_OrganizeBy = new javax.swing.ButtonGroup();
+        FilePicker = new javax.swing.JFileChooser();
         L_Info1 = new javax.swing.JLabel();
         TB_OutputPath = new javax.swing.JTextField();
         CB_DontGroup = new javax.swing.JCheckBox();
@@ -23,19 +40,37 @@ public class DeclutterSettingsPanel extends javax.swing.JPanel {
         RB_Both = new javax.swing.JRadioButton();
         RB_Custom = new javax.swing.JRadioButton();
         L_Info3 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
+        SP_GroupingInfo = new javax.swing.JScrollPane();
         TA_GroupingInfo = new javax.swing.JTextArea();
+
+        FilePicker.setFileSelectionMode(javax.swing.JFileChooser.DIRECTORIES_ONLY);
 
         L_Info1.setText("Where should all the files organized in folders go?");
 
+        TB_OutputPath.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                TB_OutputPathFocusLost(evt);
+            }
+        });
+
         CB_DontGroup.setSelected(true);
         CB_DontGroup.setText("Don't group files when they are less than:");
+        CB_DontGroup.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CB_DontGroupActionPerformed(evt);
+            }
+        });
 
         SP_DontGroupCount.setModel(new javax.swing.SpinnerNumberModel(4, 2, 100, 1));
 
         L_Info2.setText("Organize my files by:");
 
         B_Browse.setText("Browse");
+        B_Browse.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                B_BrowseActionPerformed(evt);
+            }
+        });
 
         RBG_OrganizeBy.add(RB_Type);
         RB_Type.setText("Type");
@@ -53,6 +88,11 @@ public class DeclutterSettingsPanel extends javax.swing.JPanel {
         RBG_OrganizeBy.add(RB_Custom);
         RB_Custom.setText("I'll decide");
         RB_Custom.setToolTipText("<html>\n<b>Format example:</b><br>\n'Pics' ai bmp gif ico jpeg jpg png ps psd svg tif tiff<br>\n'Docs' doc docx odt pdf rtf txt wks wps wpd ods xlr xls xlsx key odp pps ppt pptx<br>\n'Videos' 3g2 3gp avi flv m4v mkv mov mp4 mpg mpeg rm swf vob wmv<br>\n'My Songs' aif cda mid midi mp3 mpa ogg wav wma wpl<br>\n</html>");
+        RB_Custom.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                RB_CustomStateChanged(evt);
+            }
+        });
 
         L_Info3.setText("<html> In each line, enter in quotes the name of folder, followed by list of space seperated extensions of files that go in that folder. </html>");
 
@@ -60,7 +100,7 @@ public class DeclutterSettingsPanel extends javax.swing.JPanel {
         TA_GroupingInfo.setFont(new java.awt.Font("Ubuntu", 0, 12)); // NOI18N
         TA_GroupingInfo.setRows(5);
         TA_GroupingInfo.setText("'Pics' ai bmp gif ico jpeg jpg png ps psd svg tif tiff\n'Docs' doc docx odt pdf rtf txt wks wps wpd ods xlr xls xlsx key odp pps ppt pptx\n'Videos' 3g2 3gp avi flv m4v mkv mov mp4 mpg mpeg rm swf vob wmv\n'My Songs' aif cda mid midi mp3 mpa ogg wav wma wpl");
-        jScrollPane1.setViewportView(TA_GroupingInfo);
+        SP_GroupingInfo.setViewportView(TA_GroupingInfo);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -97,7 +137,7 @@ public class DeclutterSettingsPanel extends javax.swing.JPanel {
                 .addGap(12, 12, 12)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(L_Info3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1))
+                    .addComponent(SP_GroupingInfo))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -126,8 +166,8 @@ public class DeclutterSettingsPanel extends javax.swing.JPanel {
                 .addGap(18, 18, 18)
                 .addComponent(L_Info3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(SP_GroupingInfo)
+                .addContainerGap())
         );
 
         layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {B_Browse, TB_OutputPath});
@@ -136,10 +176,47 @@ public class DeclutterSettingsPanel extends javax.swing.JPanel {
 
     }// </editor-fold>//GEN-END:initComponents
 
+    private void RB_CustomStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_RB_CustomStateChanged
+        boolean value = RB_Custom.isSelected();
+        L_Info3.setVisible(value);
+        SP_GroupingInfo.setVisible(value);
+    }//GEN-LAST:event_RB_CustomStateChanged
+
+    private void TB_OutputPathFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_TB_OutputPathFocusLost
+        String path = TB_OutputPath.getText();
+
+        if (path.equals(""))
+            return;
+
+        File file = new File(path);
+        if (!file.exists()) {
+            JOptionPane.showMessageDialog(this, "This path does not exist. Please check.");
+            TB_OutputPath.requestFocus();
+        } else if (!file.isDirectory()) {
+            JOptionPane.showMessageDialog(this, "You need to enter a path to a directory.");
+            TB_OutputPath.requestFocus();
+        }
+    }//GEN-LAST:event_TB_OutputPathFocusLost
+
+    private void B_BrowseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_B_BrowseActionPerformed
+        FilePicker.showOpenDialog(this);
+
+        TB_OutputPath.setText(FilePicker.getSelectedFile().getAbsolutePath());
+    }//GEN-LAST:event_B_BrowseActionPerformed
+
+    private void CB_DontGroupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CB_DontGroupActionPerformed
+        SP_DontGroupCount.setEnabled(CB_DontGroup.isSelected());
+    }//GEN-LAST:event_CB_DontGroupActionPerformed
+
+    private void initOtherThings() {
+        L_Info3.setVisible(false);
+        SP_GroupingInfo.setVisible(false);
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton B_Browse;
     private javax.swing.JCheckBox CB_DontGroup;
+    private javax.swing.JFileChooser FilePicker;
     private javax.swing.JLabel L_Info1;
     private javax.swing.JLabel L_Info2;
     private javax.swing.JLabel L_Info3;
@@ -149,9 +226,9 @@ public class DeclutterSettingsPanel extends javax.swing.JPanel {
     private javax.swing.JRadioButton RB_Extension;
     private javax.swing.JRadioButton RB_Type;
     private javax.swing.JSpinner SP_DontGroupCount;
+    private javax.swing.JScrollPane SP_GroupingInfo;
     private javax.swing.JTextArea TA_GroupingInfo;
     private javax.swing.JTextField TB_OutputPath;
-    private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 
     //</editor-fold>

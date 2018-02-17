@@ -23,7 +23,7 @@ public class MainFrame extends javax.swing.JFrame {
         P_Declutter = new javax.swing.JPanel();
         declutterSettingsPanel = new me.vijaychavda.ui.DeclutterSettingsPanel();
         P_Declone = new javax.swing.JPanel();
-        compareSettingsPanel = new me.vijaychavda.ui.DecloneSettingsPanel();
+        decloneSettingsPanel = new me.vijaychavda.ui.DecloneSettingsPanel();
         P_Commands = new javax.swing.JPanel();
         B_Declone = new javax.swing.JButton();
         B_Declutter = new javax.swing.JButton();
@@ -57,37 +57,18 @@ public class MainFrame extends javax.swing.JFrame {
         TabbedPane.addTab("File select", P_FileOptions);
 
         P_Declutter.setOpaque(false);
+        P_Declutter.setLayout(new javax.swing.BoxLayout(P_Declutter, javax.swing.BoxLayout.Y_AXIS));
 
         declutterSettingsPanel.setOpaque(false);
-
-        javax.swing.GroupLayout P_DeclutterLayout = new javax.swing.GroupLayout(P_Declutter);
-        P_Declutter.setLayout(P_DeclutterLayout);
-        P_DeclutterLayout.setHorizontalGroup(
-            P_DeclutterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 622, Short.MAX_VALUE)
-            .addGroup(P_DeclutterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(P_DeclutterLayout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(declutterSettingsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 0, Short.MAX_VALUE)))
-        );
-        P_DeclutterLayout.setVerticalGroup(
-            P_DeclutterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 424, Short.MAX_VALUE)
-            .addGroup(P_DeclutterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(P_DeclutterLayout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(declutterSettingsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 0, Short.MAX_VALUE)))
-        );
+        P_Declutter.add(declutterSettingsPanel);
 
         TabbedPane.addTab("Declutter", P_Declutter);
 
         P_Declone.setOpaque(false);
         P_Declone.setLayout(new java.awt.BorderLayout());
 
-        compareSettingsPanel.setOpaque(false);
-        P_Declone.add(compareSettingsPanel, java.awt.BorderLayout.CENTER);
+        decloneSettingsPanel.setOpaque(false);
+        P_Declone.add(decloneSettingsPanel, java.awt.BorderLayout.CENTER);
 
         TabbedPane.addTab("Declone", P_Declone);
 
@@ -179,7 +160,7 @@ public class MainFrame extends javax.swing.JFrame {
     private void B_DecloneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_B_DecloneActionPerformed
         AppContext.Current.setSources(selectSourcesPanel.getSources());
         AppContext.Current.setSelectionSettings(selectionSettingsPanel.getSettings());
-        AppContext.Current.setCompareSettings(compareSettingsPanel.getSettings());
+        AppContext.Current.setDecloneSettings(decloneSettingsPanel.getSettings());
 
         JDialog decloneDialog = new JDialog(this, "File Marshal - Declone");
         DecloneWorkerPanel decloneWorkerPanel = new DecloneWorkerPanel();
@@ -194,7 +175,7 @@ public class MainFrame extends javax.swing.JFrame {
     private void B_DeclutterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_B_DeclutterActionPerformed
         AppContext.Current.setSources(selectSourcesPanel.getSources());
         AppContext.Current.setSelectionSettings(selectionSettingsPanel.getSettings());
-        AppContext.Current.setCompareSettings(compareSettingsPanel.getSettings());
+        AppContext.Current.setDeclutterSettings(declutterSettingsPanel.getSettings());
 
         JDialog decloneDialog = new JDialog(this, "File Marshal - Declutter");
         DeclutterWorkerPanel declutterWorkerPanel = new DeclutterWorkerPanel();
@@ -224,7 +205,7 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JPanel P_FileOptions;
     private javax.swing.JPanel P_Sources;
     private javax.swing.JTabbedPane TabbedPane;
-    private me.vijaychavda.ui.DecloneSettingsPanel compareSettingsPanel;
+    private me.vijaychavda.ui.DecloneSettingsPanel decloneSettingsPanel;
     private me.vijaychavda.ui.DeclutterSettingsPanel declutterSettingsPanel;
     private me.vijaychavda.ui.SelectSourcesPanel selectSourcesPanel;
     private me.vijaychavda.ui.SelectionSettingsPanel selectionSettingsPanel;

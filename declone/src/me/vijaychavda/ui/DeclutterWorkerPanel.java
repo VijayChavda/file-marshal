@@ -10,7 +10,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import me.vijaychavda.AppContext;
 import me.vijaychavda.FileInfo;
-import me.vijaychavda.settings.CompareSettings;
+import me.vijaychavda.settings.DecloneSettings;
 import workers.DeclutterWorker;
 import workers.ScanSourcesWorker;
 

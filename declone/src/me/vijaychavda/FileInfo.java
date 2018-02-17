@@ -1,6 +1,6 @@
 package me.vijaychavda;
 
-import me.vijaychavda.settings.CompareSettings;
+import me.vijaychavda.settings.DecloneSettings;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -67,13 +67,13 @@ public class FileInfo {
         //</editor-fold>
 
         //<editor-fold defaultstate="collapsed" desc="Case 1: No need to check content">
-        if (AppContext.Current.getCompareSettings().isUsingContent() == false)
+        if (AppContext.Current.getDecloneSettings().isUsingContent() == false)
             return new FileInfo(path, fileName, fileType, fileSize, -1);
         //</editor-fold>
 
         //<editor-fold defaultstate="collapsed" desc="more variables">
         Adler32 adler = new Adler32();
-        CompareSettings settings = AppContext.Current.getCompareSettings();
+        DecloneSettings settings = AppContext.Current.getDecloneSettings();
 
         int partScanLength = 1048576;
         long totalLength = fileSize;

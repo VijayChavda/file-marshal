@@ -1,6 +1,6 @@
 package me.vijaychavda.settings;
 
-public class CompareSettings {
+public class DecloneSettings {
 
     private boolean usingNames;
     private boolean usingSize;

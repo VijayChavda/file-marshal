@@ -3,12 +3,14 @@ package me.vijaychavda;
 import java.io.File;
 import java.util.ArrayList;
 import me.vijaychavda.settings.SelectionSettings;
-import me.vijaychavda.settings.CompareSettings;
+import me.vijaychavda.settings.DecloneSettings;
+import me.vijaychavda.settings.DeclutterSettings;
 
 public class AppContext {
 
     private ArrayList<File> sources;
-    private CompareSettings compareSettings;
+    private DeclutterSettings declutterSettings;
+    private DecloneSettings decloneSettings;
     private SelectionSettings selectionSettings;
 
     public static final AppContext Current = new AppContext();
@@ -21,8 +23,12 @@ public class AppContext {
         return sources;
     }
 
-    public CompareSettings getCompareSettings() {
-        return compareSettings;
+    public DeclutterSettings getDeclutterSettings() {
+        return declutterSettings;
+    }
+
+    public DecloneSettings getDecloneSettings() {
+        return decloneSettings;
     }
 
     public SelectionSettings getSelectionSettings() {
@@ -33,8 +39,12 @@ public class AppContext {
         this.sources = sources;
     }
 
-    public void setCompareSettings(CompareSettings compareSettings) {
-        this.compareSettings = compareSettings;
+    public void setDeclutterSettings(DeclutterSettings declutterSettings) {
+        this.declutterSettings = declutterSettings;
+    }
+
+    public void setDecloneSettings(DecloneSettings decloneSettings) {
+        this.decloneSettings = decloneSettings;
     }
 
     public void setSelectionSettings(SelectionSettings selectionSettings) {

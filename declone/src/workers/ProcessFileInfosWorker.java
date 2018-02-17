@@ -8,7 +8,7 @@ import java.util.List;
 import javax.swing.SwingWorker;
 import me.vijaychavda.AppContext;
 import me.vijaychavda.FileInfo;
-import me.vijaychavda.settings.CompareSettings;
+import me.vijaychavda.settings.DecloneSettings;
 
 public class ProcessFileInfosWorker extends SwingWorker<Void, String> {
 
@@ -24,7 +24,7 @@ public class ProcessFileInfosWorker extends SwingWorker<Void, String> {
         setProgress(0);
         publish("Running task: Processing gathered information.");
 
-        CompareSettings settings = AppContext.Current.getCompareSettings();
+        DecloneSettings settings = AppContext.Current.getDecloneSettings();
         if (settings.isUsingNames() == false || settings.isNameExactlySame() || settings.isNameSimilar()) {
             publish("\tNo needed to process information based on current settings.");
             return null;
