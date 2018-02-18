@@ -211,6 +211,9 @@ public class DeclutterSettingsPanel extends javax.swing.JPanel {
     private void initOtherThings() {
         L_Info3.setVisible(false);
         SP_GroupingInfo.setVisible(false);
+
+        String desktopPath = System.getProperty("user.home") + "/Desktop";
+        TB_OutputPath.setText(desktopPath);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
