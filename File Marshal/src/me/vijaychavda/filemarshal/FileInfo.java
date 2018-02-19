@@ -1,6 +1,6 @@
-package me.vijaychavda;
+package me.vijaychavda.filemarshal;
 
-import me.vijaychavda.settings.DecloneSettings;
+import me.vijaychavda.filemarshal.settings.DecloneSettings;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;

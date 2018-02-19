@@ -1,4 +1,4 @@
-package me.vijaychavda.ui;
+package me.vijaychavda.filemarshal.ui;
 
 import java.io.File;
 import java.util.ArrayList;

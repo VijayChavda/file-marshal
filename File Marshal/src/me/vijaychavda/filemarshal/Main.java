@@ -1,11 +1,11 @@
-package me.vijaychavda;
+package me.vijaychavda.filemarshal;
 
 import java.awt.EventQueue;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
-import me.vijaychavda.ui.MainFrame;
+import me.vijaychavda.filemarshal.ui.MainFrame;
 
 public class Main {
 

@@ -1,7 +1,7 @@
-package me.vijaychavda.ui;
+package me.vijaychavda.filemarshal.ui;
 
 import javax.swing.JCheckBox;
-import me.vijaychavda.settings.SelectionSettings;
+import me.vijaychavda.filemarshal.settings.SelectionSettings;
 
 public class SelectionSettingsPanel extends javax.swing.JPanel {
 

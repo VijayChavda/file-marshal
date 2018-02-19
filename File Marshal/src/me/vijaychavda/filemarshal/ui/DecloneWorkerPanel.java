@@ -1,4 +1,4 @@
-package me.vijaychavda.ui;
+package me.vijaychavda.filemarshal.ui;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -7,11 +7,11 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import me.vijaychavda.FileInfo;
-import workers.DecloneWorker;
-import workers.GatherFileInfoWorker;
-import workers.ProcessFileInfosWorker;
-import workers.ScanSourcesWorker;
+import me.vijaychavda.filemarshal.FileInfo;
+import me.vijaychavda.filemarshal.workers.DecloneWorker;
+import me.vijaychavda.filemarshal.workers.GatherFileInfoWorker;
+import me.vijaychavda.filemarshal.workers.ProcessFileInfosWorker;
+import me.vijaychavda.filemarshal.workers.ScanSourcesWorker;
 
 public class DecloneWorkerPanel extends javax.swing.JPanel {
 

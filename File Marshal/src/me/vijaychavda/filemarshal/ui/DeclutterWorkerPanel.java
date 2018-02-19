@@ -1,4 +1,4 @@
-package me.vijaychavda.ui;
+package me.vijaychavda.filemarshal.ui;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -8,11 +8,11 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import me.vijaychavda.AppContext;
-import me.vijaychavda.FileInfo;
-import me.vijaychavda.settings.DecloneSettings;
-import workers.DeclutterWorker;
-import workers.ScanSourcesWorker;
+import me.vijaychavda.filemarshal.AppContext;
+import me.vijaychavda.filemarshal.FileInfo;
+import me.vijaychavda.filemarshal.settings.DecloneSettings;
+import me.vijaychavda.filemarshal.workers.DeclutterWorker;
+import me.vijaychavda.filemarshal.workers.ScanSourcesWorker;
 
 public class DeclutterWorkerPanel extends javax.swing.JPanel {
 

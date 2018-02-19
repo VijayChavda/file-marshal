@@ -1,6 +1,6 @@
-package me.vijaychavda;
+package me.vijaychavda.filemarshal;
 
-import me.vijaychavda.settings.DecloneSettings;
+import me.vijaychavda.filemarshal.settings.DecloneSettings;
 import info.debatty.java.stringsimilarity.JaroWinkler;
 import java.util.Arrays;
 import java.util.HashSet;

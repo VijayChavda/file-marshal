@@ -1,4 +1,4 @@
-package workers;
+package me.vijaychavda.filemarshal.workers;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -6,9 +6,9 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import javax.swing.SwingWorker;
-import me.vijaychavda.AppContext;
-import me.vijaychavda.FileInfo;
-import me.vijaychavda.settings.DecloneSettings;
+import me.vijaychavda.filemarshal.AppContext;
+import me.vijaychavda.filemarshal.FileInfo;
+import me.vijaychavda.filemarshal.settings.DecloneSettings;
 
 public class ProcessFileInfosWorker extends SwingWorker<Void, String> {
 

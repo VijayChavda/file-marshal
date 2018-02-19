@@ -1,6 +1,6 @@
-package me.vijaychavda.ui;
+package me.vijaychavda.filemarshal.ui;
 
-import me.vijaychavda.settings.DecloneSettings;
+import me.vijaychavda.filemarshal.settings.DecloneSettings;
 
 public class DecloneSettingsPanel extends javax.swing.JPanel {
 

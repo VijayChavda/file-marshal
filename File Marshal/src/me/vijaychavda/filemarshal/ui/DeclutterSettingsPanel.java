@@ -1,9 +1,8 @@
-package me.vijaychavda.ui;
+package me.vijaychavda.filemarshal.ui;
 
 import java.io.File;
 import javax.swing.JOptionPane;
-import me.vijaychavda.AppContext;
-import me.vijaychavda.settings.DeclutterSettings;
+import me.vijaychavda.filemarshal.settings.DeclutterSettings;
 
 public class DeclutterSettingsPanel extends javax.swing.JPanel {
 
@@ -17,7 +16,7 @@ public class DeclutterSettingsPanel extends javax.swing.JPanel {
 
         settings.setGrouping(TA_GroupingInfo.getText());
         settings.setOutputPath(TB_OutputPath.getText());
-        settings.setMinimumGroupCardinality((int) SP_DontGroupCount.getValue());
+        settings.setMinimumGroupCardinality(CB_DontGroup.isSelected() ? (int) SP_DontGroupCount.getValue() : 0);
 
         return settings;
     }

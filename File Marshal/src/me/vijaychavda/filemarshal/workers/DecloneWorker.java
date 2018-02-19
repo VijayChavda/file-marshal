@@ -1,9 +1,9 @@
-package workers;
+package me.vijaychavda.filemarshal.workers;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import javax.swing.SwingWorker;
-import me.vijaychavda.FileInfo;
+import me.vijaychavda.filemarshal.FileInfo;
 
 public class DecloneWorker extends SwingWorker<HashSet<ArrayList<FileInfo>>, String> {
 

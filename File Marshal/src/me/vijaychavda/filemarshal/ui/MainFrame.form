@@ -109,7 +109,7 @@
 
               <Layout class="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout"/>
               <SubComponents>
-                <Component class="me.vijaychavda.ui.SelectSourcesPanel" name="selectSourcesPanel">
+                <Component class="me.vijaychavda.filemarshal.ui.SelectSourcesPanel" name="selectSourcesPanel">
                   <Properties>
                     <Property name="opaque" type="boolean" value="false"/>
                   </Properties>
@@ -135,7 +135,7 @@
 
               <Layout class="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout"/>
               <SubComponents>
-                <Component class="me.vijaychavda.ui.SelectionSettingsPanel" name="selectionSettingsPanel">
+                <Component class="me.vijaychavda.filemarshal.ui.SelectionSettingsPanel" name="selectionSettingsPanel">
                   <Properties>
                     <Property name="opaque" type="boolean" value="false"/>
                   </Properties>
@@ -163,7 +163,7 @@
                 <Property name="axis" type="int" value="1"/>
               </Layout>
               <SubComponents>
-                <Component class="me.vijaychavda.ui.DeclutterSettingsPanel" name="declutterSettingsPanel">
+                <Component class="me.vijaychavda.filemarshal.ui.DeclutterSettingsPanel" name="declutterSettingsPanel">
                   <Properties>
                     <Property name="opaque" type="boolean" value="false"/>
                   </Properties>
@@ -184,7 +184,7 @@
 
               <Layout class="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout"/>
               <SubComponents>
-                <Component class="me.vijaychavda.ui.DecloneSettingsPanel" name="decloneSettingsPanel">
+                <Component class="me.vijaychavda.filemarshal.ui.DecloneSettingsPanel" name="decloneSettingsPanel">
                   <Properties>
                     <Property name="opaque" type="boolean" value="false"/>
                   </Properties>

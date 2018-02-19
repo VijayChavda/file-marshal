@@ -1,10 +1,10 @@
-package workers;
+package me.vijaychavda.filemarshal.workers;
 
 import java.io.File;
 import java.util.ArrayList;
 import javax.swing.SwingWorker;
-import me.vijaychavda.AppContext;
-import me.vijaychavda.settings.SelectionSettings;
+import me.vijaychavda.filemarshal.AppContext;
+import me.vijaychavda.filemarshal.settings.SelectionSettings;
 
 public class ScanSourcesWorker extends SwingWorker<ArrayList<File>, String> {
 

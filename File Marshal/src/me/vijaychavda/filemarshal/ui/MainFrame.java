@@ -1,7 +1,7 @@
-package me.vijaychavda.ui;
+package me.vijaychavda.filemarshal.ui;
 
 import javax.swing.JDialog;
-import me.vijaychavda.AppContext;
+import me.vijaychavda.filemarshal.AppContext;
 
 public class MainFrame extends javax.swing.JFrame {
 
@@ -17,13 +17,13 @@ public class MainFrame extends javax.swing.JFrame {
         P_Content = new javax.swing.JPanel();
         TabbedPane = new javax.swing.JTabbedPane();
         P_Sources = new javax.swing.JPanel();
-        selectSourcesPanel = new me.vijaychavda.ui.SelectSourcesPanel();
+        selectSourcesPanel = new me.vijaychavda.filemarshal.ui.SelectSourcesPanel();
         P_FileOptions = new javax.swing.JPanel();
-        selectionSettingsPanel = new me.vijaychavda.ui.SelectionSettingsPanel();
+        selectionSettingsPanel = new me.vijaychavda.filemarshal.ui.SelectionSettingsPanel();
         P_Declutter = new javax.swing.JPanel();
-        declutterSettingsPanel = new me.vijaychavda.ui.DeclutterSettingsPanel();
+        declutterSettingsPanel = new me.vijaychavda.filemarshal.ui.DeclutterSettingsPanel();
         P_Declone = new javax.swing.JPanel();
-        decloneSettingsPanel = new me.vijaychavda.ui.DecloneSettingsPanel();
+        decloneSettingsPanel = new me.vijaychavda.filemarshal.ui.DecloneSettingsPanel();
         P_Commands = new javax.swing.JPanel();
         B_Declone = new javax.swing.JButton();
         B_Declutter = new javax.swing.JButton();
@@ -205,10 +205,10 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JPanel P_FileOptions;
     private javax.swing.JPanel P_Sources;
     private javax.swing.JTabbedPane TabbedPane;
-    private me.vijaychavda.ui.DecloneSettingsPanel decloneSettingsPanel;
-    private me.vijaychavda.ui.DeclutterSettingsPanel declutterSettingsPanel;
-    private me.vijaychavda.ui.SelectSourcesPanel selectSourcesPanel;
-    private me.vijaychavda.ui.SelectionSettingsPanel selectionSettingsPanel;
+    private me.vijaychavda.filemarshal.ui.DecloneSettingsPanel decloneSettingsPanel;
+    private me.vijaychavda.filemarshal.ui.DeclutterSettingsPanel declutterSettingsPanel;
+    private me.vijaychavda.filemarshal.ui.SelectSourcesPanel selectSourcesPanel;
+    private me.vijaychavda.filemarshal.ui.SelectionSettingsPanel selectionSettingsPanel;
     // End of variables declaration//GEN-END:variables
     // </editor-fold>
 

@@ -1,4 +1,4 @@
-package workers;
+package me.vijaychavda.filemarshal.workers;
 
 import java.io.File;
 import java.io.IOException;
@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.SwingWorker;
-import me.vijaychavda.FileInfo;
+import me.vijaychavda.filemarshal.FileInfo;
 
 public class GatherFileInfoWorker extends SwingWorker<ArrayList<FileInfo>, String> {
 

@@ -1,10 +1,10 @@
-package me.vijaychavda;
+package me.vijaychavda.filemarshal;
 
 import java.io.File;
 import java.util.ArrayList;
-import me.vijaychavda.settings.SelectionSettings;
-import me.vijaychavda.settings.DecloneSettings;
-import me.vijaychavda.settings.DeclutterSettings;
+import me.vijaychavda.filemarshal.settings.SelectionSettings;
+import me.vijaychavda.filemarshal.settings.DecloneSettings;
+import me.vijaychavda.filemarshal.settings.DeclutterSettings;
 
 public class AppContext {
 
