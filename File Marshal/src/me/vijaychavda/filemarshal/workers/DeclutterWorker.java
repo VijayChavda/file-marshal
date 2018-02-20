@@ -12,6 +12,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 import java.nio.file.attribute.FileAttribute;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -32,6 +33,7 @@ public class DeclutterWorker extends SwingWorker<Void, String> {
     @Override
     protected Void doInBackground() {
         try {
+            int filesInMap = 0;
             int progress = 0;
             setProgress(0);
             publish("Running task: Declutter!");
@@ -46,15 +48,19 @@ public class DeclutterWorker extends SwingWorker<Void, String> {
                     map.put(ex, new HashSet<>());
                 }
 
-                if (file.getCanonicalPath().equals(file.getAbsolutePath()))
+                if (file.getCanonicalPath().equals(file.getAbsolutePath())) {
                     map.get(ex).add(file);
-                else
+                    filesInMap++;
+                } else
                     publish("\tIgnoring '" + file.getName() + "' as it is a shortcut.");
 
                 setProgress((int) Math.round(100 * (double) progress / allFiles.size()));
                 progress++;
             }
             publish("\tDone.");
+
+            Thread.sleep(200);
+            setProgress(progress = 0);
 
             File outputPath = new File(settings.getOutputPath());
             File outputDir = new File(outputPath, "Decluttered");
@@ -77,10 +83,17 @@ public class DeclutterWorker extends SwingWorker<Void, String> {
 
                 for (File sourceFile : map.get(extension)) {
                     File destFile = new File(groupFolder, sourceFile.toPath().getFileName().toString());
+                    publish(MessageFormat.format("Moving: {0} to {1}.", sourceFile.getAbsolutePath(), destFile.getAbsolutePath()));
                     copyFileUsingStream(sourceFile, destFile);
+
+                    setProgress((int) Math.round(100 * (double) progress / filesInMap));
+                    progress++;
                 }
             }
-        } catch (Exception e) {
+
+            setProgress(100);
+            publish("Done.");
+        } catch (IOException | InterruptedException e) {
             Logger.getLogger(DeclutterWorker.class.getName()).log(Level.SEVERE, null, e);
         }
         return null;
