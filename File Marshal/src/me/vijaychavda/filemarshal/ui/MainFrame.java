@@ -1,7 +1,9 @@
 package me.vijaychavda.filemarshal.ui;
 
 import javax.swing.JDialog;
+import javax.swing.JOptionPane;
 import me.vijaychavda.filemarshal.AppContext;
+import me.vijaychavda.filemarshal.workers.DeclutterWorker;
 
 public class MainFrame extends javax.swing.JFrame {
 
@@ -176,6 +178,12 @@ public class MainFrame extends javax.swing.JFrame {
         AppContext.Current.setSources(selectSourcesPanel.getSources());
         AppContext.Current.setSelectionSettings(selectionSettingsPanel.getSettings());
         AppContext.Current.setDeclutterSettings(declutterSettingsPanel.getSettings());
+
+        String error = DeclutterWorker.GroupFormatString.check(declutterSettingsPanel.getSettings().getGroupFormatString());
+        if (error != null) {
+            JOptionPane.showMessageDialog(null, error, "Declutter - File marshal", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
 
         JDialog decloneDialog = new JDialog(this, "File Marshal - Declutter");
         DeclutterWorkerPanel declutterWorkerPanel = new DeclutterWorkerPanel();

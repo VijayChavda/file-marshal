@@ -58,7 +58,7 @@ public class DeclutterWorkerPanel extends javax.swing.JPanel {
 
                 ProgressBar.setValue(getProgress());
                 
-                if(chunks.contains("\tDone.")) {
+                if(chunks.contains("Done!\n")) {
                     CB_Step2.setSelected(true);
                 }
             }

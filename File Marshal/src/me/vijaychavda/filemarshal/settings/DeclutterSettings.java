@@ -4,7 +4,12 @@ public class DeclutterSettings {
 
     private int minimumGroupCardinality;
     private String outputPath;
-    private String grouping;
+    private String groupFormatString;
+
+    private boolean groupByType;
+    private boolean groupByExtension;
+    private boolean groupByBoth;
+    private boolean groupByCustom;
 
     public int getMinimumGroupCardinality() {
         return minimumGroupCardinality;
@@ -22,11 +27,43 @@ public class DeclutterSettings {
         this.outputPath = outputPath;
     }
 
-    public String getGrouping() {
-        return grouping;
+    public String getGroupFormatString() {
+        return groupFormatString;
     }
 
-    public void setGrouping(String grouping) {
-        this.grouping = grouping;
+    public void setGroupFormatString(String groupFormatString) {
+        this.groupFormatString = groupFormatString;
+    }
+
+    public boolean isGroupByType() {
+        return groupByType;
+    }
+
+    public void setGroupByType(boolean groupByType) {
+        this.groupByType = groupByType;
+    }
+
+    public boolean isGroupByExtension() {
+        return groupByExtension;
+    }
+
+    public void setGroupByExtension(boolean groupByExtension) {
+        this.groupByExtension = groupByExtension;
+    }
+
+    public boolean isGroupByBoth() {
+        return groupByBoth;
+    }
+
+    public void setGroupByBoth(boolean groupByBoth) {
+        this.groupByBoth = groupByBoth;
+    }
+
+    public boolean isGroupByCustom() {
+        return groupByCustom;
+    }
+
+    public void setGroupByCustom(boolean groupByCustom) {
+        this.groupByCustom = groupByCustom;
     }
 }

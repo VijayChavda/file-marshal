@@ -205,7 +205,7 @@
               <Font name="Ubuntu" size="12" style="0"/>
             </Property>
             <Property name="rows" type="int" value="5"/>
-            <Property name="text" type="java.lang.String" value="&apos;Pics&apos; ai bmp gif ico jpeg jpg png ps psd svg tif tiff&#xa;&apos;Docs&apos; doc docx odt pdf rtf txt wks wps wpd ods xlr xls xlsx key odp pps ppt pptx&#xa;&apos;Videos&apos; 3g2 3gp avi flv m4v mkv mov mp4 mpg mpeg rm swf vob wmv&#xa;&apos;My Songs&apos; aif cda mid midi mp3 mpa ogg wav wma wpl"/>
+            <Property name="text" type="java.lang.String" value="Pics: ai bmp gif ico jpeg jpg png ps psd svg tif tiff&#xa;Docs: doc docx odt pdf rtf txt wks wps wpd ods xlr xls xlsx key odp pps ppt pptx&#xa;Videos: 3g2 3gp avi flv m4v mkv mov mp4 mpg mpeg rm swf vob wmv&#xa;My Songs: aif cda mid midi mp3 mpa ogg wav wma wpl"/>
           </Properties>
         </Component>
       </SubComponents>

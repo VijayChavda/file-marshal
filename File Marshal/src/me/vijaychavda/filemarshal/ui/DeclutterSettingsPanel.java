@@ -3,6 +3,7 @@ package me.vijaychavda.filemarshal.ui;
 import java.io.File;
 import javax.swing.JOptionPane;
 import me.vijaychavda.filemarshal.settings.DeclutterSettings;
+import me.vijaychavda.filemarshal.workers.DeclutterWorker;
 
 public class DeclutterSettingsPanel extends javax.swing.JPanel {
 
@@ -14,9 +15,14 @@ public class DeclutterSettingsPanel extends javax.swing.JPanel {
     public final DeclutterSettings getSettings() {
         DeclutterSettings settings = new DeclutterSettings();
 
-        settings.setGrouping(TA_GroupingInfo.getText());
+        settings.setGroupFormatString(TA_GroupingInfo.getText());
         settings.setOutputPath(TB_OutputPath.getText());
         settings.setMinimumGroupCardinality(CB_DontGroup.isSelected() ? (int) SP_DontGroupCount.getValue() : 0);
+
+        settings.setGroupByType(RB_Type.isSelected());
+        settings.setGroupByExtension(RB_Extension.isSelected());
+        settings.setGroupByBoth(RB_Both.isSelected());
+        settings.setGroupByCustom(RB_Custom.isSelected());
 
         return settings;
     }
@@ -98,7 +104,7 @@ public class DeclutterSettingsPanel extends javax.swing.JPanel {
         TA_GroupingInfo.setColumns(20);
         TA_GroupingInfo.setFont(new java.awt.Font("Ubuntu", 0, 12)); // NOI18N
         TA_GroupingInfo.setRows(5);
-        TA_GroupingInfo.setText("'Pics' ai bmp gif ico jpeg jpg png ps psd svg tif tiff\n'Docs' doc docx odt pdf rtf txt wks wps wpd ods xlr xls xlsx key odp pps ppt pptx\n'Videos' 3g2 3gp avi flv m4v mkv mov mp4 mpg mpeg rm swf vob wmv\n'My Songs' aif cda mid midi mp3 mpa ogg wav wma wpl");
+        TA_GroupingInfo.setText("Pics: ai bmp gif ico jpeg jpg png ps psd svg tif tiff\nDocs: doc docx odt pdf rtf txt wks wps wpd ods xlr xls xlsx key odp pps ppt pptx\nVideos: 3g2 3gp avi flv m4v mkv mov mp4 mpg mpeg rm swf vob wmv\nMy Songs: aif cda mid midi mp3 mpa ogg wav wma wpl");
         SP_GroupingInfo.setViewportView(TA_GroupingInfo);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
