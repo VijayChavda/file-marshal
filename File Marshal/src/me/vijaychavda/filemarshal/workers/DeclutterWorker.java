@@ -2,17 +2,11 @@ package me.vijaychavda.filemarshal.workers;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.nio.file.CopyOption;
 import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
-import java.nio.file.attribute.FileAttribute;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -55,11 +49,19 @@ public class DeclutterWorker extends SwingWorker<Void, String> {
                 return null;
             }
 
+            HashMap<String, Integer> nameFrequencyMap = new HashMap<>();
+            for (File file : allFiles) {
+                String name = file.toPath().getFileName().toString();
+                if (!nameFrequencyMap.containsKey(name)) {
+                    nameFrequencyMap.put(name, 0);
+                }
+                nameFrequencyMap.put(name, nameFrequencyMap.get(name) + 1);
+            }
+
             int filesInMap = 0;
             HashMap<String, HashSet<File>> groupMap = new HashMap<>();
-            String group;
             for (File file : allFiles) {
-                group = format.getGroupOf(extension(file));
+                String group = format.getGroupOf(extension(file));
 
                 if (groupMap.containsKey(group) == false) {
                     publish("\tCreating group: [" + group + "]");
@@ -88,9 +90,9 @@ public class DeclutterWorker extends SwingWorker<Void, String> {
                 setProgress(0);
                 return null;
             }
-            for (String extension : groupMap.keySet()) {
-                boolean bigEnoughGroup = groupMap.get(extension).size() >= settings.getMinimumGroupCardinality();
-                File groupDir = new File(outputDir, bigEnoughGroup ? extension : SmallGroup);
+            for (String group : groupMap.keySet()) {
+                boolean bigEnoughGroup = groupMap.get(group).size() >= settings.getMinimumGroupCardinality();
+                File groupDir = new File(outputDir, bigEnoughGroup ? group : SmallGroup);
                 groupDir.mkdirs();
                 if (!groupDir.exists()) {
                     publish("\tError! Failed to create directory: " + outputDir);
@@ -98,10 +100,18 @@ public class DeclutterWorker extends SwingWorker<Void, String> {
                     return null;
                 }
 
-                for (File sourceFile : groupMap.get(extension)) {
-                    File destFile = new File(groupDir, sourceFile.toPath().getFileName().toString());
+                for (File sourceFile : groupMap.get(group)) {
+                    String name = sourceFile.toPath().getFileName().toString();
+                    String pureName = pureName(sourceFile);
+                    String extension = extension(sourceFile);
+                    int nameFrequency = nameFrequencyMap.get(name);
+                    String clashResolvedName = nameFrequency <= 1 ? name
+                        : MessageFormat.format("{0}_{1}.{2}", pureName, nameFrequencyMap.get(name), extension);
+                    File destFile = new File(groupDir, clashResolvedName);
                     publish(MessageFormat.format("\tMoving: {0} to {1}.", sourceFile.getAbsolutePath(), destFile.getAbsolutePath()));
-                    copyFileUsingStream(sourceFile, destFile);
+//                    copyFileUsingStream(sourceFile, destFile);
+                    Files.createSymbolicLink(destFile.toPath(), sourceFile.toPath());
+                    nameFrequencyMap.put(name, nameFrequency - 1);
 
                     setProgress((int) Math.round(100 * (double) progress / filesInMap));
                     progress++;
@@ -116,10 +126,16 @@ public class DeclutterWorker extends SwingWorker<Void, String> {
         return null;
     }
 
+    private String pureName(File file) {
+        String name = file.getName();
+        int i = name.lastIndexOf('.');
+        return i > 0 ? name.substring(0, i) : name;
+    }
+
     private String extension(File file) {
         String name = file.getName();
         int i = name.lastIndexOf('.');
-        return i > 0 ? name.substring(i + 1) : "No Extension";
+        return i > 0 ? name.substring(i + 1) : NoExtension;
     }
 
     private static void copyFileUsingStream(File source, File dest) throws IOException {
