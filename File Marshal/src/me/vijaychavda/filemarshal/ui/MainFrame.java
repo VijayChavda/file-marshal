@@ -42,6 +42,12 @@ public class MainFrame extends javax.swing.JFrame {
         setTitle("Declone - Find and remove duplicate files");
         setResizable(false);
 
+        TabbedPane.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                TabbedPaneStateChanged(evt);
+            }
+        });
+
         P_Sources.setOpaque(false);
         P_Sources.setLayout(new java.awt.BorderLayout());
 
@@ -80,7 +86,7 @@ public class MainFrame extends javax.swing.JFrame {
             P_ContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(P_ContentLayout.createSequentialGroup()
                 .addComponent(TabbedPane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addGap(0, 6, Short.MAX_VALUE))
         );
         P_ContentLayout.setVerticalGroup(
             P_ContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -113,7 +119,7 @@ public class MainFrame extends javax.swing.JFrame {
         P_CommandsLayout.setHorizontalGroup(
             P_CommandsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, P_CommandsLayout.createSequentialGroup()
-                .addContainerGap(288, Short.MAX_VALUE)
+                .addContainerGap(277, Short.MAX_VALUE)
                 .addComponent(B_FindLarge)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(B_Declutter)
@@ -194,6 +200,10 @@ public class MainFrame extends javax.swing.JFrame {
         decloneDialog.setVisible(true);
         declutterWorkerPanel.start();
     }//GEN-LAST:event_B_DeclutterActionPerformed
+
+    private void TabbedPaneStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_TabbedPaneStateChanged
+        pack();
+    }//GEN-LAST:event_TabbedPaneStateChanged
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton B_Declone;

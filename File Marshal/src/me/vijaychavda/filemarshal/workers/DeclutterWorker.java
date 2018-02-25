@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -19,10 +20,6 @@ import me.vijaychavda.filemarshal.AppContext;
 import me.vijaychavda.filemarshal.settings.DeclutterSettings;
 
 public class DeclutterWorker extends SwingWorker<Void, String> {
-
-    private static final String Ungrouped = "Ungrouped";
-    private static final String NoExtension = "No extension";
-    private static final String SmallGroup = "Others";
 
     private final ArrayList<File> allFiles;
 
@@ -92,7 +89,7 @@ public class DeclutterWorker extends SwingWorker<Void, String> {
             }
             for (String group : groupMap.keySet()) {
                 boolean bigEnoughGroup = groupMap.get(group).size() >= settings.getMinimumGroupCardinality();
-                File groupDir = new File(outputDir, bigEnoughGroup ? group : SmallGroup);
+                File groupDir = new File(outputDir, bigEnoughGroup ? group : AppContext.Current.getDeclutterSettings().getSmallGroupGroup());
                 groupDir.mkdirs();
                 if (!groupDir.exists()) {
                     publish("\tError! Failed to create directory: " + outputDir);
@@ -109,8 +106,14 @@ public class DeclutterWorker extends SwingWorker<Void, String> {
                         : MessageFormat.format("{0}_{1}.{2}", pureName, nameFrequencyMap.get(name), extension);
                     File destFile = new File(groupDir, clashResolvedName);
                     publish(MessageFormat.format("\tMoving: {0} to {1}.", sourceFile.getAbsolutePath(), destFile.getAbsolutePath()));
-//                    copyFileUsingStream(sourceFile, destFile);
-                    Files.createSymbolicLink(destFile.toPath(), sourceFile.toPath());
+
+                    if (settings.isModeMove())
+                        Files.move(sourceFile.toPath(), destFile.toPath(), StandardCopyOption.ATOMIC_MOVE);
+                    else if (settings.isModeCopy())
+                        copyFileUsingStream(sourceFile, destFile);
+                    else
+                        Files.createSymbolicLink(destFile.toPath(), sourceFile.toPath());
+
                     nameFrequencyMap.put(name, nameFrequency - 1);
 
                     setProgress((int) Math.round(100 * (double) progress / filesInMap));
@@ -135,7 +138,7 @@ public class DeclutterWorker extends SwingWorker<Void, String> {
     private String extension(File file) {
         String name = file.getName();
         int i = name.lastIndexOf('.');
-        return i > 0 ? name.substring(i + 1) : NoExtension;
+        return i > 0 ? name.substring(i + 1) : AppContext.Current.getDeclutterSettings().getNoExtensionName();
     }
 
     private static void copyFileUsingStream(File source, File dest) throws IOException {
@@ -238,7 +241,7 @@ public class DeclutterWorker extends SwingWorker<Void, String> {
                 if (map.get(group).contains(extension))
                     return group;
             }
-            return DeclutterWorker.Ungrouped;
+            return AppContext.Current.getDeclutterSettings().getUngroupedName();
         }
     }
 }
