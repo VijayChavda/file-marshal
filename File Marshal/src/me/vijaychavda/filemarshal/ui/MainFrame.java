@@ -196,7 +196,7 @@ public class MainFrame extends javax.swing.JFrame {
             @Override
             public void completed() {
                 JOptionPane.showMessageDialog(this, "Done!", "Declutter", JOptionPane.INFORMATION_MESSAGE);
-                decloneDialog.dispose();
+//                decloneDialog.dispose();
             }
         };
         decloneDialog.add(declutterWorkerPanel);
