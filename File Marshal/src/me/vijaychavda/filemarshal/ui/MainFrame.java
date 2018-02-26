@@ -192,7 +192,13 @@ public class MainFrame extends javax.swing.JFrame {
         }
 
         JDialog decloneDialog = new JDialog(this, "File Marshal - Declutter");
-        DeclutterWorkerPanel declutterWorkerPanel = new DeclutterWorkerPanel();
+        DeclutterWorkerPanel declutterWorkerPanel = new DeclutterWorkerPanel() {
+            @Override
+            public void completed() {
+                JOptionPane.showMessageDialog(this, "Done!", "Declutter", JOptionPane.INFORMATION_MESSAGE);
+                decloneDialog.dispose();
+            }
+        };
         decloneDialog.add(declutterWorkerPanel);
         decloneDialog.pack();
         decloneDialog.setLocationRelativeTo(this);

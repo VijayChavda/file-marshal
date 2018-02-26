@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.text.MessageFormat;
 import java.util.ArrayList;
@@ -21,19 +22,31 @@ import me.vijaychavda.filemarshal.settings.DeclutterSettings;
 
 public class DeclutterWorker extends SwingWorker<Void, String> {
 
+    private final DeclutterSettings settings = AppContext.Current.getDeclutterSettings();
     private final ArrayList<File> allFiles;
 
-    public DeclutterWorker(ArrayList<File> allFiles) {
-        this.allFiles = allFiles;
+    public DeclutterWorker(ArrayList<File> files) {
+        allFiles = new ArrayList<>();
+
+        String outputDir = Paths.get(settings.getOutputPath(), File.separator, "Decluttered").toString();
+        for (File file : files) {
+            if (file.getAbsolutePath().startsWith(outputDir))
+                continue;
+
+            allFiles.add(file);
+        }
     }
 
     @Override
     protected Void doInBackground() {
         try {
-            DeclutterSettings settings = AppContext.Current.getDeclutterSettings();
-
             int progress = 0;
             setProgress(0);
+
+            File outputDir = createOutputDir();
+            if (outputDir == null)
+                return null;
+
             publish("Running task: Classify files");
 
             GroupFormatString format = new GroupFormatString(
@@ -80,13 +93,6 @@ public class DeclutterWorker extends SwingWorker<Void, String> {
             setProgress(progress = 0);
             publish("Running task: Move files to better place");
 
-            File outputDir = new File(settings.getOutputPath(), "Decluttered");
-            outputDir.mkdir();
-            if (!outputDir.exists()) {
-                publish("\tError! Failed to create directory: " + outputDir);
-                setProgress(0);
-                return null;
-            }
             for (String group : groupMap.keySet()) {
                 boolean bigEnoughGroup = groupMap.get(group).size() >= settings.getMinimumGroupCardinality();
                 File groupDir = new File(outputDir, bigEnoughGroup ? group : AppContext.Current.getDeclutterSettings().getSmallGroupGroup());
@@ -150,6 +156,46 @@ public class DeclutterWorker extends SwingWorker<Void, String> {
                 os.write(buffer, 0, length);
             }
         }
+    }
+
+    private void deleteDir(File file) {
+        if (!file.exists())
+            return;
+
+        try {
+            File[] contents = file.listFiles();
+            if (contents != null) {
+                for (File f : contents) {
+                    deleteDir(f);
+                }
+            }
+            Files.delete(file.toPath());
+        } catch (IOException e) {
+            Logger.getLogger(DeclutterWorker.class.getName()).log(Level.SEVERE, null, e);
+        }
+    }
+
+    private File createOutputDir() {
+        File outputDir = new File(settings.getOutputPath(), "Decluttered/");
+        if (outputDir.exists()) {
+            int choice = JOptionPane.showConfirmDialog(null, "An entry with name 'Declutter'"
+                + " already exists at output location '" + outputDir.getAbsolutePath() + "'.\n"
+                + "It will be deleted, so in case you need to keep it's content, please\n"
+                + "move them to a different location, then press OK.", "Declutter",
+                JOptionPane.OK_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE);
+            if (choice == JOptionPane.CANCEL_OPTION) {
+                return null;
+            }
+        }
+        deleteDir(outputDir);
+        outputDir.mkdir();
+        if (!outputDir.exists()) {
+            publish("\tError! Failed to create directory: " + outputDir);
+            setProgress(0);
+            return null;
+        }
+
+        return outputDir;
     }
 
     public static class GroupFormatString {
