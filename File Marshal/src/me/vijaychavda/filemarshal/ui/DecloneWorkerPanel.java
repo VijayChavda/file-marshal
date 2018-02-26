@@ -1,12 +1,18 @@
 package me.vijaychavda.filemarshal.ui;
 
+import java.awt.Desktop;
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import me.vijaychavda.filemarshal.FileInfo;
 import me.vijaychavda.filemarshal.workers.DecloneWorker;
 import me.vijaychavda.filemarshal.workers.GatherFileInfoWorker;
@@ -119,16 +125,27 @@ public class DecloneWorkerPanel extends javax.swing.JPanel {
     }
 
     private void completed() {
-        System.out.println("RESULT");
+        StringBuilder builder = new StringBuilder();
+
         for (ArrayList<FileInfo> set : duplicates) {
             if (set.size() > 1) {
                 for (FileInfo fileInfo : set) {
-                    System.out.println(fileInfo.getName());
-                    System.out.println(fileInfo);
-                    System.out.println();
+                    builder.append(MessageFormat.format("{0} - {1}\n", fileInfo.getSize(), fileInfo.getPath()));
                 }
-                System.out.println("\n");
+                builder.append("\n\n");
             }
+        }
+
+        File desktop = new File(System.getProperty("user.home") + "/Desktop");
+        File output = new File(desktop, "Declone output - " + System.nanoTime() + ".txt");
+
+        try (FileWriter writer = new FileWriter(output)) {
+            writer.write(builder.toString());
+            JOptionPane.showMessageDialog(null, "Results can be found in '" + output.getAbsolutePath() + "'."
+                + "\nOutput will be shown in a better way in the UI in coming update :)",
+                "Duplicates", JOptionPane.INFORMATION_MESSAGE);
+        } catch (IOException ex) {
+            Logger.getLogger(DecloneWorkerPanel.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

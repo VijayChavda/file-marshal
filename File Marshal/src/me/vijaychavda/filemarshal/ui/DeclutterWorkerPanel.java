@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import me.vijaychavda.filemarshal.AppContext;
 import me.vijaychavda.filemarshal.FileInfo;
 import me.vijaychavda.filemarshal.settings.DecloneSettings;
@@ -57,8 +58,8 @@ public class DeclutterWorkerPanel extends javax.swing.JPanel {
                 chunks.forEach((chunk) -> TA_Status.append(chunk + "\n"));
 
                 ProgressBar.setValue(getProgress());
-                
-                if(chunks.contains("Done!\n")) {
+
+                if (chunks.contains("Done!\n")) {
                     CB_Step2.setSelected(true);
                 }
             }
@@ -66,9 +67,15 @@ public class DeclutterWorkerPanel extends javax.swing.JPanel {
             @Override
             protected void done() {
                 CB_Step3.setSelected(true);
+
+                completed();
             }
         };
         declutterWorker.execute();
+    }
+
+    public void completed() {
+        
     }
 
     //<editor-fold defaultstate="collapsed" desc="GUI stuff">
