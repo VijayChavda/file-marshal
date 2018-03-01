@@ -76,28 +76,35 @@ public class DecloneSettingsPanel extends javax.swing.JPanel {
 
         RBG_Name.add(RB_Name1);
         RB_Name1.setText("Similar");
+        RB_Name1.setToolTipText("Names of files should be similar.");
 
         RBG_Name.add(RB_Name2);
         RB_Name2.setSelected(true);
         RB_Name2.setText("Common words");
+        RB_Name2.setToolTipText("Name of files should have common words.");
 
         RBG_Name.add(RB_Name3);
         RB_Name3.setText("Similar common words");
+        RB_Name3.setToolTipText("Names of files should have similar commond words.");
 
         RBG_Name.add(RB_Name4);
         RB_Name4.setText("Exactly same");
+        RB_Name4.setToolTipText("Names of files should be exactly same.");
 
         RBG_Size.add(RB_Size1);
         RB_Size1.setSelected(true);
         RB_Size1.setText("No huge difference");
+        RB_Size1.setToolTipText("Sizes of files should not be much different.");
         RB_Size1.setEnabled(false);
 
         RBG_Size.add(RB_Size2);
         RB_Size2.setText("Almost same");
+        RB_Size2.setToolTipText("Sizes of files should be almost same.");
         RB_Size2.setEnabled(false);
 
         RBG_Size.add(RB_Size3);
         RB_Size3.setText("Exactly same");
+        RB_Size3.setToolTipText("Sizes of files shuold be exactly same.");
         RB_Size3.setEnabled(false);
 
         RBG_Content.add(RB_Content1);
@@ -133,6 +140,7 @@ public class DecloneSettingsPanel extends javax.swing.JPanel {
 
         CB_Name.setSelected(true);
         CB_Name.setText("Name");
+        CB_Name.setToolTipText("Check the name of the file.");
         CB_Name.setOpaque(false);
         CB_Name.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -141,6 +149,7 @@ public class DecloneSettingsPanel extends javax.swing.JPanel {
         });
 
         CB_Size.setText("Size");
+        CB_Size.setToolTipText("Check the size of the file.");
         CB_Size.setOpaque(false);
         CB_Size.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -149,6 +158,7 @@ public class DecloneSettingsPanel extends javax.swing.JPanel {
         });
 
         CB_Content.setText("Content (Slow for large files)");
+        CB_Content.setToolTipText("Check the content of the file.");
         CB_Content.setOpaque(false);
         CB_Content.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -161,58 +171,62 @@ public class DecloneSettingsPanel extends javax.swing.JPanel {
         P_CustomNameSizeLayout.setHorizontalGroup(
             P_CustomNameSizeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(P_CustomNameSizeLayout.createSequentialGroup()
+                .addGap(21, 21, 21)
+                .addGroup(P_CustomNameSizeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(RB_Name4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(RB_Name3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(RB_Name2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(RB_Name1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(313, Short.MAX_VALUE))
+            .addGroup(P_CustomNameSizeLayout.createSequentialGroup()
+                .addGap(6, 6, 6)
                 .addGroup(P_CustomNameSizeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(P_CustomNameSizeLayout.createSequentialGroup()
-                        .addGap(21, 21, 21)
-                        .addGroup(P_CustomNameSizeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(RB_Name1, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
-                            .addGroup(P_CustomNameSizeLayout.createSequentialGroup()
-                                .addGap(3, 3, 3)
-                                .addGroup(P_CustomNameSizeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(P_CustomNameSizeLayout.createSequentialGroup()
-                                        .addComponent(RB_Content2, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(jLabel5))
-                                    .addGroup(P_CustomNameSizeLayout.createSequentialGroup()
-                                        .addComponent(RB_Content3, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(jLabel6))
-                                    .addGroup(P_CustomNameSizeLayout.createSequentialGroup()
-                                        .addComponent(RB_Content4, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(jLabel7))
-                                    .addGroup(P_CustomNameSizeLayout.createSequentialGroup()
-                                        .addComponent(RB_Content5, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(jLabel8))))
-                            .addComponent(RB_Name2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(RB_Name3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(RB_Name4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(P_CustomNameSizeLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jSeparator2))
-                    .addGroup(P_CustomNameSizeLayout.createSequentialGroup()
-                        .addContainerGap()
                         .addGroup(P_CustomNameSizeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(CB_Name, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(CB_Size, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(CB_Content, javax.swing.GroupLayout.DEFAULT_SIZE, 512, Short.MAX_VALUE)
                             .addGroup(P_CustomNameSizeLayout.createSequentialGroup()
                                 .addGap(19, 19, 19)
+                                .addGroup(P_CustomNameSizeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                                    .addComponent(RB_Content3, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(RB_Content2, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(RB_Content1, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(RB_Content4, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(RB_Content5, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(P_CustomNameSizeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(P_CustomNameSizeLayout.createSequentialGroup()
-                                        .addComponent(RB_Content1, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(jLabel4))
-                                    .addGroup(P_CustomNameSizeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(RB_Size1, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
-                                        .addComponent(RB_Size2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(RB_Size3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                                .addGap(0, 0, Short.MAX_VALUE)))))
-                .addContainerGap())
+                                    .addComponent(jLabel6)
+                                    .addComponent(jLabel7)
+                                    .addComponent(jLabel8)
+                                    .addComponent(jLabel5)
+                                    .addComponent(jLabel4)))
+                            .addGroup(P_CustomNameSizeLayout.createSequentialGroup()
+                                .addGap(10, 10, 10)
+                                .addGroup(P_CustomNameSizeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                                    .addComponent(RB_Size3, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(RB_Size2, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(RB_Size1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(P_CustomNameSizeLayout.createSequentialGroup()
+                        .addComponent(CB_Content, javax.swing.GroupLayout.DEFAULT_SIZE, 506, Short.MAX_VALUE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, P_CustomNameSizeLayout.createSequentialGroup()
+                .addComponent(jSeparator1)
+                .addGap(6, 6, 6))
+            .addGroup(P_CustomNameSizeLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jSeparator2)
+                .addContainerGap(501, Short.MAX_VALUE))
+            .addGroup(P_CustomNameSizeLayout.createSequentialGroup()
+                .addGap(6, 6, 6)
+                .addComponent(CB_Name, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(436, Short.MAX_VALUE))
+            .addGroup(P_CustomNameSizeLayout.createSequentialGroup()
+                .addGap(6, 6, 6)
+                .addComponent(CB_Size, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(445, Short.MAX_VALUE))
         );
+
+        P_CustomNameSizeLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {RB_Content1, RB_Content2, RB_Content3, RB_Content4, RB_Content5});
+
         P_CustomNameSizeLayout.setVerticalGroup(
             P_CustomNameSizeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(P_CustomNameSizeLayout.createSequentialGroup()

@@ -14,7 +14,7 @@ public class DecloneWorker extends SwingWorker<HashSet<ArrayList<FileInfo>>, Str
     }
 
     @Override
-    protected HashSet<ArrayList<FileInfo>> doInBackground() throws Exception {
+    protected HashSet<ArrayList<FileInfo>> doInBackground() {
         int progress = 0;
         setProgress(0);
         publish("Running task: Declone!");

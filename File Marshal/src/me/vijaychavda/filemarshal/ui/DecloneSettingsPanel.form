@@ -78,73 +78,73 @@
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
+                      <EmptySpace min="21" pref="21" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="2" attributes="0">
+                          <Component id="RB_Name4" alignment="2" max="32767" attributes="0"/>
+                          <Component id="RB_Name3" alignment="2" max="32767" attributes="0"/>
+                          <Component id="RB_Name2" alignment="2" max="32767" attributes="0"/>
+                          <Component id="RB_Name1" alignment="2" max="32767" attributes="0"/>
+                      </Group>
+                      <EmptySpace pref="313" max="32767" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" attributes="0">
-                              <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="RB_Name1" alignment="0" pref="200" max="32767" attributes="0"/>
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <EmptySpace min="-2" pref="3" max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Group type="102" alignment="0" attributes="0">
-                                              <Component id="RB_Content2" min="-2" pref="85" max="-2" attributes="0"/>
-                                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                              <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
-                                          </Group>
-                                          <Group type="102" alignment="0" attributes="0">
-                                              <Component id="RB_Content3" min="-2" pref="85" max="-2" attributes="0"/>
-                                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                              <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
-                                          </Group>
-                                          <Group type="102" alignment="0" attributes="0">
-                                              <Component id="RB_Content4" min="-2" pref="85" max="-2" attributes="0"/>
-                                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                              <Component id="jLabel7" min="-2" max="-2" attributes="0"/>
-                                          </Group>
-                                          <Group type="102" alignment="0" attributes="0">
-                                              <Component id="RB_Content5" min="-2" pref="85" max="-2" attributes="0"/>
-                                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                              <Component id="jLabel8" min="-2" max="-2" attributes="0"/>
-                                          </Group>
-                                      </Group>
-                                  </Group>
-                                  <Component id="RB_Name2" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="RB_Name3" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="RB_Name4" alignment="0" max="32767" attributes="0"/>
-                              </Group>
-                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                          </Group>
-                          <Component id="jSeparator1" alignment="1" max="32767" attributes="0"/>
-                          <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jSeparator2" max="32767" attributes="0"/>
-                          </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="CB_Name" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="CB_Size" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="CB_Content" alignment="0" pref="512" max="32767" attributes="0"/>
                                   <Group type="102" attributes="0">
                                       <EmptySpace min="19" pref="19" max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Group type="102" attributes="0">
-                                              <Component id="RB_Content1" min="-2" pref="85" max="-2" attributes="0"/>
-                                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                              <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
-                                          </Group>
-                                          <Group type="103" alignment="0" groupAlignment="0" max="-2" attributes="0">
-                                              <Component id="RB_Size1" pref="200" max="32767" attributes="0"/>
-                                              <Component id="RB_Size2" max="32767" attributes="0"/>
-                                              <Component id="RB_Size3" max="32767" attributes="0"/>
-                                          </Group>
+                                      <Group type="103" groupAlignment="2" attributes="0">
+                                          <Component id="RB_Content3" linkSize="1" alignment="2" min="-2" pref="85" max="-2" attributes="0"/>
+                                          <Component id="RB_Content2" linkSize="1" alignment="2" min="-2" pref="85" max="-2" attributes="0"/>
+                                          <Component id="RB_Content1" linkSize="1" alignment="2" min="-2" pref="85" max="-2" attributes="0"/>
+                                          <Component id="RB_Content4" linkSize="1" alignment="2" min="-2" pref="85" max="-2" attributes="0"/>
+                                          <Component id="RB_Content5" linkSize="1" alignment="2" min="-2" pref="85" max="-2" attributes="0"/>
                                       </Group>
-                                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Component id="jLabel6" alignment="0" min="-2" max="-2" attributes="0"/>
+                                          <Component id="jLabel7" alignment="0" min="-2" max="-2" attributes="0"/>
+                                          <Component id="jLabel8" alignment="0" min="-2" max="-2" attributes="0"/>
+                                          <Component id="jLabel5" alignment="0" min="-2" max="-2" attributes="0"/>
+                                          <Component id="jLabel4" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                  </Group>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="2" attributes="0">
+                                          <Component id="RB_Size3" alignment="2" min="-2" pref="200" max="-2" attributes="0"/>
+                                          <Component id="RB_Size2" alignment="2" min="-2" pref="200" max="-2" attributes="0"/>
+                                          <Component id="RB_Size1" alignment="2" min="-2" pref="200" max="-2" attributes="0"/>
+                                      </Group>
                                   </Group>
                               </Group>
+                              <EmptySpace max="32767" attributes="0"/>
+                          </Group>
+                          <Group type="102" attributes="0">
+                              <Component id="CB_Content" pref="506" max="32767" attributes="0"/>
+                              <EmptySpace max="32767" attributes="0"/>
                           </Group>
                       </Group>
+                  </Group>
+                  <Group type="102" alignment="1" attributes="0">
+                      <Component id="jSeparator1" max="32767" attributes="0"/>
+                      <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jSeparator2" max="32767" attributes="0"/>
+                      <EmptySpace pref="501" max="32767" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
+                      <Component id="CB_Name" max="32767" attributes="0"/>
+                      <EmptySpace pref="436" max="32767" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
+                      <Component id="CB_Size" max="32767" attributes="0"/>
+                      <EmptySpace pref="445" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -212,6 +212,7 @@
                   <ComponentRef name="RBG_Name"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Similar"/>
+                <Property name="toolTipText" type="java.lang.String" value="Names of files should be similar."/>
               </Properties>
             </Component>
             <Component class="javax.swing.JRadioButton" name="RB_Name2">
@@ -221,6 +222,7 @@
                 </Property>
                 <Property name="selected" type="boolean" value="true"/>
                 <Property name="text" type="java.lang.String" value="Common words"/>
+                <Property name="toolTipText" type="java.lang.String" value="Name of files should have common words."/>
               </Properties>
             </Component>
             <Component class="javax.swing.JRadioButton" name="RB_Name3">
@@ -229,6 +231,7 @@
                   <ComponentRef name="RBG_Name"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Similar common words"/>
+                <Property name="toolTipText" type="java.lang.String" value="Names of files should have similar commond words."/>
               </Properties>
             </Component>
             <Component class="javax.swing.JRadioButton" name="RB_Name4">
@@ -237,6 +240,7 @@
                   <ComponentRef name="RBG_Name"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Exactly same"/>
+                <Property name="toolTipText" type="java.lang.String" value="Names of files should be exactly same."/>
               </Properties>
             </Component>
             <Component class="javax.swing.JRadioButton" name="RB_Size1">
@@ -246,6 +250,7 @@
                 </Property>
                 <Property name="selected" type="boolean" value="true"/>
                 <Property name="text" type="java.lang.String" value="No huge difference"/>
+                <Property name="toolTipText" type="java.lang.String" value="Sizes of files should not be much different."/>
                 <Property name="enabled" type="boolean" value="false"/>
               </Properties>
             </Component>
@@ -255,6 +260,7 @@
                   <ComponentRef name="RBG_Size"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Almost same"/>
+                <Property name="toolTipText" type="java.lang.String" value="Sizes of files should be almost same."/>
                 <Property name="enabled" type="boolean" value="false"/>
               </Properties>
             </Component>
@@ -264,6 +270,7 @@
                   <ComponentRef name="RBG_Size"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Exactly same"/>
+                <Property name="toolTipText" type="java.lang.String" value="Sizes of files shuold be exactly same."/>
                 <Property name="enabled" type="boolean" value="false"/>
               </Properties>
             </Component>
@@ -342,6 +349,7 @@
               <Properties>
                 <Property name="selected" type="boolean" value="true"/>
                 <Property name="text" type="java.lang.String" value="Name"/>
+                <Property name="toolTipText" type="java.lang.String" value="Check the name of the file."/>
                 <Property name="opaque" type="boolean" value="false"/>
               </Properties>
               <Events>
@@ -351,6 +359,7 @@
             <Component class="javax.swing.JCheckBox" name="CB_Size">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Size"/>
+                <Property name="toolTipText" type="java.lang.String" value="Check the size of the file."/>
                 <Property name="opaque" type="boolean" value="false"/>
               </Properties>
               <Events>
@@ -360,6 +369,7 @@
             <Component class="javax.swing.JCheckBox" name="CB_Content">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Content (Slow for large files)"/>
+                <Property name="toolTipText" type="java.lang.String" value="Check the content of the file."/>
                 <Property name="opaque" type="boolean" value="false"/>
               </Properties>
               <Events>

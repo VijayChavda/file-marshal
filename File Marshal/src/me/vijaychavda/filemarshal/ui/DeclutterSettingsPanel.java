@@ -81,6 +81,7 @@ public class DeclutterSettingsPanel extends javax.swing.JPanel {
 
         L_Info1.setText("Where should all the files organized in folders go?");
 
+        TB_OutputPath.setToolTipText("A folder named Declutter will be created, inside which your files will be organized.");
         TB_OutputPath.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
                 TB_OutputPathFocusLost(evt);

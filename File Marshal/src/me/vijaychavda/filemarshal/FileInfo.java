@@ -17,9 +17,9 @@ public class FileInfo {
     private final long hash;
 
     private FileInfo() {
-        path = "<Not initialized>";
-        name = "<Not initialized>";
-        type = "<Not initialized>";
+        path = null;
+        name = null;
+        type = null;
         size = -1;
         hash = -1;
     }
