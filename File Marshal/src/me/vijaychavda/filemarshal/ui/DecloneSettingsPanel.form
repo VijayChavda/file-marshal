@@ -212,6 +212,7 @@
                   <ComponentRef name="RBG_Name"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Similar"/>
+                <Property name="toolTipText" type="java.lang.String" value="Names of files should be similar."/>
               </Properties>
             </Component>
             <Component class="javax.swing.JRadioButton" name="RB_Name2">
@@ -221,6 +222,7 @@
                 </Property>
                 <Property name="selected" type="boolean" value="true"/>
                 <Property name="text" type="java.lang.String" value="Common words"/>
+                <Property name="toolTipText" type="java.lang.String" value="Name of files should have common words."/>
               </Properties>
             </Component>
             <Component class="javax.swing.JRadioButton" name="RB_Name3">
@@ -229,6 +231,7 @@
                   <ComponentRef name="RBG_Name"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Similar common words"/>
+                <Property name="toolTipText" type="java.lang.String" value="Names of files should have similar commond words."/>
               </Properties>
             </Component>
             <Component class="javax.swing.JRadioButton" name="RB_Name4">
@@ -237,6 +240,7 @@
                   <ComponentRef name="RBG_Name"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Exactly same"/>
+                <Property name="toolTipText" type="java.lang.String" value="Names of files should be exactly same."/>
               </Properties>
             </Component>
             <Component class="javax.swing.JRadioButton" name="RB_Size1">
@@ -246,6 +250,7 @@
                 </Property>
                 <Property name="selected" type="boolean" value="true"/>
                 <Property name="text" type="java.lang.String" value="No huge difference"/>
+                <Property name="toolTipText" type="java.lang.String" value="Sizes of files should not be much different."/>
                 <Property name="enabled" type="boolean" value="false"/>
               </Properties>
             </Component>
@@ -255,6 +260,7 @@
                   <ComponentRef name="RBG_Size"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Almost same"/>
+                <Property name="toolTipText" type="java.lang.String" value="Sizes of files should be almost same."/>
                 <Property name="enabled" type="boolean" value="false"/>
               </Properties>
             </Component>
@@ -264,6 +270,7 @@
                   <ComponentRef name="RBG_Size"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Exactly same"/>
+                <Property name="toolTipText" type="java.lang.String" value="Sizes of files shuold be exactly same."/>
                 <Property name="enabled" type="boolean" value="false"/>
               </Properties>
             </Component>
@@ -342,6 +349,7 @@
               <Properties>
                 <Property name="selected" type="boolean" value="true"/>
                 <Property name="text" type="java.lang.String" value="Name"/>
+                <Property name="toolTipText" type="java.lang.String" value="Check the name of the file."/>
                 <Property name="opaque" type="boolean" value="false"/>
               </Properties>
               <Events>
@@ -351,6 +359,7 @@
             <Component class="javax.swing.JCheckBox" name="CB_Size">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Size"/>
+                <Property name="toolTipText" type="java.lang.String" value="Check the size of the file."/>
                 <Property name="opaque" type="boolean" value="false"/>
               </Properties>
               <Events>
@@ -360,6 +369,7 @@
             <Component class="javax.swing.JCheckBox" name="CB_Content">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Content (Slow for large files)"/>
+                <Property name="toolTipText" type="java.lang.String" value="Check the content of the file."/>
                 <Property name="opaque" type="boolean" value="false"/>
               </Properties>
               <Events>

@@ -114,6 +114,9 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="TB_OutputPath">
+      <Properties>
+        <Property name="toolTipText" type="java.lang.String" value="A folder named Declutter will be created, inside which your files will be organized."/>
+      </Properties>
       <Events>
         <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="TB_OutputPathFocusLost"/>
       </Events>
