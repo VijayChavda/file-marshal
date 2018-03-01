@@ -2,16 +2,10 @@ package me.vijaychavda.filemarshal.ui;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JOptionPane;
-import me.vijaychavda.filemarshal.AppContext;
-import me.vijaychavda.filemarshal.FileInfo;
-import me.vijaychavda.filemarshal.settings.DecloneSettings;
 import me.vijaychavda.filemarshal.workers.DeclutterWorker;
 import me.vijaychavda.filemarshal.workers.ScanSourcesWorker;
 
@@ -75,7 +69,7 @@ public class DeclutterWorkerPanel extends javax.swing.JPanel {
     }
 
     public void completed() {
-        
+
     }
 
     //<editor-fold defaultstate="collapsed" desc="GUI stuff">

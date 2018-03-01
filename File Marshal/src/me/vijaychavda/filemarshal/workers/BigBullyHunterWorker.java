@@ -8,16 +8,12 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.text.MessageFormat;
 import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
 import java.util.PriorityQueue;
-import java.util.concurrent.ExecutionException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.SwingWorker;
 import me.vijaychavda.filemarshal.AppContext;
-import me.vijaychavda.filemarshal.FileInfo;
 import me.vijaychavda.filemarshal.ui.DecloneWorkerPanel;
 
 public class BigBullyHunterWorker extends SwingWorker<Void, String> {
@@ -25,15 +21,12 @@ public class BigBullyHunterWorker extends SwingWorker<Void, String> {
     private final PriorityQueue<Path> queue;
 
     public BigBullyHunterWorker() {
-        queue = new PriorityQueue<>(10, new Comparator<Path>() {
-            @Override
-            public int compare(Path o1, Path o2) {
-                try {
-                    return (Files.size(o1) >= Files.size(o2)) ? 1 : -1;
-                } catch (IOException ex) {
-                    Logger.getLogger(BigBullyHunterWorker.class.getName()).log(Level.SEVERE, null, ex);
-                    return 0;
-                }
+        queue = new PriorityQueue<>(10, (Path o1, Path o2) -> {
+            try {
+                return (Files.size(o1) >= Files.size(o2)) ? 1 : -1;
+            } catch (IOException ex) {
+                Logger.getLogger(BigBullyHunterWorker.class.getName()).log(Level.SEVERE, null, ex);
+                return 0;
             }
         });
     }
@@ -45,36 +38,6 @@ public class BigBullyHunterWorker extends SwingWorker<Void, String> {
             scanDir(source.toPath());
         }
 
-        completed();
-
-        return null;
-    }
-
-    private void scanDir(Path folder) {
-        try (DirectoryStream<Path> stream = Files.newDirectoryStream(folder)) {
-            for (Path entry : stream) {
-                if (Files.isDirectory(entry))
-                    scanDir(entry);
-                else
-                    addToQueue(entry);
-            }
-        } catch (IOException ex) {
-            Logger.getLogger(BigBullyHunterWorker.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    private void addToQueue(Path entry) {
-        try {
-            System.out.printf("%d %s\n", Files.size(entry), entry);
-        } catch (IOException ex) {
-            Logger.getLogger(BigBullyHunterWorker.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        queue.add(entry);
-        if (queue.size() > 10)
-            queue.poll();
-    }
-
-    private void completed() {
         StringBuilder builder = new StringBuilder();
 
         for (Path path : queue) {
@@ -96,5 +59,27 @@ public class BigBullyHunterWorker extends SwingWorker<Void, String> {
         } catch (IOException ex) {
             Logger.getLogger(DecloneWorkerPanel.class.getName()).log(Level.SEVERE, null, ex);
         }
+
+        return null;
+    }
+
+    private void scanDir(Path folder) {
+        try (DirectoryStream<Path> stream = Files.newDirectoryStream(folder)) {
+            for (Path entry : stream) {
+                if (Files.isDirectory(entry))
+                    scanDir(entry);
+                else
+                    addToQueue(entry);
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(BigBullyHunterWorker.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    private void addToQueue(Path entry) {
+        queue.add(entry);
+
+        if (queue.size() > 10)
+            queue.poll();
     }
 }

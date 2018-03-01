@@ -17,32 +17,34 @@ public class GatherFileInfoWorker extends SwingWorker<ArrayList<FileInfo>, Strin
     }
 
     @Override
-    protected ArrayList<FileInfo> doInBackground() throws Exception {
-        ArrayList<FileInfo> fileInfos = new ArrayList<>();
+    protected ArrayList<FileInfo> doInBackground() {
+        try {
+            ArrayList<FileInfo> fileInfos = new ArrayList<>();
 
-        int progress = 0;
-        setProgress(0);
-        publish("Running task: Gathering files' information.");
+            int progress = 0;
+            setProgress(0);
+            publish("Running task: Gathering files' information.");
 
-        for (File inputFile : inputFiles) {
-            String path = inputFile.getPath();
-            try {
+            for (File inputFile : inputFiles) {
+                String path = inputFile.getPath();
+
                 publish("\tAnalyzing: " + path);
-                FileInfo info = FileInfo.get(path);
-                fileInfos.add(info);
+                fileInfos.add(FileInfo.get(path));
                 //publish("\tHash = " + info.getHash());
-            } catch (IOException ex) {
-                publish("\tFailed! Error was logged.");
-                Logger.getLogger(GatherFileInfoWorker.class.getName()).log(Level.SEVERE, null, ex);
+
+                setProgress((int) Math.round(100 * (double) progress / inputFiles.size()));
+                progress++;
             }
 
-            setProgress((int) Math.round(100 * (double) progress / inputFiles.size()));
-            progress++;
+            publish("Done.\n");
+            setProgress(100);
+
+            return fileInfos;
+        } catch (IOException ex) {
+            publish("\tFailed! Error was logged.");
+            Logger.getLogger(GatherFileInfoWorker.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        publish("Done.\n");
-        setProgress(100);
-
-        return fileInfos;
+        return null;
     }
 }

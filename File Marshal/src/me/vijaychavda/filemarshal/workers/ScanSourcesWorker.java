@@ -8,11 +8,8 @@ import me.vijaychavda.filemarshal.settings.SelectionSettings;
 
 public class ScanSourcesWorker extends SwingWorker<ArrayList<File>, String> {
 
-    public ScanSourcesWorker() {
-    }
-
     @Override
-    protected ArrayList<File> doInBackground() throws Exception {
+    protected ArrayList<File> doInBackground() {
         ArrayList<File> inputFiles = new ArrayList<>();
         ArrayList<File> sources = AppContext.Current.getSources();
 

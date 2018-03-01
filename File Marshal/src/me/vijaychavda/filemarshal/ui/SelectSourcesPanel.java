@@ -117,7 +117,7 @@ public class SelectSourcesPanel extends javax.swing.JPanel {
         L_Sources.addListSelectionListener(
             e -> B_RemoveSource.setVisible(L_Sources.getSelectedIndices().length > 0)
         );
-        
+
         String desktopPath = System.getProperty("user.home") + "/Desktop";
         T_SourcePath.setText(desktopPath);
     }

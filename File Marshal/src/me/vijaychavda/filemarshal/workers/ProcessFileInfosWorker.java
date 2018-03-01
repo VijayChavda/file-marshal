@@ -19,7 +19,7 @@ public class ProcessFileInfosWorker extends SwingWorker<Void, String> {
     }
 
     @Override
-    protected Void doInBackground() throws Exception {
+    protected Void doInBackground() {
         int progress = 0;
         setProgress(0);
         publish("Running task: Processing gathered information.");
