@@ -1,8 +1,16 @@
 package me.vijaychavda.filemarshal.ui;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import me.vijaychavda.filemarshal.AppContext;
+import me.vijaychavda.filemarshal.workers.BigBullyHunterWorker;
 import me.vijaychavda.filemarshal.workers.DeclutterWorker;
 
 public class MainFrame extends javax.swing.JFrame {
@@ -41,12 +49,6 @@ public class MainFrame extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Declone - Find and remove duplicate files");
         setResizable(false);
-
-        TabbedPane.addChangeListener(new javax.swing.event.ChangeListener() {
-            public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                TabbedPaneStateChanged(evt);
-            }
-        });
 
         P_Sources.setOpaque(false);
         P_Sources.setLayout(new java.awt.BorderLayout());
@@ -112,14 +114,19 @@ public class MainFrame extends javax.swing.JFrame {
             }
         });
 
-        B_FindLarge.setText("Find large files");
+        B_FindLarge.setText("Big Bully Hunter");
+        B_FindLarge.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                B_FindLargeActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout P_CommandsLayout = new javax.swing.GroupLayout(P_Commands);
         P_Commands.setLayout(P_CommandsLayout);
         P_CommandsLayout.setHorizontalGroup(
             P_CommandsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, P_CommandsLayout.createSequentialGroup()
-                .addContainerGap(277, Short.MAX_VALUE)
+                .addContainerGap(269, Short.MAX_VALUE)
                 .addComponent(B_FindLarge)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(B_Declutter)
@@ -175,7 +182,7 @@ public class MainFrame extends javax.swing.JFrame {
         decloneDialog.add(decloneWorkerPanel);
         decloneDialog.pack();
         decloneDialog.setLocationRelativeTo(this);
-//        decloneDialog.setModal(true);
+        decloneDialog.setModal(true);
         decloneDialog.setVisible(true);
         decloneWorkerPanel.start();
     }//GEN-LAST:event_B_DecloneActionPerformed
@@ -202,14 +209,19 @@ public class MainFrame extends javax.swing.JFrame {
         decloneDialog.add(declutterWorkerPanel);
         decloneDialog.pack();
         decloneDialog.setLocationRelativeTo(this);
-//        decloneDialog.setModal(true);
+        decloneDialog.setModal(true);
         decloneDialog.setVisible(true);
         declutterWorkerPanel.start();
     }//GEN-LAST:event_B_DeclutterActionPerformed
 
-    private void TabbedPaneStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_TabbedPaneStateChanged
-        pack();
-    }//GEN-LAST:event_TabbedPaneStateChanged
+    private void B_FindLargeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_B_FindLargeActionPerformed
+        AppContext.Current.setSources(selectSourcesPanel.getSources());
+        AppContext.Current.setSelectionSettings(selectionSettingsPanel.getSettings());
+        AppContext.Current.setDeclutterSettings(declutterSettingsPanel.getSettings());
+
+        BigBullyHunterWorker worker = new BigBullyHunterWorker();
+        worker.execute();
+    }//GEN-LAST:event_B_FindLargeActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton B_Declone;
