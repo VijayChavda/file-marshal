@@ -176,8 +176,8 @@ public class MainFrame extends javax.swing.JFrame {
         decloneDialog.pack();
         decloneDialog.setLocationRelativeTo(this);
         decloneDialog.setModal(true);
-        decloneDialog.setVisible(true);
         decloneWorkerPanel.start();
+        decloneDialog.setVisible(true);
     }//GEN-LAST:event_B_DecloneActionPerformed
 
     private void B_DeclutterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_B_DeclutterActionPerformed
@@ -203,8 +203,8 @@ public class MainFrame extends javax.swing.JFrame {
         decloneDialog.pack();
         decloneDialog.setLocationRelativeTo(this);
         decloneDialog.setModal(true);
-        decloneDialog.setVisible(true);
         declutterWorkerPanel.start();
+        decloneDialog.setVisible(true);
     }//GEN-LAST:event_B_DeclutterActionPerformed
 
     private void B_FindLargeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_B_FindLargeActionPerformed
